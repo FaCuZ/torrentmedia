@@ -1,0 +1,19 @@
+{
+	"name": "Eltor",
+	"version": "0.1.0",
+	"description": "Cliente de bitorrent",
+  	"author": "Facundo Zaldo",
+  	"license": "MIT",
+	"main": "app.html",
+	"app-id": "com.facuz.torrent",
+	"chromium-args": "--disable-setuid-sandbox",
+	"window": {
+		"width": 1200,
+		"height": 800,
+		"title": "Eltor Torrent",
+		"icon": "icons/icon.png"
+	},
+	"webkit": {
+		"plugin": true
+	}
+}
