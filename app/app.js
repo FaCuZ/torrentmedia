@@ -20,7 +20,7 @@ client.add(torrentId, function (torrent) {
 		Humanize.fileSize(torrent.downloadSpeed) + " / " + Humanize.fileSize(torrent.uploadSpeed),
 		torrent.numPeers,
 		esHumanTime(torrent.timeRemaining)
-	]).draw(false);
+	]).draw(false)
 
 	/*$('#nombre').html(torrent.name)
 
@@ -42,10 +42,10 @@ client.add(torrentId, function (torrent) {
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
 				(torrent.progress * 100).toFixed(1) + '%',
-				Humanize.fileSize(torrent.downloadSpeed) + " / " + Humanize.fileSize(torrent.uploadSpeed),
+				Humanize.fileSize(torrent.downloadSpeed) + "/s | " + Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
 				esHumanTime(torrent.timeRemaining)
-			]).draw();
+			]).draw()
 
         }, 500)
 
