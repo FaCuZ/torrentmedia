@@ -2,10 +2,14 @@
 	"name": "mediaTorrent",
 	"version": "0.1.0",
 	"description": "Cliente de bitorrent",
-  	"author": "Facundo Zaldo",
-  	"license": "MIT",
+	"author": "Facundo Zaldo",
+	"license": "MIT",
 	"main": "app/front/app.html",
 	"app-id": "com.facuz.torrent",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/FaCuZ/torrentmedia.git"
+	},
 	"chromium-args": "--disable-setuid-sandbox",
 	"window": {
 		"width": 1200,
