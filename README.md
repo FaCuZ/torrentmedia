@@ -1,11 +1,8 @@
 # Media Torrent
 
-Cliente de bitorrent.
+Beta de cliente de bitorrent utilizando WebTorrent.
 
 ## Componentes de terceros
 * WebTorrent
 * AdminLTE
-** Bootstrap
-** jQuery
-** Font-awesome
-** Ionicons
+* Humanizer

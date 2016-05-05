@@ -1,3 +1,40 @@
 .sin-padding{
 	padding: 0px;
 }
+
+.no-select {
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+}
+
+.breadcrumb-botones{
+	padding: 0px 15px !important;
+}
+
+
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+	font-family: FontAwesome;
+}
+
+table.dataTable thead th.sorting:after{
+	content: none;
+}
+
+table.dataTable thead th.sorting_asc:after {
+	content: "\f0d8";
+}
+
+table.dataTable thead th.sorting_desc:after {
+	content: "\f0d7";
+}
+
+table.dataTable {
+	margin-top: -1px !important;
+	margin-bottom: -1px !important;
+}
+
+table.dataTable thead > tr > th {
+	padding-right: 8px;
+	text-align: center !important;
+}
