@@ -98,14 +98,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<ul class="sidebar-menu">
 						<!-- <li class="header">DESCARGAS</li> -->
 						<!-- Optionally, you can add icons to the links -->
-						<li class="treeview active">
+						<!-- <li class="treeview active">
 							<a href="#"><i class="fa fa-files-o"></i> <span>Descargas</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
 								<li><a href="#">Activos</a></li>
 								<li><a href="#">Compartiendo</a></li>
 							</ul>
-						</li>
+						</li> -->
 						<!--  <li class="header">CANALES</li> -->
+						<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span>Descargas</span></a></li>						
+						<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Estadisticas</span></a></li>						
 						<li><a href="#"><i class="fa fa-feed"></i> <span>Feeds</span></a></li>
 						<li><a href="#"><i class="fa fa-plus"></i> <span>Agregar</span></a></li>						
 					</ul><!-- /.sidebar-menu -->
@@ -141,50 +143,54 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+					<!-- MODAL: Agregar Torrent -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
 
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Agregar nuevo torrent</h4>
-			</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">Agregar nuevo torrent</h4>
+								</div>
 
-			<div class="modal-body">
-				<form>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label for="torrent-tb" class="control-label">Torrent:</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="tb-agregar-file" placeholder="Magnet, Archivo, Url o Infohash" >
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-default" id="btn-agregar-fileDialog">
+														<i class="fa fa-fw fa-file-o"></i>
+													</button>
+												</div>
+											</div>
+										</div>
 
-					<label for="torrent-tb" class="control-label">Torrent:</label>
-					<div class="input-group">
-						<input type="text" class="form-control" id="torrent-tb" placeholder="Magnet, Archivo, Url o Infohash" >
-						<div class="input-group-btn">
-							<button type="button" class="btn btn-default">Archivo</button>
+										<div class="form-group">
+											<label for="ubicacion-tb" class="control-label">Descarga en:</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="tb-agregar-folder">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-default" id="btn-agregar-folderDialog">
+														<i class="fa fa-fw fa-folder-open-o"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+
+									</form>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn-agregar-download">Descargar</button>
+								</div>
+
+							</div>
 						</div>
 					</div>
-
-						<div class="input-group-btn">
-							<input type="file" class="btn btn-default" nwdirectory id="folderSelector">Archivo</input>
-						</div>
-
-					<label for="directorio-tb" class="control-label">Descarga en:</label>
-					<div class="input-group">
-						<input type="text" class="form-control" id="directorio-tb" placeholder="Directorio" >
-						<div class="input-group-btn">
-							<input type="file" class="btn btn-default" nwdirectory id="folderSelector">Archivo</input>
-						</div>
-					</div>
-
-				</form>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary">Descargar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
+					<!-- MODAL END -->
 
 
 
@@ -201,6 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							</div><!-- /.box -->			  
 						</div><!-- /.col -->
 					</div><!-- /.row -->					
+				
 				</section><!-- /.content -->
 
 			</div><!-- /.content-wrapper -->
@@ -304,8 +311,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="../js/webtorrent.min.js"></script>
 		<script src="../js/humanize.min.js"></script>
 		<script src="../js/humanize-duration.js"></script>
-		<script src="base.js"></script>
+
 		<script src="../app.js"></script>
+		<script src="base.js"></script>
+		<!-- <script src="../Clase.js"></script> -->
 
 
 	</body>

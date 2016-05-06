@@ -1,24 +1,27 @@
 {
-	"name": "mediaTorrent",
-	"version": "0.1.0",
-	"description": "Cliente de bitorrent",
-	"author": "Facundo Zaldo",
-	"license": "MIT",
-	"main": "app/front/app.html",
-	"app-id": "com.facuz.torrent",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/FaCuZ/torrentmedia.git"
-	},
-	"chromium-args": "--disable-setuid-sandbox",
-	"window": {
-		"width": 1200,
-		"height": 800,
-		"title": "Eltor Torrent",
-		"icon": "app/front/icons/icon.png"
-	},
-	"single-instance": true,
-	"webkit": {
-		"plugin": true
-	}
+  "name": "mediaTorrent",
+  "version": "0.1.0",
+  "description": "Cliente de bitorrent",
+  "author": "Facundo Zaldo",
+  "license": "MIT",
+  "main": "app/front/app.html",
+  "app-id": "com.facuz.torrent",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FaCuZ/torrentmedia.git"
+  },
+  "chromium-args": "--disable-setuid-sandbox",
+  "window": {
+    "width": 1200,
+    "height": 800,
+    "title": "Eltor Torrent",
+    "icon": "app/front/icons/icon.png"
+  },
+  "single-instance": true,
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "nw-dialog": "^1.0.7"
+  }
 }
