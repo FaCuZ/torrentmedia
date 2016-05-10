@@ -1,16 +1,30 @@
 {
   "name": "torrentmedia",
   "version": "0.1.0",
+  "author": "Facundo Zaldo",
+  "license": "MIT",
   "description": "Cliente de bitorrent con webtorrent",
   "main": "app/index.js",
+  "app-id": "com.facuz.torrentmedia",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FaCuZ/torrentmedia.git"
+  },
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["Torrent", "Download", "Files"],
-  "author": "Facundo Zaldo",
-  "license": "MIT",
+  "keywords": [
+    "Torrent",
+    "Download",
+    "Files"
+  ],
   "devDependencies": {
     "electron-prebuilt": "^0.37.8"
+  },
+  "dependencies": {
+    "humanize-duration": "^3.7.1",
+    "humanize-plus": "^1.8.2",
+    "webtorrent": "^0.93.1"
   }
 }
