@@ -1,27 +1,16 @@
 {
-  "name": "mediaTorrent",
+  "name": "torrentmedia",
   "version": "0.1.0",
-  "description": "Cliente de bitorrent",
+  "description": "Cliente de bitorrent con webtorrent",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["Torrent", "Download", "Files"],
   "author": "Facundo Zaldo",
   "license": "MIT",
-  "main": "app/front/app.html",
-  "app-id": "com.facuz.torrent",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/FaCuZ/torrentmedia.git"
-  },
-  "chromium-args": "--disable-setuid-sandbox",
-  "window": {
-    "width": 1200,
-    "height": 800,
-    "title": "Eltor Torrent",
-    "icon": "app/front/icons/icon.png"
-  },
-  "single-instance": true,
-  "webkit": {
-    "plugin": true
-  },
-  "dependencies": {
-    "nw-dialog": "^1.0.7"
+  "devDependencies": {
+    "electron-prebuilt": "^0.37.8"
   }
 }
