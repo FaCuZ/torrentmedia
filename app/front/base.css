@@ -50,20 +50,20 @@ table.dataTable tr {
 }
  /*
 table.dataTable tr:hover {
-    background-color: #DEDEDE !important;
+	background-color: #DEDEDE !important;
 }
 */
 
 .column-name {
 	overflow: hidden;
-  	text-overflow: ellipsis;
-  	white-space: nowrap;
-  	text-align: left !important;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left !important;
 }
 
 tr.selected{
-    background-color: #ADD8E6 !important;
-    border: none; /* no funciona */
+	background-color: #ADD8E6 !important;
+	border: none; /* no funciona */
 }
 
 .hide-btns{
@@ -75,5 +75,23 @@ tr.selected{
 }
 
 .progress {
-	margin-top: 0px !important;
+	margin: 0px !important;	
+	border: 1px solid #E6E6E6;
+}
+
+.ft-cell {
+	padding-right: 18px;
+}
+
+.db-download:hover {
+	background-color: #E1E1E1;
+}
+
+.db-download {
+	padding: 5px;
+}
+
+.db-download i {
+	padding-left: 4px;
+	color: #B3B3B3;
 }

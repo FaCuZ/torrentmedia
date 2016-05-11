@@ -21,12 +21,15 @@ var table = $('#table').DataTable({
 			{ title: "Nombre", "className": "column-name" },
 			{ title: "Tamaño" },
 			{ title: "Progreso" },
-			{ title: "Vel Descarga" },
-			{ title: "Vel Subida" },
-			{ title: "Seeds/Peers" },
-			{ title: "Tiempo Est." }
+			{ title: "Descarga" },
+			{ title: "Subida" },
+			{ title: "Peers" },
+			{ title: "Ratio" },
+			{ title: "Estimado" }
 		]
 })
+
+$(".main-footer").html(generalFoot())
 
 $('#table tbody').on( 'click', 'tr', function () {
 	if($('#table tbody td').hasClass('dataTables_empty')) return false 
@@ -87,6 +90,7 @@ function addTorrent(torrentID){
 		'0 Kb/s',
 		'0 Kb/s',
 		'0',
+		'0',
 		'-'
 	]).draw()
 	
@@ -135,27 +139,54 @@ var interval = setInterval(function () {
 				i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1)),//(torrent.progress * 100).toFixed(1) + '%',
+				progressBar((torrent.progress * 100).toFixed(1)),
 				Humanize.fileSize(torrent.downloadSpeed) + "/s",
 				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
+				Humanize.formatNumber(torrent.ratio, 2),
 				esHumanTime(torrent.timeRemaining)
 			]).draw()
 		}
+
+	$(".main-footer").html(generalFoot())
+
 	}
 
-}, 15000)
+}, 500)
 
 
 function progressBar(progress){
 	return `
-		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
-				${progress}%
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
+					${progress}%
+				</div>
 			</div>
-		</div>
-	`
+			`
 }
+
+
+function generalFoot (){
+	
+	var pb = progressBar((client.progress * 100).toFixed(1))
+	var ds = Humanize.fileSize(client.downloadSpeed) + "/s"
+	var us = Humanize.fileSize(client.uploadSpeed) + "/s"
+	var ra = Humanize.formatNumber(client.ratio, 2)
+	var o = ""
+	if(ra <= 1) o = "-o"
+
+	return  `
+			<div class="row">
+  				<div class="col-md-10">
+					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
+					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
+					<span class="ft-cell"><i class="fa fa-fw fa-heart${o}"></i> ${ra} </span>
+  				</div>
+				<div class="col-md-2">${pb}</div>
+			</div>
+			` 	
+}
+
 
 
 /*** DEBUG ***/
