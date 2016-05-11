@@ -73,3 +73,7 @@ tr.selected{
 .dataTables_empty{
 	cursor: default;
 }
+
+.progress {
+	margin-top: 0px !important;
+}

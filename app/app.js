@@ -135,7 +135,7 @@ var interval = setInterval(function () {
 				i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
-				(torrent.progress * 100).toFixed(1) + '%',
+				progressBar((torrent.progress * 100).toFixed(1)),//(torrent.progress * 100).toFixed(1) + '%',
 				Humanize.fileSize(torrent.downloadSpeed) + "/s",
 				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
@@ -144,8 +144,18 @@ var interval = setInterval(function () {
 		}
 	}
 
-}, 500)
+}, 15000)
 
+
+function progressBar(progress){
+	return `
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
+				${progress}%
+			</div>
+		</div>
+	`
+}
 
 
 /*** DEBUG ***/
