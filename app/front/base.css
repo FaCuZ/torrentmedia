@@ -3,7 +3,7 @@
 }
 
 .no-select {
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -webkit-user-select: none;   
 }
 
 .breadcrumb-botones{
@@ -37,4 +37,30 @@ table.dataTable {
 table.dataTable thead > tr > th {
 	padding-right: 8px;
 	text-align: center !important;
+}
+
+table.dataTable tr {
+	text-align: center !important;
+	white-space: nowrap;
+}
+ /*
+table.dataTable tr:hover {
+    background-color: #DEDEDE !important;
+}
+*/
+
+.column-name {
+	overflow: hidden;
+  	text-overflow: ellipsis;
+  	white-space: nowrap;
+  	text-align: left !important;
+}
+
+tr.selected{
+    background-color: #999999 !important;
+    border: none; /* no funciona */
+}
+
+.hide-btns{
+	display: none;
 }

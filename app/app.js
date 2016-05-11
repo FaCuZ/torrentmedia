@@ -6,13 +6,12 @@ var humanizeDuration = require('humanize-duration')
 var Humanize = require('humanize-plus')
 
 var client = new WebTorrent()
-console.log(client.torrents)
 
 var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
 
 var tabla = $('#tabla').DataTable({
 	"paging": false,
-	"lengthChange": false,
+	"lengthChange": true,
 	"searching": false,
 	"ordering": true,
 	"info": true,
@@ -20,22 +19,32 @@ var tabla = $('#tabla').DataTable({
 	"bInfo": false,
 	"columns": [
 			{ title: "#" },
-			{ title: "Nombre" },
+			{ title: "Nombre", "className": "column-name" },
 			{ title: "Tamaño" },
 			{ title: "Progreso" },
-			{ title: "Velocidad" },
+			{ title: "Vel Descarga" },
+			{ title: "Vel Subida" },
 			{ title: "Seeds/Peers" },
 			{ title: "Tiempo Est." }
 		]
 })
 
-/*** DEBUG ***/
-var torrentId = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
-var torrentId1 = "magnet:?xt=urn:btih:DF19459B13F9E6B57347DBEE54F2DBBD751B914A&dn=10+cloverfield+lane+2016+1080p+hdrip+x264+aac+jyk&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce"
-var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
-$('#tb-agregar-file').val(torrentId)
-/*** END DEBUG ***/
+$('#tabla tbody').on( 'click', 'tr', function () {
+	if ($(this).hasClass('selected')) {
+		$(this).removeClass('selected')
+		$('#btns-hided').hide()
+	} else {
+		tabla.$('tr.selected').removeClass('selected')
+		$(this).addClass('selected')
+		$('#btns-hided').show()
+	}
+})
 
+/*
+$('#button').click( function () {
+	table.row('.selected').remove().draw(false)
+})
+*/
 
 /*** Agregar Torrent Dialog ***/
 $('#btn-agregar-fileDialog').click(function (){
@@ -75,7 +84,8 @@ function addTorrent(torrentID){
 		'Cargando...',
 		'0 Kb/s',
 		'0%',
-		'0 Kb/s | 0 Kb/s',
+		'0 Kb/s',
+		'0 Kb/s',
 		'0',
 		'-'
 	]).draw()
@@ -84,6 +94,7 @@ function addTorrent(torrentID){
 		//var file = torrent.files[0]
 
 		torrent.on('error', function (err) {
+			// TODO: Remove row
 			console.log("salto un error")
 		})
 		
@@ -102,7 +113,8 @@ var interval = setInterval(function () {
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
 				(torrent.progress * 100).toFixed(1) + '%',
-				Humanize.fileSize(torrent.downloadSpeed) + "/s | " + Humanize.fileSize(torrent.uploadSpeed) + "/s",
+				Humanize.fileSize(torrent.downloadSpeed) + "/s",
+				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
 				esHumanTime(torrent.timeRemaining)
 			]).draw()
@@ -111,5 +123,15 @@ var interval = setInterval(function () {
 
 }, 500)
 
+
+
+/*** DEBUG ***/
+var torrentId = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
+var torrentId1 = "magnet:?xt=urn:btih:DF19459B13F9E6B57347DBEE54F2DBBD751B914A&dn=10+cloverfield+lane+2016+1080p+hdrip+x264+aac+jyk&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce"
+var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
+
+$('#tb-agregar-file').val(torrentId)
+
 addTorrent(torrentId)
 addTorrent(torrentId1)
+/*** END DEBUG ***/
