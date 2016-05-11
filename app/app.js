@@ -1,6 +1,5 @@
-var remote = require('remote')
-var dialog = remote.require('dialog')
-
+const remote = require('remote')
+const dialog = remote.require('dialog')
 var WebTorrent = require('webtorrent')
 var humanizeDuration = require('humanize-duration')
 var Humanize = require('humanize-plus')
@@ -30,6 +29,8 @@ var table = $('#table').DataTable({
 })
 
 $('#table tbody').on( 'click', 'tr', function () {
+	if($('#table tbody td').hasClass('dataTables_empty')) return false 
+
 	if ($(this).hasClass('selected')) {
 		$(this).removeClass('selected')
 		$('#btns-hided').hide()
@@ -41,7 +42,10 @@ $('#table tbody').on( 'click', 'tr', function () {
 })
 
 $('body').on('click', function (event){
-	switch(event.target.id) {
+	target = event.target.id
+	if(!target) target = event.target.parentNode.id
+
+	switch(target) {
 		case 'btn-agregar-fileDialog': ///- BUTTON: ADD TORRENT: FILE DIALOG -///
 			filtros = { filters: [{ name: 'Torrents', extensions: ['torrent'] } ], properties: ['openFile'] }
 			dialog.showOpenDialog(filtros, function (fileName) {
@@ -58,6 +62,14 @@ $('body').on('click', function (event){
 
 		case 'btn-agregar-download': ///- BUTTON: ADD TORRENT: DOWNLOAD -///
 			addTorrent($('#tb-agregar-file').val())			
+			break
+
+		case 'btn-remove': ///- BUTTON: REMOVE TORRENT -///
+			removeTorrent(table.row('tr.selected'))			
+			break
+
+		case 'btn-pause': ///- BUTTON: REMOVE TORRENT -///
+			pauseTorrent(table.row('tr.selected'))			
 			break
 
 		default:
@@ -83,10 +95,34 @@ function addTorrent(torrentID){
 	})
 
 	torrent.on('error', function (error) {
-		temp.row().remove()
+		temp.row().remove().draw()
 		alert(error)
 	})
 
+}
+
+function removeTorrent(row){
+	// NOTE: Cuando hago lo de las posiciones tengo que cambiar row data 0 
+	var torrent = client.torrents[row.data()[0]]
+
+	// TODO: Preguntar si esta seguro, y si quiere borrar los archivos tambien
+	torrent.destroy(function(){
+		row.remove().draw()
+		$('#btns-hided').hide()
+		//if(client.torrents.length === 0) 
+	})
+
+}
+
+function pauseTorrent(row){
+	$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play') 
+
+	// NOTE: Pausa pero no funciona
+	var torrent = client.torrents[row.data()[0]]
+
+	console.log(torrent.paused)
+	console.log(torrent.pause())
+	console.log(torrent.paused)
 }
 
 

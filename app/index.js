@@ -13,7 +13,13 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 1200, height: 800})
+  mainWindow = new BrowserWindow({
+                                  width: 1200,
+                                  height: 800,
+                                  autoHideMenuBar: true,
+                                  title: "TorrentMedia"
+                                })
+
   mainWindow.loadURL('file://' + __dirname + '/front/index.html')
 
   mainWindow.webContents.openDevTools(); // Abre DevTools

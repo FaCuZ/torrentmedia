@@ -69,3 +69,7 @@ tr.selected{
 .hide-btns{
 	display: none;
 }
+
+.dataTables_empty{
+	cursor: default;
+}
