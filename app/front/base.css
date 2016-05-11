@@ -1,3 +1,7 @@
+body{
+	cursor: default;
+}
+
 .sin-padding{
 	padding: 0px;
 }
@@ -42,6 +46,7 @@ table.dataTable thead > tr > th {
 table.dataTable tr {
 	text-align: center !important;
 	white-space: nowrap;
+	cursor: pointer;
 }
  /*
 table.dataTable tr:hover {
@@ -57,7 +62,7 @@ table.dataTable tr:hover {
 }
 
 tr.selected{
-    background-color: #999999 !important;
+    background-color: #ADD8E6 !important;
     border: none; /* no funciona */
 }
 

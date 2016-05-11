@@ -9,7 +9,7 @@ var client = new WebTorrent()
 
 var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
 
-var tabla = $('#tabla').DataTable({
+var table = $('#table').DataTable({
 	"paging": false,
 	"lengthChange": true,
 	"searching": false,
@@ -29,57 +29,45 @@ var tabla = $('#tabla').DataTable({
 		]
 })
 
-$('#tabla tbody').on( 'click', 'tr', function () {
+$('#table tbody').on( 'click', 'tr', function () {
 	if ($(this).hasClass('selected')) {
 		$(this).removeClass('selected')
 		$('#btns-hided').hide()
 	} else {
-		tabla.$('tr.selected').removeClass('selected')
+		table.$('tr.selected').removeClass('selected')
 		$(this).addClass('selected')
 		$('#btns-hided').show()
 	}
 })
 
-/*
-$('#button').click( function () {
-	table.row('.selected').remove().draw(false)
+$('body').on('click', function (event){
+	switch(event.target.id) {
+		case 'btn-agregar-fileDialog': ///- BUTTON: ADD TORRENT: FILE DIALOG -///
+			filtros = { filters: [{ name: 'Torrents', extensions: ['torrent'] } ], properties: ['openFile'] }
+			dialog.showOpenDialog(filtros, function (fileName) {
+				$('#tb-agregar-file').val(fileName)
+			})		
+			break
+
+		case 'btn-agregar-folderDialog': ///- BUTTON: ADD TORRENT: FOLDER DIALOG -///
+			filtros = { properties: ['openDirectory'] }			
+			dialog.showOpenDialog(filtros, function (folderName) {
+				$('#tb-agregar-folder').val(folderName)
+			})		
+			break
+
+		case 'btn-agregar-download': ///- BUTTON: ADD TORRENT: DOWNLOAD -///
+			addTorrent($('#tb-agregar-file').val())			
+			break
+
+		default:
+			break
+	}
+
 })
-*/
-
-/*** Agregar Torrent Dialog ***/
-$('#btn-agregar-fileDialog').click(function (){
-	let filtros = { filters: [{ name: 'Torrents', extensions: ['torrent'] } ],
-					properties: ['openFile'] }
-
-	dialog.showOpenDialog(filtros, function (fileName) {
-		$('#tb-agregar-file').val(fileName)
-		// if (fileNames === undefined) return;
-		// var fileName = fileNames[0];
-		// $('#tb-agregar-file').val(fileName)
-
-		// fs.readFile(fileName, 'utf-8', function (err, data) {
-		// 	document.getElementById("editor").value = data;*/
-		// });
-	})
-})
-
-$('#btn-agregar-folderDialog').click(function (){
-	let filtros = { properties: ['openDirectory'] }
-	
-	dialog.showOpenDialog(filtros, function (folderName) {
-		$('#tb-agregar-folder').val(folderName)
-	})
-})
-
-$('#btn-agregar-download').click(function (){
-	addTorrent($('#tb-agregar-file').val())
-
-	//return e.preventDefault()
-})
-
 
 function addTorrent(torrentID){
-	var fila = tabla.row.add([
+	temp = table.row.add([
 		'#',
 		'Cargando...',
 		'0 Kb/s',
@@ -89,15 +77,14 @@ function addTorrent(torrentID){
 		'0',
 		'-'
 	]).draw()
+	
+	torrent = client.add(torrentID, function (torrent) {
+		//alert("dentro")
+	})
 
-	client.add(torrentID, function (torrent) {
-		//var file = torrent.files[0]
-
-		torrent.on('error', function (err) {
-			// TODO: Remove row
-			console.log("salto un error")
-		})
-		
+	torrent.on('error', function (error) {
+		temp.row().remove()
+		alert(error)
 	})
 
 }
@@ -108,7 +95,7 @@ var interval = setInterval(function () {
 	if(count > 0){
 		for (var i = count - 1; i >= 0; i--) {
 			torrent = client.torrents[i]
-			tabla.row(i).data([
+			table.row(i).data([
 				i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
@@ -132,6 +119,6 @@ var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
 
 $('#tb-agregar-file').val(torrentId)
 
-addTorrent(torrentId)
-addTorrent(torrentId1)
+//addTorrent(torrentId)
+//addTorrent(torrentId1)
 /*** END DEBUG ***/
