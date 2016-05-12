@@ -75,35 +75,36 @@ tr.selected{
 }
 
 .progress {
-    position: relative;
-    overflow: hidden;
+	position: relative;
+	overflow: hidden;
 	margin: 0px !important;	
-    box-shadow: inset 0px 0px 1px gray;
+	box-shadow: inset 0px 0px 1px gray;
+	max-width: 120px;
 }
 
 .progress .p-black {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    left: 0px;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	left: 0px;
 }
 
 .progress .progress-bar {
-    position: absolute;
-    overflow: hidden;
+	position: absolute;
+	overflow: hidden;
 }
 .progress-bar {
-    float: left;
-    width: 0%;
-    color: #ffffff;
-    text-align: center;
+	float: left;
+	width: 0%;
+	color: #ffffff;
+	text-align: center;
 }
 
 .progress .p-white {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 14px;
 }
 
 .ft-cell {
@@ -123,3 +124,30 @@ tr.selected{
 	color: #B3B3B3;
 }
 
+.main-footer {
+	position: fixed;
+	padding: 10px 15px;
+	bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+@media (max-width: 991px){	
+
+	.content-header>.breadcrumb {
+		background: none;
+		text-align: center;
+	}
+	
+	.main-footer {
+		width: 100%;
+	}
+
+	.main-footer .progress {
+		display: none;
+	}
+
+	.box {
+		overflow: auto;
+	}
+}

@@ -86,7 +86,7 @@ function addTorrent(torrentID){
 		'#',
 		'Cargando...',
 		'0 Kb/s',
-		'0%',
+		progressBar(0, $('#table')),
 		'0 Kb/s',
 		'0 Kb/s',
 		'0',
