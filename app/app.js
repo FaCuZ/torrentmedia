@@ -103,6 +103,10 @@ function addTorrent(torrentID){
 		alert(error)
 	})
 
+	torrent.on('done', function () {
+		//temp.row().remove().draw()
+	})
+
 }
 
 function removeTorrent(row){
@@ -139,11 +143,11 @@ var interval = setInterval(function () {
 				i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1)),
+				progressBar((torrent.progress * 100).toFixed(1), $('#table')),
 				Humanize.fileSize(torrent.downloadSpeed) + "/s",
 				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
-				Humanize.formatNumber(torrent.ratio, 2),
+				fixRatio(torrent.ratio),
 				esHumanTime(torrent.timeRemaining)
 			]).draw()
 		}
@@ -154,12 +158,17 @@ var interval = setInterval(function () {
 
 }, 500)
 
+function fixRatio(ratio){
+	if(ratio > 1000) return "&infin;"
+	return Humanize.formatNumber(ratio, 2)	
+}
 
-function progressBar(progress){
-	return `
-			<div class="progress">
+function progressBar(progress, elem){
+	var size = elem.find('.progress').outerWidth()
+	return `<div class="progress">
+				<span class="p-black" style="width: ${size}px;">${progress}%</span>
 				<div class="progress-bar" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
-					${progress}%
+					<span class="p-white" style="width: ${size}px;">${progress}%</span>
 				</div>
 			</div>
 			`
@@ -168,15 +177,14 @@ function progressBar(progress){
 
 function generalFoot (){
 	
-	var pb = progressBar((client.progress * 100).toFixed(1))
+	var pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
 	var ds = Humanize.fileSize(client.downloadSpeed) + "/s"
 	var us = Humanize.fileSize(client.uploadSpeed) + "/s"
-	var ra = Humanize.formatNumber(client.ratio, 2)
+	var ra = fixRatio(client.ratio)
 	var o = ""
 	if(ra <= 1) o = "-o"
 
-	return  `
-			<div class="row">
+	return `<div class="row">
   				<div class="col-md-10">
 					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
 					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
