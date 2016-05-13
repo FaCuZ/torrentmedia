@@ -17,7 +17,7 @@ var table = $('#table').DataTable({
 	"autoWidth": true,
 	"bInfo": false,
 	"columns": [
-			{ title: "#" },
+			{ title: "#",  "className": "column-id"},
 			{ title: "Nombre", "className": "column-name" },
 			{ title: "Tamaño" },
 			{ title: "Progreso" },
@@ -34,44 +34,51 @@ $(".main-footer").html(generalFoot())
 $('#table tbody').on( 'click', 'tr', function () {
 	if($('#table tbody td').hasClass('dataTables_empty')) return false 
 
-	if ($(this).hasClass('selected')) {
+	if ($(this).hasClass('selected')) { 
 		$(this).removeClass('selected')
 		$('#btns-hided').hide()
+		torrentSelected = null
 	} else {
 		table.$('tr.selected').removeClass('selected')
 		$(this).addClass('selected')
+		torrentSelected = client.get($(this).data("hash")) 
 		$('#btns-hided').show()
 	}
 })
 
 $('body').on('click', function (event){
-	target = event.target.id
+	let target = event.target.id
 	if(!target) target = event.target.parentNode.id
 
 	switch(target) {
-		case 'btn-agregar-fileDialog': ///- BUTTON: ADD TORRENT: FILE DIALOG -///
+		///- BUTTON: ADD TORRENT: FILE DIALOG -///
+		case 'btn-agregar-fileDialog': 
 			filtros = { filters: [{ name: 'Torrents', extensions: ['torrent'] } ], properties: ['openFile'] }
 			dialog.showOpenDialog(filtros, function (fileName) {
 				$('#tb-agregar-file').val(fileName)
 			})		
 			break
 
-		case 'btn-agregar-folderDialog': ///- BUTTON: ADD TORRENT: FOLDER DIALOG -///
+		///- BUTTON: ADD TORRENT: FOLDER DIALOG -///
+		case 'btn-agregar-folderDialog':
 			filtros = { properties: ['openDirectory'] }			
 			dialog.showOpenDialog(filtros, function (folderName) {
 				$('#tb-agregar-folder').val(folderName)
 			})		
 			break
 
-		case 'btn-agregar-download': ///- BUTTON: ADD TORRENT: DOWNLOAD -///
+		///- BUTTON: ADD TORRENT: DOWNLOAD -///
+		case 'btn-agregar-download': 
 			addTorrent($('#tb-agregar-file').val())			
 			break
 
-		case 'btn-remove': ///- BUTTON: REMOVE TORRENT -///
+		///- BUTTON: REMOVE TORRENT -///
+		case 'btn-remove': 
 			removeTorrent(table.row('tr.selected'))			
 			break
 
-		case 'btn-pause': ///- BUTTON: REMOVE TORRENT -///
+		///- BUTTON: REMOVE TORRENT -///
+		case 'btn-pause': 
 			pauseTorrent(table.row('tr.selected'))			
 			break
 
@@ -82,7 +89,7 @@ $('body').on('click', function (event){
 })
 
 function addTorrent(torrentID){
-	temp = table.row.add([
+	let temp = table.row.add([
 		'#',
 		'Cargando...',
 		'0 Kb/s',
@@ -94,27 +101,30 @@ function addTorrent(torrentID){
 		'-'
 	]).draw()
 	
-	torrent = client.add(torrentID, function (torrent) {
-		//alert("dentro")
+	let torrent = client.add(torrentID, function (torrent) {
+		// Quitar lineas al progres 
 	})
+
+
+	torrent.on('infoHash', function (error) {
+		$(temp.node()).attr('data-hash', torrent.infoHash)
+	})
+
 
 	torrent.on('error', function (error) {
 		temp.row().remove().draw()
 		alert(error)
 	})
 
-	torrent.on('done', function () {
-		//temp.row().remove().draw()
-	})
+	/*torrent.on('done', function () {
+		changeStyleProgress($(temp.node()).find('.progress-bar'), 'success', false)
+	})*/
 
 }
 
 function removeTorrent(row){
-	// NOTE: Cuando hago lo de las posiciones tengo que cambiar row data 0 
-	var torrent = client.torrents[row.data()[0]]
-
 	// TODO: Preguntar si esta seguro, y si quiere borrar los archivos tambien
-	torrent.destroy(function(){
+	torrentSelected.destroy(function(){
 		row.remove().draw()
 		$('#btns-hided').hide()
 		//if(client.torrents.length === 0) 
@@ -126,11 +136,10 @@ function pauseTorrent(row){
 	$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play') 
 
 	// NOTE: Pausa pero no funciona
-	var torrent = client.torrents[row.data()[0]]
-
-	console.log(torrent.paused)
-	console.log(torrent.pause())
-	console.log(torrent.paused)
+	console.log(torrentSelected.paused)
+	if(torrentSelected.paused) torrentSelected.resume()
+	else torrentSelected.pause()
+	console.log(torrentSelected.paused)
 }
 
 
@@ -143,7 +152,7 @@ var interval = setInterval(function () {
 				i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1), $('#table')),
+				progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
 				Humanize.fileSize(torrent.downloadSpeed) + "/s",
 				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
@@ -163,25 +172,35 @@ function fixRatio(ratio){
 	return Humanize.formatNumber(ratio, 2)	
 }
 
-function progressBar(progress, elem){
-	var size = elem.find('.progress').outerWidth()
+function progressBar(progress, element, torrent = null){ //progress-bar-info progress-bar-striped
+
+	let size = element.find('.progress').outerWidth()
+	let style = ''	
+
+	if(torrent){
+		style = 'progress-bar-info progress-bar-striped'
+		if(torrent.done) style = 'progress-bar-success' 
+		else if(torrent.paused) style = 'progress-bar-warning' 
+		else if(torrent.ready) style = ''
+	}
+
+// FIX: Cambiar para que no regenere toda la barra todo el tiempo
 	return `<div class="progress">
 				<span class="p-black" style="width: ${size}px;">${progress}%</span>
-				<div class="progress-bar" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
+				<div class="progress-bar ${style}" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
 					<span class="p-white" style="width: ${size}px;">${progress}%</span>
 				</div>
 			</div>
 			`
 }
 
-
 function generalFoot (){
 	
-	var pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
-	var ds = Humanize.fileSize(client.downloadSpeed) + "/s"
-	var us = Humanize.fileSize(client.uploadSpeed) + "/s"
-	var ra = fixRatio(client.ratio)
-	var o = ""
+	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
+	let ds = Humanize.fileSize(client.downloadSpeed) + "/s"
+	let us = Humanize.fileSize(client.uploadSpeed) + "/s"
+	let ra = fixRatio(client.ratio)
+	let o = ""
 	if(ra <= 1) o = "-o"
 
 	return `<div class="row">
@@ -204,6 +223,6 @@ var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
 
 $('#tb-agregar-file').val(torrentId)
 
-//addTorrent(torrentId)
-//addTorrent(torrentId1)
+addTorrent(torrentId)
+addTorrent(torrentId1)
 /*** END DEBUG ***/

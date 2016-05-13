@@ -70,9 +70,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<!-- Control Sidebar Toggle Button -->
-							<li>
-								<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+
+							<!-- EJEMPLO DE CAST -->
+							<li class="dropdown notifications-menu">
+								<a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-share-square-o"></i>
+									<!-- <span class="label label-success">3</span> -->
+								</a>
+								<ul class="dropdown-menu">
+									<li class="header">You have 3 files to play</li>
+									<li>
+										<!-- inner menu: contains the actual data -->
+										<ul class="menu">
+											<li><a href="#"><i class="fa fa-users text-aqua"></i> 5 new members joined today</a></li>
+											<li><a href="#"><i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems</a></li>
+											<li><a href="#"><i class="fa fa-users text-red"></i> 5 new members joined</a></li>
+											<li><a href="#"><i class="fa fa-shopping-cart text-green"></i> 25 sales made</a></li>
+											<li><a href="#"><i class="fa fa-user text-red"></i> You changed your username</a></li>
+										</ul>
+								  	</li>
+								  	<li class="footer"><a href="#">View all</a></li>
+								</ul>
 							</li>
+							<!-- FIN DE EJEMPLO -->
+
+							<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a></li>
 						</ul>
 					</div>
 				</nav>
@@ -108,8 +130,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<!--  <li class="header">CANALES</li> -->
 						<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span>Descargas</span></a></li>						
 						<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Estadisticas</span></a></li>						
-						<li><a href="#"><i class="fa fa-feed"></i> <span>Feeds</span></a></li>
-						<li><a href="#"><i class="fa fa-plus"></i> <span>Agregar</span></a></li>						
+						<li><a href="#"><i class="fa fa-feed"></i> <span>Autofeeds</span></a></li>
+						<li><a href="#"><i class="fa fa-plug"></i> <span>Canales</span></a></li>						
 					</ul><!-- /.sidebar-menu -->
 				</section>
 				<!-- /.sidebar -->
@@ -200,7 +222,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 				<!-- Main content -->
 				<section class="content">
-				
+
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="box">
@@ -227,7 +249,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<!-- Create the tabs -->
 				<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
 					<li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-					<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+					<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">

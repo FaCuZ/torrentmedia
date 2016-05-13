@@ -14,6 +14,9 @@ body{
 	padding: 0px 15px !important;
 }
 
+#table{
+    width: 100%;
+}
 
 table.dataTable thead th.sorting:after,
 table.dataTable thead th.sorting_asc:after,
@@ -79,7 +82,8 @@ tr.selected{
 	overflow: hidden;
 	margin: 0px !important;	
 	box-shadow: inset 0px 0px 1px gray;
-	max-width: 120px;
+	max-width: 120px;	
+    margin: auto;
 }
 
 .progress .p-black {
