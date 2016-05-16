@@ -1,5 +1,6 @@
 body{
 	cursor: default;
+	background-color: #ECF0F5;
 }
 
 .sin-padding{
@@ -82,7 +83,6 @@ tr.selected{
 	overflow: hidden;
 	margin: 0px !important;	
 	box-shadow: inset 0px 0px 1px gray;
-	max-width: 120px;	
     margin: auto;
 }
 

@@ -17,16 +17,16 @@ var table = $('#table').DataTable({
 	"autoWidth": true,
 	"bInfo": false,
 	"columns": [
-			{ title: "#",  "className": "column-id"},
-			{ title: "Nombre", "className": "column-name" },
-			{ title: "Tamaño" },
-			{ title: "Progreso" },
-			{ title: "Descarga" },
-			{ title: "Subida" },
-			{ title: "Peers" },
-			{ title: "Ratio" },
-			{ title: "Estimado" }
-		]
+		{ title: "#",  "className": "column-id"},
+		{ title: "Nombre", "className": "column-name" },
+		{ title: "Tamaño" },
+		{ title: "Progreso" },
+		{ title: "Descarga" },
+		{ title: "Subida" },
+		{ title: "Peers" },
+		{ title: "Ratio" },
+		{ title: "Estimado" }
+	]
 })
 
 $(".main-footer").html(generalFoot())
@@ -81,6 +81,32 @@ $('body').on('click', function (event){
 		case 'btn-pause': 
 			pauseTorrent(table.row('tr.selected'))			
 			break
+		
+		///- NAV BUTTON: STATS -///
+		case 'btn-main': 
+			$('.content-wrapper').hide()
+			$('.content-wrapper-main').show()
+			break
+
+		///- NAV BUTTON: STATS -///
+		case 'btn-stats': 
+			$('.content-wrapper').hide()
+			$('.content-wrapper-stats').show()
+			break
+
+		///- NAV BUTTON: AUTOFEEDS -///
+		case 'btn-autofeeds': 
+			$('.content-wrapper').hide()
+			$('.content-wrapper-autofeeds').show()
+			break
+
+		///- NAV BUTTON: CHANNELS -///
+		case 'btn-channels': 
+			$('.content-wrapper').hide()
+			$('.content-wrapper-channels').show()
+			break
+
+	
 
 		default:
 			break

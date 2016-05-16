@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -28,24 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- Agregados -->
 		<link rel="stylesheet" href="base.css">
 	</head>
-	<!--
-	BODY TAG OPTIONS:
-	=================
-	Apply one or more of the following classes to get the
-	desired effect
-	| SKINS         | skin-blue                               |
-	|               | skin-black                              |
-	|               | skin-purple                             |
-	|               | skin-yellow                             |
-	|               | skin-red                                |
-	|               | skin-green                              |
 
-	|LAYOUT OPTIONS | fixed                                   |
-	|               | layout-boxed                            |
-	|               | layout-top-nav                          |
-	|               | sidebar-collapse                        |
-	|               | sidebar-mini                            |
-	-->
 	<body class="hold-transition skin-blue sidebar-mini fixed no-select">
 		<div class="wrapper">
 
@@ -128,21 +107,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							</ul>
 						</li> -->
 						<!--  <li class="header">CANALES</li> -->
-						<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span>Descargas</span></a></li>						
-						<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Estadisticas</span></a></li>						
-						<li><a href="#"><i class="fa fa-feed"></i> <span>Autofeeds</span></a></li>
-						<li><a href="#"><i class="fa fa-plug"></i> <span>Canales</span></a></li>						
+						<li id="btn-main" class="active"><a href="#"><i class="fa fa-files-o"></i> Descargas</a></li>						
+						<li id="btn-stats"><a href="#"><i class="fa fa-bar-chart"></i> Estadisticas</a></li>						
+						<li id="btn-autofeeds"><a href="#"><i class="fa fa-feed"></i> Autofeeds</a></li>
+						<li id="btn-channels"><a href="#"><i class="fa fa-plug"></i> Canales</a></li>						
 					</ul><!-- /.sidebar-menu -->
 				</section>
 				<!-- /.sidebar -->
 			</aside>
 
 
-			<!-- Content Wrapper. Contains page content	 -->
-			<div class="content-wrapper">
+			<!--/////// DYNAMIC CONTENT: MAIN ///////-->
+			<div class="content-wrapper content-wrapper-main">
 
 				<!-- Content Header (Page header) -->
-				<section class="content-header">
+				<section class="content-header content-header-main">
+						
 					<h1>Descargas <small class="db-download">Todas <i class="fa fa-angle-down"></i></small></h1>
 					<!-- TODO: Cambio a fa-angle-down -->
 
@@ -161,10 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</span>
 
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
-
-
 					</div>
-
 
 
 					<!-- MODAL: Agregar Torrent -->
@@ -221,7 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				</section>
 
 				<!-- Main content -->
-				<section class="content">
+				<section class="content content-main">
 
 					<div class="row">
 						<div class="col-xs-12">
@@ -237,10 +214,88 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			</div><!-- /.content-wrapper -->
 
 
+			<!--/////// DYNAMIC CONTENT: STATS ///////-->
+			<div class="content-wrapper content-wrapper-stats">
+
+				<!-- Content Header (Page header) -->
+				<section class="content-header content-header-main">
+						
+					<h1>Estadisticas <small class="db-download">Todas </small></h1>
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content content-main">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<div class="box-body sin-padding">
+									Aca van las Estadisticas!!!!!!!!!!
+								</div><!-- /.box-body -->
+							</div><!-- /.box -->			  
+						</div><!-- /.col -->
+					</div><!-- /.row -->			
+				
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			<!--/////// DYNAMIC CONTENT: AUTOFEEDS ///////-->
+			<div class="content-wrapper content-wrapper-autofeeds">
+
+				<!-- Content Header (Page header) -->
+				<section class="content-header content-header-main">
+						
+					<h1>Autofeeds <small class="db-download">Todas </small></h1>
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content content-main">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<div class="box-body sin-padding">
+									Aca va la configuracion de las descargas automaticas <br/> Se utilizara los channels para configurarlas
+								</div><!-- /.box-body -->
+							</div><!-- /.box -->			  
+						</div><!-- /.col -->
+					</div><!-- /.row -->			
+				
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			<!--/////// DYNAMIC CONTENT: CHANNELS ///////-->
+			<div class="content-wrapper content-wrapper-channels">
+
+				<!-- Content Header (Page header) -->
+				<section class="content-header content-header-main">
+						
+					<h1>Canales <small class="db-download">Todas </small></h1>
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content content-main">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<div class="box-body sin-padding">
+									En esta seccion de puede instalar y configurar los canales.
+								</div><!-- /.box-body -->
+							</div><!-- /.box -->			  
+						</div><!-- /.col -->
+					</div><!-- /.row -->			
+				
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+
 
 			<!-- Main Footer -->
 			<footer class="main-footer">
-				<!-- To the right -->
 				
 			</footer>
 
