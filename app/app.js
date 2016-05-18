@@ -1,12 +1,21 @@
 const remote = require('remote')
 const dialog = remote.require('dialog')
-var WebTorrent = require('webtorrent')
-var humanizeDuration = require('humanize-duration')
+const WebTorrent = require('webtorrent')
+const humanizeDuration = require('humanize-duration')
 var Humanize = require('humanize-plus')
 
 var client = new WebTorrent()
 
 var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
+
+/*let torrents = {}
+torrents['aa11'] = new Torrents(1)
+torrents['bb22'] = new Torrents(2)
+torrents['cc33'] = new Torrents(3)
+torrents['aa11'] = new Torrents(3)
+
+console.log(torrents)
+*/
 
 var table = $('#table').DataTable({
 	"paging": false,
@@ -82,6 +91,14 @@ $('body').on('click', function (event){
 			pauseTorrent(table.row('tr.selected'))			
 			break
 		
+		///- BUTTON: POSITION UP -///
+		case 'btn-position-up': 
+			break
+		
+		///- BUTTON: POSITION DOWN -///
+		case 'btn-position-up': 
+			break
+		
 		///- NAV BUTTON: STATS -///
 		case 'btn-main': 
 			$('.content-wrapper').hide()
@@ -105,8 +122,6 @@ $('body').on('click', function (event){
 			$('.content-wrapper').hide()
 			$('.content-wrapper-channels').show()
 			break
-
-	
 
 		default:
 			break
@@ -230,16 +245,15 @@ function generalFoot (){
 	if(ra <= 1) o = "-o"
 
 	return `<div class="row">
-  				<div class="col-md-10">
+				<div class="col-md-10">
 					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
 					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
 					<span class="ft-cell"><i class="fa fa-fw fa-heart${o}"></i> ${ra} </span>
-  				</div>
+				</div>
 				<div class="col-md-2">${pb}</div>
 			</div>
 			` 	
 }
-
 
 
 /*** DEBUG ***/
