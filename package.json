@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "electron .",
+    "adminlte": "echo 'Updating AdminLTE...' && cd AdminLTE/dist/css/ && git pull origin && sed -i '1i/*' AdminLTE.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
