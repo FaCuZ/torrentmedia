@@ -1,21 +1,19 @@
-const remote = require('remote')
-const dialog = remote.require('dialog')
-const WebTorrent = require('webtorrent')
-const humanizeDuration = require('humanize-duration')
-var Humanize = require('humanize-plus')
+const remote = require('remote'),
+	  dialog = remote.require('dialog'),
+	  WebTorrent = require('webtorrent'),
+	  humanizeDuration = require('humanize-duration'),
+	  Humanize = require('humanize-plus')
 
-var client = new WebTorrent()
+var client = new WebTorrent(),
+	torrents = {},
+	settings = {},
+	i18n = {}
+
+loadSettings()
+
+console.log(settings.interval_refresh)
 
 var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
-
-/*let torrents = {}
-torrents['aa11'] = new Torrents(1)
-torrents['bb22'] = new Torrents(2)
-torrents['cc33'] = new Torrents(3)
-torrents['aa11'] = new Torrents(3)
-
-console.log(torrents)
-*/
 
 var table = $('#table').DataTable({
 	"paging": false,
@@ -93,10 +91,12 @@ $('body').on('click', function (event){
 		
 		///- BUTTON: POSITION UP -///
 		case 'btn-position-up': 
+			torrents[torrentSelected.infoHash].up()
 			break
 		
 		///- BUTTON: POSITION DOWN -///
-		case 'btn-position-up': 
+		case 'btn-position-down': 
+			torrents[torrentSelected.infoHash].down()
 			break
 		
 		///- NAV BUTTON: STATS -///
@@ -129,6 +129,14 @@ $('body').on('click', function (event){
 
 })
 
+function loadSettings(){
+	settings['interval_refresh'] = 500
+	settings['conections_max'] = 25
+	settings['base_lang'] = 'es'
+	console.log(settings)	
+}
+
+
 function addTorrent(torrentID){
 	let temp = table.row.add([
 		'#',
@@ -143,12 +151,12 @@ function addTorrent(torrentID){
 	]).draw()
 	
 	let torrent = client.add(torrentID, function (torrent) {
-		// Quitar lineas al progres 
 	})
 
 
 	torrent.on('infoHash', function (error) {
 		$(temp.node()).attr('data-hash', torrent.infoHash)
+		if(!torrents[torrent.infoHash]) torrents[torrent.infoHash] = new Torrent()
 	})
 
 
@@ -190,7 +198,7 @@ var interval = setInterval(function () {
 		for (var i = count - 1; i >= 0; i--) {
 			torrent = client.torrents[i]
 			table.row(i).data([
-				i,
+				torrents[torrent.infoHash].position,//i,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
 				progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
@@ -206,7 +214,7 @@ var interval = setInterval(function () {
 
 	}
 
-}, 500)
+}, settings.interval_refresh)
 
 function fixRatio(ratio){
 	if(ratio > 1000) return "&infin;"

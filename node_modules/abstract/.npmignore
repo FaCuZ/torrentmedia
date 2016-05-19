@@ -1,0 +1,6 @@
+node_modules/
+.git/
+.idea/
+.idea/workspace.xml
+.DS_Store
+.svn

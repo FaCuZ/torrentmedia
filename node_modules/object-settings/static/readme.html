@@ -1,0 +1,221 @@
+<!DOCTYPE  html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>doc</title>
+    <style>
+      /*github.com style (c) Vasily Polovnyov <vast@whiteants.net>*/
+      pre code {
+        display: block; padding: 0.5em;
+        color: #333;
+        background: #f8f8ff
+      }
+      pre .comment,
+      pre .template_comment,
+      pre .diff .header,
+      pre .javadoc {
+        color: #998;
+        font-style: italic
+      }
+      pre .keyword,
+      pre .css .rule .keyword,
+      pre .winutils,
+      pre .javascript .title,
+      pre .nginx .title,
+      pre .subst,
+      pre .request,
+      pre .status {
+        color: #333;
+        font-weight: bold
+      }
+      pre .number,
+      pre .hexcolor,
+      pre .ruby .constant {
+        color: #099;
+      }
+      pre .string,
+      pre .tag .value,
+      pre .phpdoc,
+      pre .tex .formula {
+        color: #d14
+      }
+      pre .title,
+      pre .id {
+        color: #900;
+        font-weight: bold
+      }
+      pre .javascript .title,
+      pre .lisp .title,
+      pre .clojure .title,
+      pre .subst {
+        font-weight: normal
+      }
+      pre .class .title,
+      pre .haskell .type,
+      pre .vhdl .literal,
+      pre .tex .command {
+        color: #458;
+        font-weight: bold
+      }
+      pre .tag,
+      pre .tag .title,
+      pre .rules .property,
+      pre .django .tag .keyword {
+        color: #000080;
+        font-weight: normal
+      }
+      pre .attribute,
+      pre .variable,
+      pre .lisp .body {
+        color: #008080
+      }
+      pre .regexp {
+        color: #009926
+      }
+      pre .class {
+        color: #458;
+        font-weight: bold
+      }
+      pre .symbol,
+      pre .ruby .symbol .string,
+      pre .lisp .keyword,
+      pre .tex .special,
+      pre .prompt {
+        color: #990073
+      }
+      pre .built_in,
+      pre .lisp .title,
+      pre .clojure .built_in {
+        color: #0086b3
+      }
+      pre .preprocessor,
+      pre .pi,
+      pre .doctype,
+      pre .shebang,
+      pre .cdata {
+        color: #999;
+        font-weight: bold
+      }
+      pre .deletion {
+        background: #fdd
+      }
+      pre .addition {
+        background: #dfd
+      }
+      pre .diff .change {
+        background: #0086b3
+      }
+      pre .chunk {
+        color: #aaa
+      }
+    </style>
+  </head>
+  <body>  
+    <h1 id="object-settings">Object Settings</h1>
+<p>Extends a custom JavaScript Object with &quot;settings&quot; methods.
+This is similar to the &quot;Configurable&quot; module but provides several additional functions, most notably usage of Events.</p>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Add Settings methods to a basic Object.</p>
+<pre><code class="lang-javascript">  // Get module
+  var ObjectSettings = require( &#39;object-settings&#39; );
+
+  // Create target object
+  MyObject = {
+   my_data: {},
+   my_method: function() {}
+  };
+
+  // Mixin Object Setting methods into MyObject
+  ObjectSettings.mixin( MyObject );
+
+  // Set a key and value
+  MyObject.set( &#39;first_name&#39;, &#39;John&#39; );
+
+  // Set via an object
+  MyObject.set({
+   &#39;age&#39;: 42,
+   &#39;last_name&#39;: &#39;Adams&#39;
+  });</code></pre>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<pre><code class="lang-javascript">  // Create target object
+  var MyObject = {};
+
+  // Set properties and apply Object Settings to a property
+  Object.defineProperties( MyObject, {
+    &quot;my_data&quot;: {
+      &quot;value&quot;: {}
+    },
+    &quot;settings&quot;: {
+      &quot;value&quot;: new ObjectSettings
+    }
+  });
+
+  // Interact with settings via the custom property
+  MyObject.settings.set( &#39;some key&#39;, &#39;some value&#39; );</code></pre>
+<h2 id="setting-defaults">Setting Defaults</h2>
+<pre><code class="lang-javascript">  // Get module
+  var ObjectSettings = require( &#39;object-settings&#39; );
+
+  // Create target object
+  var MyObject = {
+    my_data: {},
+    my_method: function() {}
+  };
+
+  // Bind to Object with default settings
+  MyObject.settings = ObjectSettings.use( MyObject, {
+    &quot;name&quot;: &quot;Sparky&quot;,
+    &quot;color&quot;: &quot;red&quot;
+  });</code></pre>
+<h2 id="constructor-methods">Constructor Methods</h2>
+<p>Constructor methods are only available on the non-initialized Object Settings module.</p>
+<p>  .debug()
+  .use()
+  .mixin()
+  .extend()</p>
+<h2 id="object-settings-methods">Object Settings&#39; Methods</h2>
+<p>The below methods are available once an Object Settigns instance is created.</p>
+<p>  .get( name )
+  .set( name, val )
+  .set( obj )
+  .enable( name )
+  .disable( name )</p>
+<h2 id="event-usage">Event Usage</h2>
+<p>If your object is EventEmitter-capable the Object Settings will emit events when settings are changed.</p>
+<pre><code class="lang-javascript">
+  // Trigger an event when the name is set
+  MyClass.on( &quot;set:name&quot;, function( value, key ) {
+    console.log( key, &quot;changed to &quot;, value );
+  });
+
+  // Trigger an event when the name is set
+  MyClass.on( &quot;disable:name&quot;, function( value, key ) {
+    console.log( key, &quot;disabled&quot; );
+  });
+
+  // Set and disable the name, triggering the above events
+  MyClass.set( &quot;name&quot;, &quot;Sparky&quot; );
+  MyClass.disable( &quot;name&quot; );</code></pre>
+<h2 id="license">License</h2>
+<p>(The MIT License)</p>
+<p>Copyright (c) 2013 Usability Dynamics, Inc. &lt;info@usabilitydynamics.com&gt;</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&#39;Software&#39;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &#39;AS IS&#39;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+  </body>
+</html>

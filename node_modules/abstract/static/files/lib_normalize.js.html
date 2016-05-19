@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/normalize.js - Abstract</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Abstract"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.4</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/abstract.html">abstract</a></li>
+            
+                <li><a href="../classes/abstract-utility.html">abstract-utility</a></li>
+            
+                <li><a href="../classes/Json.html">Json</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/abstract.html">abstract</a></li>
+            
+                <li><a href="../modules/abstract-utility.html">abstract-utility</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/normalize.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Object Normalization / JSON Object
+ * ============================+===============
+ *
+ * Transformation and normalization of a JSON Document, Nested Array, XML Document, or Two Dimensional Table.
+ *
+ * = Conversions = Can be chained.
+ * - Primarily for working with Associative Arrays, e.g. JSON Hash  , being able to transform objects between hashtables and arrays
+ * - Strandard transofmration between XML and JSON, using the @ prefix for attributes, etc.
+ * - Associative Array / Object conversion to Nested Array Format, and reverals (e.g. Knockout.js Models)
+ *
+ * = Structure Remapping =
+ * - Handle Object Transformations based on a Schema with advanced mapping ruels similar to XPath capabilities
+ *
+ * = Structure Normalization =
+ * - Key Pattern Grouping - Convert 2D objects into nested objects based on patterns, such as common prefix.
+ * - Numbered Key Decoupling - Created nested elements from numbered keys. e.g. bedroom1, bedroom2, =&gt; { &#x27;bedrooms&#x27;: [ &#x27;first value&#x27;, &#x27;second&#x27;, etc. ] }
+ * - Key Normalization - Convert to standard underscore format: de-camel, lowercase, etc.
+ *
+ * = Value Conversions =
+ * - True Data Type - Ensure values have their intended data formats, e.g. converting &quot;5&quot; to 5, &quot;true&quot; to true, etc.
+ * - Nullification - Apply rules to convert values between &quot;undefined&quot;, &quot;null&quot;, &quot;false&quot;, etc.
+ * - Filtering &amp; Stripping - Removing empty fields and/or empty objects and arrays. Whitespace removal.
+ * - Tokenize - Value tokenization. e.g. &quot;my dog hasn&#x27;t any flees&quot; =&gt; [ &#x27;my&#x27;, &#x27;dog&#x27;, &#x27;has&#x27;, &#x27;n\&#x27;t&#x27;, &#x27;any&#x27;, &#x27;flees&#x27;, &#x27;.&#x27; ]
+ *
+ * = Semantic Conversions = Can be chained.
+ * - Singularize / Pluralize -
+ * - Change Tense - Future, Present
+ * - Ordinalize -
+ * - Deordinalize -
+ * - Wordize - Convert to printable format. e.g. &quot;my_homes&quot; =&gt; &quot;My Home&quot;
+ * - Stem - Get stem of a word. e.g. &quot;words&quot; =&gt; &quot;word&quot;
+ *
+ * = Other / Specialized =
+ * - Geolocation - Conversion of an address into coordinates.
+ * - Categorical Classification
+ * - Phoenetics
+ *
+ * @version 0.1.0
+ * @author potanin@UD
+ */
+module.exports = function( target ) {
+
+  var app = {
+
+    /**
+     * Produces an iteration callback bound to an optional &#x60;thisArg&#x60;. If &#x60;func&#x60; is
+     * a property name, the callback will return the property value for a given element.
+     *
+     */
+    &#x27;create_callback&#x27;: function(func, thisArg) {
+
+      if (typeof func != &#x27;function&#x27;) {
+        return function(object) {
+          return object[func];
+        };
+      }
+
+      if (thisArg !== undefined) {
+        return function(value, index, object) {
+          return func.call(thisArg, value, index, object);
+        };
+      }
+
+      return func;
+
+    }
+
+  }
+
+  /**
+   * Non-chainable Utility Functions
+   *
+   * @since 0.2.0
+   */
+  var _ = {
+
+
+    /**
+     * Creates an object composed of keys returned from running each element of
+     * &#x60;collection&#x60; through a &#x60;callback&#x60;. The corresponding value of each key is an
+     * array of elements passed to &#x60;callback&#x60; that returned the key. The &#x60;callback&#x60;
+     * is bound to &#x60;thisArg&#x60; and invoked with three arguments; (value, index|key, collection).
+     * The &#x60;callback&#x60; argument may also be the name of a property to group by (e.g. &#x27;length&#x27;).
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;group_by&#x27;: function(collection, callback, thisArg) {
+      var result = {};
+      callback = app.create_callback(callback, thisArg);
+
+      _.for_each(collection, function(value, key, collection) {
+      key = callback(value, key, collection);
+      (hasOwnProperty.call(result, key) ? result[key] : result[key] = []).push(value);
+      });
+
+      return result;
+    },
+
+
+    /**
+     * Creates an object composed from arrays of &#x60;keys&#x60; and &#x60;values&#x60;. Pass either
+     * a single two dimensional array, i.e. &#x60;[[key1, value1], [key2, value2]]&#x60;, or
+     * two arrays, one of &#x60;keys&#x60; and one of corresponding &#x60;values&#x60;.
+     *
+     * _.object([&#x27;moe&#x27;, &#x27;larry&#x27;, &#x27;curly&#x27;], [30, 40, 50]); // =&gt; { &#x27;moe&#x27;: 30, &#x27;larry&#x27;: 40, &#x27;curly&#x27;: 50 }
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;object&#x27;: function(keys, values) {
+
+      var index = -1,
+        length = keys ? keys.length : 0,
+        result = {};
+
+      while (++index &lt; length) {
+
+      var key = keys[index];
+      if (values) {
+        result[key] = values[index];
+      } else {
+        result[key[0]] = key[1];
+      }
+      }
+
+      return result;
+    },
+
+
+    /**
+     * Converts the &#x60;collection&#x60;, to an array.
+     *
+     * (function() { return _.to_array(arguments).slice(1); })(1, 2, 3, 4); // =&gt; [2, 3, 4]
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;to_array&#x27;: function(collection) {
+
+      var noArraySliceOnStrings = slice.call(&#x27;x&#x27;)[0] != &#x27;x&#x27;;
+
+      if (collection &amp;&amp; typeof collection.length == &#x27;number&#x27;) {
+      return (noArraySliceOnStrings ? isString(collection) : typeof collection == &#x27;string&#x27;)
+        ? collection.split(&#x27;&#x27;)
+        : slice.call(collection);
+      }
+      return values(collection);
+    },
+
+
+    /**
+     * Creates an array of numbers (positive and/or negative) progressing from
+     * &#x60;start&#x60; up to but not including &#x60;stop&#x60;. This method is a port of Python&#x27;s
+     * &#x60;range()&#x60; function. See http://docs.python.org/library/functions.html#range.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;range&#x27;: function(start, end, step) {
+      start = +start || 0;
+      step = +step || 1;
+
+      if (end == null) {
+      end = start;
+      start = 0;
+      }
+
+      // use &#x60;Array(length)&#x60; so V8 will avoid the slower &quot;dictionary&quot; mode
+      // http://www.youtube.com/watch?v=XAqIpGU8ZZk#t=16m27s
+      var index = -1,
+        length = Math.max(0, ceil((end - start) / step)),
+        result = Array(length);
+
+      while (++index &lt; length) {
+      result[index] = start;
+      start += step;
+      }
+      return result;
+    },
+
+
+    /**
+     * Array Iterator
+     *
+     * @lodash forEach requires createIterator() which is too robust to port.
+     * @source async
+     * @since 0.2.0
+     */
+    &#x27;for_each&#x27;: function( arr, iterator ) {
+
+      if( arr.for_each ) {
+      return arr.for_each(iterator);
+      }
+
+      for (var i = 0; i &lt; arr.length; i += 1) {
+      iterator(arr[i], i, arr);
+      }
+
+    },
+
+
+    /**
+     * Retrieves the value of a specified property from all elements in
+     * the &#x60;collection&#x60;.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;pluck&#x27;: function(collection, property) {
+      var result = [];
+
+      _.for_each(collection, function(value) {
+      result.push(value[property]);
+      });
+
+      return result;
+    },
+
+    /**
+     * Gets the size of the &#x60;collection&#x60; by returning &#x60;collection.length&#x60; for arrays
+     * and array-like objects or the number of own enumerable properties for objects.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;size&#x27;: function(collection) {
+      var length = collection ? collection.length : 0;
+      return typeof length == &#x27;number&#x27; ? length : _.keys(collection).length;
+    },
+
+    /**
+     * Checks if &#x60;value&#x60; is a string.
+     *
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;is_string&#x27;: function(value) {
+      return toString.call(value) == stringClass;
+    },
+
+
+    /**
+     *
+     *
+     * @source http://stackoverflow.com/questions/4775722/javascript-check-if-object-is-array
+     */
+    &#x27;is_array&#x27;: function( item ) {
+
+      if( Object.prototype.toString.call( item ) === &#x27;[object Array]&#x27; ) {
+      return true;
+      }
+
+      return false;
+
+    },
+
+
+    /**
+     * Creates a function that is the composition of the passed functions,
+     * where each function consumes the return value of the function that follows.
+     * In math terms, composing the functions &#x60;f()&#x60;, &#x60;g()&#x60;, and &#x60;h()&#x60; produces &#x60;f(g(h()))&#x60;.
+     * Each function is executed with the &#x60;this&#x60; binding of the composed function.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;compose&#x27;: function() {
+      var funcs = arguments;
+
+      return function() {
+      var args = arguments,
+        length = funcs.length;
+
+      while (length--) {
+        args = [funcs[length].apply(this, args)];
+      }
+      return args[0];
+      };
+
+    },
+
+
+    /**
+     * Uses a binary search to determine the smallest index at which the &#x60;value&#x60;
+     * should be inserted into &#x60;array&#x60; in order to maintain the sort order of the
+     * sorted &#x60;array&#x60;. If &#x60;callback&#x60; is passed, it will be executed for &#x60;value&#x60; and
+     * each element in &#x60;array&#x60; to compute their sort ranking. The &#x60;callback&#x60; is
+     * bound to &#x60;thisArg&#x60; and invoked with one argument; (value). The &#x60;callback&#x60;
+     * argument may also be the name of a property to order by.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;sorted_index&#x27;: function(array, value, callback, thisArg) {
+      var low = 0,
+        high = array ? array.length : low;
+
+      // explicitly reference &#x60;identity&#x60; for better engine inlining
+      callback = callback ? app.create_callback(callback, thisArg) : identity;
+      value = callback(value);
+      while (low &lt; high) {
+      var mid = (low + high) &gt;&gt;&gt; 1;
+      callback(array[mid]) &lt; value
+        ? low = mid + 1
+        : high = mid;
+      }
+      return low;
+    },
+
+
+    /**
+     * Gets the index at which the first occurrence of &#x60;value&#x60; is found using
+     * strict equality for comparisons, i.e. &#x60;===&#x60;. If the &#x60;array&#x60; is already
+     * sorted, passing &#x60;true&#x60; for &#x60;fromIndex&#x60; will run a faster binary search.
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;indexOf&#x27;: function(array, value, fromIndex) {
+      var index = -1,
+        length = array ? array.length : 0;
+
+      if (typeof fromIndex == &#x27;number&#x27;) {
+      index = (fromIndex &lt; 0 ? Math.max(0, length + fromIndex) : fromIndex || 0) - 1;
+      } else if (fromIndex) {
+      index = _.sorted_index(array, value);
+      return array[index] === value ? index : -1;
+      }
+      while (++index &lt; length) {
+      if (array[index] === value) {
+        return index;
+      }
+      }
+      return -1;
+    },
+
+
+    /**
+     * Creates an array of values by running each element in the &#x60;collection&#x60;
+     * through a &#x60;callback&#x60;. The &#x60;callback&#x60; is bound to &#x60;thisArg&#x60; and invoked with
+     * three arguments; (value, index|key, collection).
+     *
+     * _.map([1, 2, 3], function(num) { return num * 3; });  // =&gt; [3, 6, 9]
+     *
+     * _.map({ &#x27;one&#x27;: 1, &#x27;two&#x27;: 2, &#x27;three&#x27;: 3 }, function(num) { return num * 3; });  // =&gt; [3, 6, 9] (order is not guaranteed)
+     *
+     * @source Lo-Dash v0.9.2
+     */
+    &#x27;map&#x27;: function(collection, callback, thisArg) {
+      var index = -1,
+        length = collection ? collection.length : 0,
+        result = Array(typeof length == &#x27;number&#x27; ? length : 0);
+
+      callback = app.create_callback(callback, thisArg);
+
+      if(_.is_array(collection)) {
+
+      while (++index &lt; length) {
+        result[index] = callback(collection[index], index, collection);
+      }
+
+      } else {
+
+      _.for_each(collection, function(value, key, collection) {
+        result[++index] = callback(value, key, collection);
+      });
+
+      }
+      return result;
+    },
+
+
+    /**
+     *
+     * @source Async
+     * @since 0.2.0
+     */
+    &#x27;reduce&#x27;: function( arr, iterator, memo) {
+
+      if (arr.reduce) {
+      return arr.reduce(iterator, memo);
+      }
+
+      _.for_each(arr, function( x, i, a) {
+      memo = iterator(memo, x, i, a);
+      });
+
+      return memo;
+    },
+
+
+    /**
+     *
+     *
+     * @since 0.2.0
+     */
+    &#x27;keys&#x27;: function( obj) {
+
+      if (Object.keys) {
+      return Object.keys(obj);
+      }
+
+      var keys = [];
+      for (var k in obj) {
+      if (obj.hasOwnProperty(k)) {
+        keys.push(k);
+      }
+      }
+
+      return keys;
+
+    },
+
+
+    /**
+     * Not Yet Tested at All
+     *
+     * @source json_path 0.8.0 - XPath for JSON
+     * @since 0.2.0
+     */
+    &#x27;json_path&#x27;: function(obj, expr, arg) {
+
+     var P = {
+      resultType: arg &amp;&amp; arg.resultType || &quot;VALUE&quot;,
+      result: [],
+      normalize: function(expr) {
+         var subx = [];
+         return expr.replace(/[\[&#x27;](\??\(.*?\))[\]&#x27;]/g, function($0,$1){return &quot;[#&quot;+(subx.push($1)-1)+&quot;]&quot;;})
+              .replace(/&#x27;?\.&#x27;?|\[&#x27;?/g, &quot;;&quot;)
+              .replace(/;;;|;;/g, &quot;;..;&quot;)
+              .replace(/;$|&#x27;?\]|&#x27;$/g, &quot;&quot;)
+              .replace(/#([0-9]+)/g, function($0,$1){return subx[$1];});
+      },
+      asPath: function(path) {
+         var x = path.split(&quot;;&quot;), p = &quot;$&quot;;
+         for (var i=1,n=x.length; i&lt;n; i++)
+          p += /^[0-9*]+$/.test(x[i]) ? (&quot;[&quot;+x[i]+&quot;]&quot;) : (&quot;[&#x27;&quot;+x[i]+&quot;&#x27;]&quot;);
+         return p;
+      },
+      store: function(p, v) {
+         if (p) P.result[P.result.length] = P.resultType == &quot;PATH&quot; ? P.asPath(p) : v;
+         return !!p;
+      },
+      trace: function(expr, val, path) {
+         if (expr) {
+          var x = expr.split(&quot;;&quot;), loc = x.shift();
+          x = x.join(&quot;;&quot;);
+          if (val &amp;&amp; val.hasOwnProperty(loc))
+           P.trace(x, val[loc], path + &quot;;&quot; + loc);
+          else if (loc === &quot;*&quot;)
+           P.walk(loc, x, val, path, function(m,l,x,v,p) { P.trace(m+&quot;;&quot;+x,v,p); });
+          else if (loc === &quot;..&quot;) {
+           P.trace(x, val, path);
+           P.walk(loc, x, val, path, function(m,l,x,v,p) { typeof v[m] === &quot;object&quot; &amp;&amp; P.trace(&quot;..;&quot;+x,v[m],p+&quot;;&quot;+m); });
+          }
+          else if (/,/.test(loc)) { // [name1,name2,...]
+           for (var s=loc.split(/&#x27;?,&#x27;?/),i=0,n=s.length; i&lt;n; i++)
+            P.trace(s[i]+&quot;;&quot;+x, val, path);
+          }
+          else if (/^\(.*?\)$/.test(loc)) // [(expr)]
+           P.trace(P.eval(loc, val, path.substr(path.lastIndexOf(&quot;;&quot;)+1))+&quot;;&quot;+x, val, path);
+          else if (/^\?\(.*?\)$/.test(loc)) // [?(expr)]
+           P.walk(loc, x, val, path, function(m,l,x,v,p) { if (P.eval(l.replace(/^\?\((.*?)\)$/,&quot;$1&quot;),v[m],m)) P.trace(m+&quot;;&quot;+x,v,p); });
+          else if (/^(-?[0-9]*):(-?[0-9]*):?([0-9]*)$/.test(loc)) // [start:end:step]  phyton slice syntax
+           P.slice(loc, x, val, path);
+         }
+         else
+          P.store(path, val);
+      },
+      walk: function(loc, expr, val, path, f) {
+         if (val instanceof Array) {
+          for (var i=0,n=val.length; i&lt;n; i++)
+           if (i in val)
+            f(i,loc,expr,val,path);
+         }
+         else if (typeof val === &quot;object&quot;) {
+          for (var m in val)
+           if (val.hasOwnProperty(m))
+            f(m,loc,expr,val,path);
+         }
+      },
+      slice: function(loc, expr, val, path) {
+         if (val instanceof Array) {
+          var len=val.length, start=0, end=len, step=1;
+          loc.replace(/^(-?[0-9]*):(-?[0-9]*):?(-?[0-9]*)$/g, function($0,$1,$2,$3){start=parseInt($1||start);end=parseInt($2||end);step=parseInt($3||step);});
+          start = (start &lt; 0) ? Math.max(0,start+len) : Math.min(len,start);
+          end   = (end &lt; 0)   ? Math.max(0,end+len)   : Math.min(len,end);
+          for (var i=start; i&lt;end; i+=step)
+           P.trace(i+&quot;;&quot;+expr, val, path);
+         }
+      },
+      eval: function(x, _v, _vname) {
+         try { return $ &amp;&amp; _v &amp;&amp; eval(x.replace(/@/g, &quot;_v&quot;)); }
+         catch(e) { throw new SyntaxError(&quot;json_path: &quot; + e.message + &quot;: &quot; + x.replace(/@/g, &quot;_v&quot;).replace(/\^/g, &quot;_a&quot;)); }
+      }
+     };
+
+     var $ = obj;
+
+     if (expr &amp;&amp; obj &amp;&amp; (P.resultType == &quot;VALUE&quot; || P.resultType == &quot;PATH&quot;)) {
+      P.trace(P.normalize(expr).replace(/^\$;/,&quot;&quot;), obj, &quot;$&quot;);
+      return P.result.length ? P.result : false;
+     }
+
+    },
+
+
+    /**
+     *
+     *
+     * @since 2.0
+     * @author potanin@UD
+     */
+    &#x27;array_to_hash_tables&#x27;: function( array ) {
+
+      var keys = [];
+      var values = [];
+
+      _.forOwn( array, function( num, key ) {
+        keys.push( _.keys( num ) );
+        values.push( _.first( _.values( num ) ) );
+      } );
+
+      return _.object( keys, values );
+    },
+
+    /**
+     *
+     *
+     * @since 0.2.0
+     */
+    &#x27;extend&#x27;: function( target ) {
+
+      target = target ? target : {};
+
+      for( var i = 1; i &lt; arguments.length; i++ ) {
+
+      var source = arguments[i];
+      var keys = Object.keys( source );
+
+      for( var j = 0; j &lt; keys.length; j++ ) {
+        var name = keys[j];
+
+        target[name] = source[name];
+
+      }
+
+      }
+
+      return target
+    },
+
+  }
+
+  /**
+   * Object and Array Transformations
+   *
+   * @since 0.2.0
+   */
+  var _process = {
+
+    /**
+     * Enable Debug for rest of chain
+     *
+     * @since 0.2.0
+     */
+    &#x27;debug&#x27;: function( object, args ) {
+      app.debug = true;
+      return object;
+    },
+
+    /**
+     * Enable Debug For Chain
+     *
+     * @since 0.2.0
+     */
+    &#x27;dot_notation&#x27;: function( object, args ) {
+
+      
+      return object;
+    },
+
+    /**
+     * Enable Debug For Chain
+     *
+     * @source http://stackoverflow.com/questions/6393943/convert-javascript-string-in-dot-notation-into-an-object-reference
+     * @since 0.2.0
+     */
+    &#x27;get_by_path&#x27;: function( object, path ) { 
+      
+      function index( obj,i ) {
+        return obj[i];
+      }
+      
+      try {
+      
+        object = path.split( &#x27;.&#x27; ).reduce( index, object );
+        
+        return object;
+        
+      } catch( error ) { debug( error ); }
+      
+      return object;
+      
+    },
+
+    /**
+     * Batch Items Passed. Second-level items will have the rest of the rules applied.
+     *
+     * @since 0.2.0
+     */
+    &#x27;batch_items&#x27;: function( json, args, parsed ) { debug( &#x27;parse()&#x27; );
+
+
+    },
+
+    /**
+     * Safelty Parse JSON
+     *
+     * @since 0.2.0
+     */
+    &#x27;parse&#x27;: function( json, args, parsed ) { debug( &#x27;parse()&#x27; );
+
+      try { parsed = JSON.parse( json ); } catch (error) { parsed = false; }
+
+      return ( typeof parsed === &#x27;object&#x27; ? parsed : json );
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;clean_object&#x27;: function( object, args ) { debug( &#x27;clean()&#x27; );
+
+      for( i in object ) {
+
+        if( !object[i] &amp;&amp; typeof object[i] != &#x27;boolean&#x27; ) {
+          delete object[i];
+        }
+
+        if( object[i] === null ) {
+          delete object[i];
+        }
+
+        if( typeof object[i] === &#x27;object&#x27; ) {
+
+          if( Object.keys( object[i] ).length ) {
+            object[i] = _process.clean_object( object[i], args );
+          } else {
+            delete object[i];
+          }
+
+        }
+
+      }
+
+      return object;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;normalize&#x27;: function( object, args ) { debug( &#x27;normalize()&#x27; );
+
+      object.__normalized = true;
+      return object;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;nestify&#x27;: function( object, args ) { debug( &#x27;make_array()&#x27; );
+
+      object.__nestify = true;
+      return object;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;objectify&#x27;: function( object, args ) { debug( &#x27;make_object()&#x27; );
+
+
+      return object;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;data_types&#x27;: function( object, args ) { debug( &#x27;data_types()&#x27; );
+
+
+      return object;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;key_map&#x27;: function( object, map ) { // console.info( &#x27;common.apply_key_map()&#x27; );
+
+      map = map ? map : {};
+
+      if( !_.isEmpty( map ) ) {
+      return object;
+      }
+
+      var _new = {};
+
+      _.each( object, function( value, key ) {
+
+      if( map[ key ] ) {
+        _new[ key ] = value;
+      } else {
+        _new[ key ] = value;
+      }
+
+      });
+
+      return _new;
+
+    },
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;group_by_key&#x27;: function( object, args ) { // console.info( &#x27;common.group_by_key()&#x27; );
+
+      args = _.extend( args, {
+      &#x27;min&#x27;: 5
+      });
+
+      //var _temp = [ &#x27;lfd_&#x27;, &#x27;lo1_&#x27;, &#x27;la1_&#x27;, &#x27;lm_&#x27;, &#x27;l_address&#x27;, &#x27;l_keyword&#x27;, &#x27;l_&#x27;, &#x27;sa3_&#x27;, &#x27;list_agent_&#x27;, &#x27;list_office_&#x27;, &#x27;alt_agent_&#x27;, &#x27;alt_office_&#x27; ];
+      var _temp = [ &#x27;list_agent_&#x27;, &#x27;list_office_&#x27;, &#x27;alt_agent_&#x27;, &#x27;alt_office_&#x27; ];
+
+      var _keys = _.keys( object );
+      var _grouped = {};
+
+      for( key in object ) {
+
+      for( i in _temp ) {
+
+        var _group_key = _temp[i];
+        var _clean_group_key = _group_key.substring( 0, _group_key.length - 1 );
+
+        if( key.toLowerCase().indexOf( _temp[i] ) &gt;= 0 ) {
+
+        _grouped[ _clean_group_key ] = _grouped[ _clean_group_key ] ? _grouped[ _clean_group_key ] : {};
+        _grouped[ _clean_group_key ][ key.replace( _group_key, &#x27;&#x27; ) ] = object[ key ];
+
+        delete object[ key ];
+
+        }
+
+      }
+
+      };
+
+      return _.extend( object, _grouped );
+
+    }
+
+  };
+
+  /**
+   * String / Number Transormations
+   *
+   * @since 0.2.0
+   */
+  var _string = {
+
+    /**
+     * Convert String to Printable Words
+     *
+     */
+    &#x27;wordize&#x27;: function( text ) {
+
+      text = _string.dasherize( text );
+
+      text = text.replace( &#x27;-&#x27;, &#x27; &#x27; );
+
+      text = _string.capitalize( text );
+
+      return text;
+
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;capitalize&#x27;: function(str) {
+      return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;dasherize&#x27;: function(str){
+      return str.replace(/\s|_/g, &#x27;-&#x27;);
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;ordinalize&#x27;: function(str){
+      var isTeen, r, n;
+      n = parseInt(str, 10) % 100;
+      isTeen = { 11: true, 12: true, 13: true}[n];
+      if(isTeen) {return str + &#x27;th&#x27;};
+      n = parseInt(str, 10) % 10
+      switch(n) {
+      case 1:
+      r = str + &#x27;st&#x27;;
+      break;
+      case 2:
+      r = str + &#x27;nd&#x27;;
+      break;
+      case 3:
+      r = str + &#x27;rd&#x27;;
+      break;
+      default:
+      r = str + &#x27;th&#x27;;
+      }
+      return r;
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;pluralize&#x27;: function(str){
+
+      var uncountable = _string.uncountableWords[str.toLowerCase()];
+
+      if (uncountable) {
+      return str;
+      };
+
+      var rules = [
+      [new RegExp(&#x27;(m)an$&#x27;, &#x27;gi&#x27;),         &#x27;$1en&#x27;],
+      [new RegExp(&#x27;(pe)rson$&#x27;, &#x27;gi&#x27;),        &#x27;$1ople&#x27;],
+      [new RegExp(&#x27;(child)$&#x27;, &#x27;gi&#x27;),         &#x27;$1ren&#x27;],
+      [new RegExp(&#x27;^(ox)$&#x27;, &#x27;gi&#x27;),         &#x27;$1en&#x27;],
+      [new RegExp(&#x27;(ax|test)is$&#x27;, &#x27;gi&#x27;),       &#x27;$1es&#x27;],
+      [new RegExp(&#x27;(octop|vir)us$&#x27;, &#x27;gi&#x27;),     &#x27;$1i&#x27;],
+      [new RegExp(&#x27;(alias|status)$&#x27;, &#x27;gi&#x27;),    &#x27;$1es&#x27;],
+      [new RegExp(&#x27;(bu)s$&#x27;, &#x27;gi&#x27;),         &#x27;$1ses&#x27;],
+      [new RegExp(&#x27;(buffal|tomat|potat)o$&#x27;, &#x27;gi&#x27;), &#x27;$1oes&#x27;],
+      [new RegExp(&#x27;([ti])um$&#x27;, &#x27;gi&#x27;),        &#x27;$1a&#x27;],
+      [new RegExp(&#x27;sis$&#x27;, &#x27;gi&#x27;),           &#x27;ses&#x27;],
+      [new RegExp(&#x27;(?:([^f])fe|([lr])f)$&#x27;, &#x27;gi&#x27;),  &#x27;$1$2ves&#x27;],
+      [new RegExp(&#x27;(hive)$&#x27;, &#x27;gi&#x27;),        &#x27;$1s&#x27;],
+      [new RegExp(&#x27;([^aeiouy]|qu)y$&#x27;, &#x27;gi&#x27;),     &#x27;$1ies&#x27;],
+      [new RegExp(&#x27;(matr|vert|ind)ix|ex$&#x27;, &#x27;gi&#x27;),  &#x27;$1ices&#x27;],
+      [new RegExp(&#x27;(x|ch|ss|sh)$&#x27;, &#x27;gi&#x27;),      &#x27;$1es&#x27;],
+      [new RegExp(&#x27;([m|l])ouse$&#x27;, &#x27;gi&#x27;),       &#x27;$1ice&#x27;],
+      [new RegExp(&#x27;(quiz)$&#x27;, &#x27;gi&#x27;),        &#x27;$1zes&#x27;],
+      [new RegExp(&#x27;s$&#x27;, &#x27;gi&#x27;),           &#x27;s&#x27;],
+      [new RegExp(&#x27;$&#x27;, &#x27;gi&#x27;),            &#x27;s&#x27;]
+      ];
+
+      for(var i = 0, l = rules.length; i &lt; l; i++){
+      if (str.match(rules[i][0])) {
+        str = str.replace(rules[i][0], rules[i][1]);
+        break;
+      };
+      }
+
+      return str;
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;singularize&#x27;: function(str){
+
+      var uncountable = _string.uncountableWords[str.toLowerCase()];
+
+      if (uncountable) {
+        return str;
+      };
+
+      var rules = [
+        [new RegExp(&#x27;(m)en$&#x27;, &#x27;gi&#x27;),                             &#x27;$1an&#x27;],
+        [new RegExp(&#x27;(pe)ople$&#x27;, &#x27;gi&#x27;),                          &#x27;$1rson&#x27;],
+        [new RegExp(&#x27;(child)ren$&#x27;, &#x27;gi&#x27;),                          &#x27;$1&#x27;],
+        [new RegExp(&#x27;([ti])a$&#x27;, &#x27;gi&#x27;),                           &#x27;$1um&#x27;],
+        [new RegExp(&#x27;((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$&#x27;,&#x27;gi&#x27;), &#x27;$1$2sis&#x27;],
+        [new RegExp(&#x27;(hive)s$&#x27;, &#x27;gi&#x27;),                           &#x27;$1&#x27;],
+        [new RegExp(&#x27;(tive)s$&#x27;, &#x27;gi&#x27;),                           &#x27;$1&#x27;],
+        [new RegExp(&#x27;(curve)s$&#x27;, &#x27;gi&#x27;),                          &#x27;$1&#x27;],
+        [new RegExp(&#x27;([lr])ves$&#x27;, &#x27;gi&#x27;),                           &#x27;$1f&#x27;],
+        [new RegExp(&#x27;([^fo])ves$&#x27;, &#x27;gi&#x27;),                          &#x27;$1fe&#x27;],
+        [new RegExp(&#x27;([^aeiouy]|qu)ies$&#x27;, &#x27;gi&#x27;),                       &#x27;$1y&#x27;],
+        [new RegExp(&#x27;(s)eries$&#x27;, &#x27;gi&#x27;),                          &#x27;$1eries&#x27;],
+        [new RegExp(&#x27;(m)ovies$&#x27;, &#x27;gi&#x27;),                          &#x27;$1ovie&#x27;],
+        [new RegExp(&#x27;(x|ch|ss|sh)es$&#x27;, &#x27;gi&#x27;),                        &#x27;$1&#x27;],
+        [new RegExp(&#x27;([m|l])ice$&#x27;, &#x27;gi&#x27;),                          &#x27;$1ouse&#x27;],
+        [new RegExp(&#x27;(bus)es$&#x27;, &#x27;gi&#x27;),                           &#x27;$1&#x27;],
+        [new RegExp(&#x27;(o)es$&#x27;, &#x27;gi&#x27;),                             &#x27;$1&#x27;],
+        [new RegExp(&#x27;(shoe)s$&#x27;, &#x27;gi&#x27;),                           &#x27;$1&#x27;],
+        [new RegExp(&#x27;(cris|ax|test)es$&#x27;, &#x27;gi&#x27;),                      &#x27;$1is&#x27;],
+        [new RegExp(&#x27;(octop|vir)i$&#x27;, &#x27;gi&#x27;),                        &#x27;$1us&#x27;],
+        [new RegExp(&#x27;(alias|status)es$&#x27;, &#x27;gi&#x27;),                      &#x27;$1&#x27;],
+        [new RegExp(&#x27;^(ox)en&#x27;, &#x27;gi&#x27;),                            &#x27;$1&#x27;],
+        [new RegExp(&#x27;(vert|ind)ices$&#x27;, &#x27;gi&#x27;),                        &#x27;$1ex&#x27;],
+        [new RegExp(&#x27;(matr)ices$&#x27;, &#x27;gi&#x27;),                          &#x27;$1ix&#x27;],
+        [new RegExp(&#x27;(quiz)zes$&#x27;, &#x27;gi&#x27;),                           &#x27;$1&#x27;],
+        [new RegExp(&#x27;s$&#x27;, &#x27;gi&#x27;),                               &#x27;&#x27;]
+      ];
+
+      for(var i = 0, l = rules.length; i &lt; l; i++){
+        if (str.match(rules[i][0])) {
+          str = str.replace(rules[i][0], rules[i][1]);
+          break;
+        };
+      }
+
+      return str;
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;strip&#x27;: function(str){
+      return str.replace(/^\s+/, &#x27;&#x27;).replace(/\s+$/, &#x27;&#x27;);
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;underscore&#x27;: function(str){
+      return str.replace(/::/g, &#x27;/&#x27;).replace(/([A-Z]+)([A-Z][a-z])/g, &#x27;$1_$2&#x27;).replace(/([a-z\d])([A-Z])/g, &#x27;$1_$2&#x27;).replace(/-/g, &#x27;_&#x27;).toLowerCase();
+    },
+
+
+    /**
+     * {}
+     *
+     * @since 0.2.0
+     */
+    &#x27;uncountable&#x27;: function() {
+
+      var uncountable = {
+      &#x27;equipment&#x27;: true,
+      &#x27;information&#x27;: true,
+      &#x27;rice&#x27;: true,
+      &#x27;money&#x27;: true,
+      &#x27;species&#x27;: true,
+      &#x27;series&#x27;:true,
+      &#x27;fish&#x27;:true,
+      &#x27;sheep&#x27;:true,
+      &#x27;moose&#x27;:true,
+      &#x27;deer&#x27;:true,
+      &#x27;news&#x27;:true
+      };
+
+      for(var i=0,l=arguments.length; i&lt;l; i++){
+      _string.uncountable[arguments[i]] = true;
+      }
+
+      return _string;
+    }
+
+  };
+
+  /**
+   * Internal logging function
+   *
+   * @since 0.1
+   */
+  var log = function() {
+
+    switch ( true ) {
+
+      case ( arguments[0] instanceof Error ):
+      console.error( arguments[0] );
+      break;
+
+      default:
+      console.log.apply( console, [ &#x27;  \u001b[36m&#x27;, &#x27;Normalize&#x27; ].concat( arguments ).concat( [ &#x27;\u001b[0m&#x27; ] ) );
+      break;
+
+    }
+
+    return arguments[0] ? arguments[0] : null;
+
+  };
+
+  /**
+   *
+   * @author potanin@UD
+   */
+  var debug = function() {
+    return ( app.debug || arguments[0] instanceof Error ? log.apply( this, arguments ) : arguments );
+  }
+
+  /**
+   * Initialize
+   *
+   * @todo Use _.compose(); to trigger chained functions.
+   * @since 2.0
+   * @since 0.2.0
+   */
+  var init = function( target, arguments ) { // debug( arguments );
+
+    _.extend( app, {
+      &#x27;debug&#x27;: false,
+      &#x27;log&#x27;: [],
+      &#x27;stack&#x27;: [ &#x27;parse&#x27; ]
+    }, app );
+
+    for( var i = 1, l = arguments.length; i &lt; l; i++ ) {
+      app.stack.push( arguments[i] );
+    };
+
+    for( i in app.stack ) {
+      
+      if( typeof app.stack[i] === &#x27;string&#x27; ) {        
+        var caller = { &#x27;function&#x27;: app.stack[i], &#x27;args&#x27;: {} }        
+      } else {      
+        var caller = { &#x27;function&#x27;: app.stack[i][0], &#x27;args&#x27;: app.stack[i][1] }              
+      }
+      
+      this.target = target = ( typeof _process[ caller[ &#x27;function&#x27; ] ] === &#x27;function&#x27; ? _process[ caller[ &#x27;function&#x27; ] ].apply( this, [ target, caller[ &#x27;args&#x27; ] ] ) : target );
+      
+    }
+
+    return target;
+
+  };
+
+  return init( target, arguments );
+
+};
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

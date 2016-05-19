@@ -1,35 +1,44 @@
-let instance = null;
+'use strict'
 
-class Torrents{  
-	constructor() {
-		if(!instance) instance = this
-
-		this.time = new Date()
-
-		return instance;
+class Torrent { 
+	constructor() {	
+		this._position = '99'
+		this.progress = '50'		
 	}
+	
+	get position() { return this._position }
+	set position(value) { this._position = value }
+
+	up() { this._position++ }
+	down() { this._position-- }
+
+
 }
 
-let torrenta = new Torrents()
-console.log(torrenta.time);
+/* 
+ // TEST //
+let torrents = {}
+torrents['aa11'] = new Torrents()
+torrents['bb22'] = new Torrents()
+torrents['cc33'] = new Torrents()
+torrents['aa11'] = new Torrents()
+torrents['aa11'].position = 100
+torrents['bb22'].up()
 
- setTimeout(function(){
-   let torrenta = new Torrents();
-   console.log(torrenta.time);
- },4000);
+console.log(torrents)
+*/
 
 
+/*
+let instance = null
 
-/*function Torrents(position) {
-	var position = position
+class Singleton { 
+	constructor() {	
+		this._value = ''
 
-	this.getPosition = function (){
-		return position;
-	}
-
-	this.setPosition = function (){
-		//definir la posicion
-		return position;
+		// SINGLETON
+		if(!instance) instance = this
+		return instance
 	}
 }
 */
