@@ -12,7 +12,6 @@ class Torrent {
 	up() { this._position++ }
 	down() { this._position-- }
 
-
 }
 
 /* 
