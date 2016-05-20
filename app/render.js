@@ -8,7 +8,8 @@ const remote = require('remote'),
 var client = new WebTorrent(),
 	torrents = {},
 	settings = {},
-	i18n = {}
+	i18n = {},
+	states = {}
 
 loadSettings()
 
@@ -39,6 +40,10 @@ var table = $('#table').DataTable({
 
 $(".main-footer").html(generalFoot())
 
+
+////////////////////
+////-- EVENTS --////
+////////////////////
 $('#table tbody').on( 'click', 'tr', function () {
 	if($('#table tbody td').hasClass('dataTables_empty')) return false 
 
@@ -130,6 +135,10 @@ $('body').on('click', function (event){
 
 })
 
+
+///////////////////////
+////-- FUNCTIONS --////
+///////////////////////
 function loadSettings(){
 	settings['interval_refresh'] = 500
 	settings['interval_tray'] = 1000
@@ -137,7 +146,6 @@ function loadSettings(){
 	settings['base_lang'] = 'es'
 	console.log(settings)	
 }
-
 
 function addTorrent(torrentID){
 	let temp = table.row.add([
@@ -193,7 +201,56 @@ function pauseTorrent(row){
 	console.log(torrentSelected.paused)
 }
 
+function fixRatio(ratio){
+	if(ratio > 1000) return "&infin;"
+	return Humanize.formatNumber(ratio, 2)	
+}
 
+function progressBar(progress, element, torrent = null){ //progress-bar-info progress-bar-striped
+
+	let size = element.find('.progress').outerWidth()
+	let style = ''	
+
+	if(torrent){
+		style = 'progress-bar-info progress-bar-striped'
+		if(torrent.done) style = 'progress-bar-success' 
+		else if(torrent.paused) style = 'progress-bar-warning' 
+		else if(torrent.ready) style = ''
+	}
+
+// FIX: Cambiar para que no regenere toda la barra todo el tiempo
+	return `<div class="progress">
+				<span class="p-black" style="width: ${size}px;">${progress}%</span>
+				<div class="progress-bar ${style}" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
+					<span class="p-white" style="width: ${size}px;">${progress}%</span>
+				</div>
+			</div>
+			`
+}
+
+function generalFoot (){	
+	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
+	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
+	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
+	let ra = fixRatio(client.ratio)
+	let o = ""
+	if(ra <= 1) o = "-o"
+
+	return `<div class="row">
+				<div class="col-md-10">
+					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
+					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
+					<span class="ft-cell"><i class="fa fa-fw fa-heart${o}"></i> ${ra} </span>
+				</div>
+				<div class="col-md-2">${pb}</div>
+			</div>
+			` 	
+}
+
+
+///////////////////////
+////-- INTERVALS --////
+///////////////////////
 var interval = setInterval(function () {
 	let count = client.torrents.length 
 	if(count > 0){
@@ -222,63 +279,31 @@ var intervalTray = setInterval(function () {
 	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
 	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
 
-	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, true)
-
-
+	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, true, 'green')
 
 }, settings.interval_tray)
 
 
-
-function fixRatio(ratio){
-	if(ratio > 1000) return "&infin;"
-	return Humanize.formatNumber(ratio, 2)	
-}
-
-function progressBar(progress, element, torrent = null){ //progress-bar-info progress-bar-striped
-
-	let size = element.find('.progress').outerWidth()
-	let style = ''	
-
-	if(torrent){
-		style = 'progress-bar-info progress-bar-striped'
-		if(torrent.done) style = 'progress-bar-success' 
-		else if(torrent.paused) style = 'progress-bar-warning' 
-		else if(torrent.ready) style = ''
+/////////////////////
+////-- CLASSES --////
+/////////////////////
+class Torrent { 
+	constructor() {	
+		this._position = '99'
+		this.progress = '50'
 	}
-
-// FIX: Cambiar para que no regenere toda la barra todo el tiempo
-	return `<div class="progress">
-				<span class="p-black" style="width: ${size}px;">${progress}%</span>
-				<div class="progress-bar ${style}" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
-					<span class="p-white" style="width: ${size}px;">${progress}%</span>
-				</div>
-			</div>
-			`
-}
-
-function generalFoot (){
 	
-	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
-	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
-	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
-	let ra = fixRatio(client.ratio)
-	let o = ""
-	if(ra <= 1) o = "-o"
+	get position() { return this._position }
+	set position(value) { this._position = value }
 
-	return `<div class="row">
-				<div class="col-md-10">
-					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
-					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
-					<span class="ft-cell"><i class="fa fa-fw fa-heart${o}"></i> ${ra} </span>
-				</div>
-				<div class="col-md-2">${pb}</div>
-			</div>
-			` 	
+	up() { this._position++ }
+	down() { this._position-- }
+
 }
 
 
-/*** DEBUG ***/
+
+////** DEBUG **////
 var torrentId = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
 var torrentId1 = "magnet:?xt=urn:btih:DF19459B13F9E6B57347DBEE54F2DBBD751B914A&dn=10+cloverfield+lane+2016+1080p+hdrip+x264+aac+jyk&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce"
 var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
@@ -287,4 +312,4 @@ $('#tb-agregar-file').val(torrentId)
 
 addTorrent(torrentId)
 addTorrent(torrentId1)
-/*** END DEBUG ***/
+////** END DEBUG **////

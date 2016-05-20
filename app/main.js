@@ -1,24 +1,25 @@
 'use strict'
 
-const electron = require('electron'),
-	  path = require('path'),
-	  ipcMain = electron.ipcMain,
-	  app = electron.app,
-	  Menu = electron.Menu,
-	  MenuItem = electron.MenuItem,
-	  Tray = electron.Tray,
-	  BrowserWindow = electron.BrowserWindow
+const Electron = require('electron'),
+	  Path = require('path'),
+	  IpcMain = Electron.ipcMain,
+	  App = Electron.app,
+	  Menu = Electron.Menu,
+	  MenuItem = Electron.MenuItem,
+	  Tray = Electron.Tray,
+	  BrowserWindow = Electron.BrowserWindow
 
 var mainWindow = null,
-	appIcon = null
+	appIcon = null,
+	flag = true
 
-app.on('window-all-closed', function() {
+App.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
-		app.quit()
+		App.quit()
 	}
 });
 
-app.on('ready', function() {
+App.on('ready', function() {
 	mainWindow = new BrowserWindow ({
 									width: 1200,
 									height: 800,
@@ -38,7 +39,6 @@ app.on('ready', function() {
 	})
 
 	////-- TRAY ICON--////
-	//let iconPath = path.join(__dirname, 'front/icons/png/icon-down-white.png')
 	appIcon = new Tray(getIconPath('white'))
 
 	const menuTray = [{
@@ -61,14 +61,12 @@ app.on('ready', function() {
 
 })
 
-var flag = true
-
-ipcMain.on('tray', function (e, text, done) {	
+IpcMain.on('tray', function (event, text, blink = false, color = white) {	
 	appIcon.setToolTip(text)
 
-	if(done){
+	if(blink){
 		if(flag){
-			appIcon.setImage(getIconPath('green'))
+			appIcon.setImage(getIconPath(color))
 			flag = false
 		} else {
 			appIcon.setImage(getIconPath('white'))
@@ -78,5 +76,5 @@ ipcMain.on('tray', function (e, text, done) {
 })
 
 function getIconPath(color){
-	return path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
+	return Path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
 }
