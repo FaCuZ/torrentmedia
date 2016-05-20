@@ -1,19 +1,18 @@
 const remote = require('remote'),
 	  dialog = remote.require('dialog'),
+	  app = remote.require('app'),	  
+	  Path = require('path'),
 	  ipcRenderer = require('electron').ipcRenderer,
+	  fs = require('fs'),
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
 	  Humanize = require('humanize-plus')
 
 var client = new WebTorrent(),
+	configPath = app.getPath('userData'),
+	settings = loadSettings(),
 	torrents = {},
-	settings = {},
-	i18n = {},
-	states = {}
-
-loadSettings()
-
-console.log(settings.interval_refresh)
+	i18n = {}
 
 var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
 
@@ -66,7 +65,12 @@ $('body').on('click', function (event){
 	switch(target) {
 		///- BUTTON: ADD TORRENT: FILE DIALOG -///
 		case 'btn-agregar-fileDialog': 
-			filtros = { filters: [{ name: 'Torrents', extensions: ['torrent'] } ], properties: ['openFile'] }
+			filtros = { title: 'Please select a torrent',
+						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
+						defaultPath: app.getPath('downloads'),
+						properties: ['openFile']
+					  }
+
 			dialog.showOpenDialog(filtros, function (fileName) {
 				$('#tb-agregar-file').val(fileName)
 			})		
@@ -74,7 +78,11 @@ $('body').on('click', function (event){
 
 		///- BUTTON: ADD TORRENT: FOLDER DIALOG -///
 		case 'btn-agregar-folderDialog':
-			filtros = { properties: ['openDirectory'] }			
+			filtros = { title: 'Please select a folder',
+						defaultPath: app.getPath('downloads'),
+						properties: ['openDirectory', 'createDirectory']
+					  }
+			
 			dialog.showOpenDialog(filtros, function (folderName) {
 				$('#tb-agregar-folder').val(folderName)
 			})		
@@ -140,11 +148,36 @@ $('body').on('click', function (event){
 ////-- FUNCTIONS --////
 ///////////////////////
 function loadSettings(){
-	settings['interval_refresh'] = 500
-	settings['interval_tray'] = 1000
-	settings['conections_max'] = 25
-	settings['base_lang'] = 'es'
-	console.log(settings)	
+	let sett = null
+	try {
+		return makeObject(configPath + '/settings.json')
+	} catch (err) {
+		try {
+			return makeObject(Path.join(__dirname, '../settings.default.json'))
+
+			console.log(sett)
+
+			/*
+			var fd = fs.openSync(sett, 'w+');
+			console.log("Created settings file...");
+			var newPath = dialog.showOpenDialog({ title: 'Please select a folder',
+						  defaultPath: app.getPath('userDesktop'), properties: [ 'openDirectory', 'createDirectory']});
+			*/
+		} catch (err) {
+			alert("Error creating settings file: " + JSON.stringify(err))
+			
+		}
+	}
+
+}
+
+function makeObject(path){
+	fs.openSync(path, 'r+')
+
+	var data = fs.readFileSync(path, 'utf8')
+  	obj = JSON.parse(data)
+
+	return obj
 }
 
 function addTorrent(torrentID){
@@ -175,9 +208,10 @@ function addTorrent(torrentID){
 		alert(error)
 	})
 
-	/*torrent.on('done', function () {
-		changeStyleProgress($(temp.node()).find('.progress-bar'), 'success', false)
-	})*/
+	torrent.on('done', function () {
+		settings['tray_blink'] = true
+		settings['tray_color'] = 'green'
+	})
 
 }
 
@@ -279,7 +313,7 @@ var intervalTray = setInterval(function () {
 	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
 	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
 
-	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, true, 'green')
+	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, settings.tray_blink, settings.tray_color)
 
 }, settings.interval_tray)
 

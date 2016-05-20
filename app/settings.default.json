@@ -1,0 +1,11 @@
+{
+	"interval_refresh": 500,
+	"interval_tray": 1000,
+
+	"conections_max": 25,
+	"base_lang": "es",
+
+	"tray_blink": false,
+	"tray_color": "white"
+}
+

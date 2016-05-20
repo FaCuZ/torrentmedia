@@ -2,8 +2,8 @@
 
 const Electron = require('electron'),
 	  Path = require('path'),
-	  IpcMain = Electron.ipcMain,
-	  App = Electron.app,
+	  ipcMain = Electron.ipcMain,
+	  app = Electron.app,
 	  Menu = Electron.Menu,
 	  MenuItem = Electron.MenuItem,
 	  Tray = Electron.Tray,
@@ -13,13 +13,13 @@ var mainWindow = null,
 	appIcon = null,
 	flag = true
 
-App.on('window-all-closed', function() {
+app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
-		App.quit()
+		app.quit()
 	}
 });
 
-App.on('ready', function() {
+app.on('ready', function() {
 	mainWindow = new BrowserWindow ({
 									width: 1200,
 									height: 800,
@@ -46,22 +46,23 @@ App.on('ready', function() {
 						accelerator: "Alt+Command+I",
 						click: function(){
 							mainWindow.show()
-							mainWindow.toggleDevTools()			
+							mainWindow.toggleDevTools()
 						}
-					},{
+					 },{
 						type: "separator"
-					},{
+					 },{
 						label: "Cerrar",
 						accelerator: "Command+Q",
-						selector: "terminate"
-					}]
-	const contextMenu = Menu.buildFromTemplate(menuTray)
+						click: function(){
+							mainWindow.close()
+						}
+					 }]
 	appIcon.setToolTip('TorrentMedia')
-	appIcon.setContextMenu(contextMenu)
+	appIcon.setContextMenu(Menu.buildFromTemplate(menuTray))
 
 })
 
-IpcMain.on('tray', function (event, text, blink = false, color = white) {	
+ipcMain.on('tray', function (event, text, blink = false, color = white) {	
 	appIcon.setToolTip(text)
 
 	if(blink){
