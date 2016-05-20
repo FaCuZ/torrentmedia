@@ -13,6 +13,7 @@
   "scripts": {
     "start": "electron .",
     "adminlte": "echo 'Updating AdminLTE...' && cd AdminLTE/dist/css/ && git pull origin && sed -i '1i/*' AdminLTE.css",
+    "adminlte-reset": "echo 'Reseting AdminLTE...' && rm -rf AdminLTE && git clone git@github.com:almasaeed2010/AdminLTE.git && npm run adminlte",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -2,6 +2,7 @@
 
 const electron = require('electron'),
 	  path = require('path'),
+	  ipcMain = electron.ipcMain,
 	  app = electron.app,
 	  Menu = electron.Menu,
 	  MenuItem = electron.MenuItem,
@@ -37,8 +38,8 @@ app.on('ready', function() {
 	})
 
 	////-- TRAY ICON--////
-	let iconPath = path.join(__dirname, 'front/icons/png/icon-down-blue.png')
-	appIcon = new Tray(iconPath)
+	//let iconPath = path.join(__dirname, 'front/icons/png/icon-down-white.png')
+	appIcon = new Tray(getIconPath('white'))
 
 	const menuTray = [{
 						label: "DevTools",
@@ -55,7 +56,27 @@ app.on('ready', function() {
 						selector: "terminate"
 					}]
 	const contextMenu = Menu.buildFromTemplate(menuTray)
-	appIcon.setToolTip('S:10 Kb/s  D:10 Kb/s')
+	appIcon.setToolTip('TorrentMedia')
 	appIcon.setContextMenu(contextMenu)
 
 })
+
+var flag = true
+
+ipcMain.on('tray', function (e, text, done) {	
+	appIcon.setToolTip(text)
+
+	if(done){
+		if(flag){
+			appIcon.setImage(getIconPath('green'))
+			flag = false
+		} else {
+			appIcon.setImage(getIconPath('white'))
+			flag = true
+		} 
+	}
+})
+
+function getIconPath(color){
+	return path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
+}

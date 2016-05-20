@@ -1,5 +1,6 @@
 const remote = require('remote'),
 	  dialog = remote.require('dialog'),
+	  ipcRenderer = require('electron').ipcRenderer,
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
 	  Humanize = require('humanize-plus')
@@ -131,6 +132,7 @@ $('body').on('click', function (event){
 
 function loadSettings(){
 	settings['interval_refresh'] = 500
+	settings['interval_tray'] = 1000
 	settings['conections_max'] = 25
 	settings['base_lang'] = 'es'
 	console.log(settings)	
@@ -216,6 +218,18 @@ var interval = setInterval(function () {
 
 }, settings.interval_refresh)
 
+var intervalTray = setInterval(function () {
+	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
+	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
+
+	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, true)
+
+
+
+}, settings.interval_tray)
+
+
+
 function fixRatio(ratio){
 	if(ratio > 1000) return "&infin;"
 	return Humanize.formatNumber(ratio, 2)	
@@ -246,8 +260,8 @@ function progressBar(progress, element, torrent = null){ //progress-bar-info pro
 function generalFoot (){
 	
 	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
-	let ds = Humanize.fileSize(client.downloadSpeed) + "/s"
-	let us = Humanize.fileSize(client.uploadSpeed) + "/s"
+	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
+	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
 	let ra = fixRatio(client.ratio)
 	let o = ""
 	if(ra <= 1) o = "-o"
