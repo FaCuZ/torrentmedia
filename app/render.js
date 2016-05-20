@@ -9,33 +9,14 @@ const remote = require('remote'),
 	  Humanize = require('humanize-plus')
 
 var client = new WebTorrent(),
+	esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true }),
+	datatableJSON = require('../json/datatable.json')
 	configPath = app.getPath('userData'),
 	settings = loadSettings(),
 	torrents = {},
 	i18n = {}
 
-var esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true })
-
-var table = $('#table').DataTable({
-	"paging": false,
-	"lengthChange": true,
-	"searching": false,
-	"ordering": true,
-	"info": true,
-	"autoWidth": true,
-	"bInfo": false,
-	"columns": [
-		{ title: "#",  "className": "column-id"},
-		{ title: "Nombre", "className": "column-name" },
-		{ title: "Tamaño" },
-		{ title: "Progreso" },
-		{ title: "Descarga" },
-		{ title: "Subida" },
-		{ title: "Peers" },
-		{ title: "Ratio" },
-		{ title: "Estimado" }
-	]
-})
+table = $('#table').DataTable(datatableJSON)
 
 $(".main-footer").html(generalFoot())
 
@@ -148,36 +129,14 @@ $('body').on('click', function (event){
 ////-- FUNCTIONS --////
 ///////////////////////
 function loadSettings(){
-	let sett = null
-	try {
-		return makeObject(configPath + '/settings.json')
-	} catch (err) {
-		try {
-			return makeObject(Path.join(__dirname, '../settings.default.json'))
-
-			console.log(sett)
-
-			/*
-			var fd = fs.openSync(sett, 'w+');
-			console.log("Created settings file...");
-			var newPath = dialog.showOpenDialog({ title: 'Please select a folder',
-						  defaultPath: app.getPath('userDesktop'), properties: [ 'openDirectory', 'createDirectory']});
-			*/
-		} catch (err) {
-			alert("Error creating settings file: " + JSON.stringify(err))
-			
-		}
+	try	{
+		let path = configPath + '/settings.json'
+		fs.openSync(path, 'r+')
+		return JSON.parse(fs.readFileSync(path, 'utf8'))
+	} catch (error) {
+		return require('../json/settings.default.json')
 	}
 
-}
-
-function makeObject(path){
-	fs.openSync(path, 'r+')
-
-	var data = fs.readFileSync(path, 'utf8')
-  	obj = JSON.parse(data)
-
-	return obj
 }
 
 function addTorrent(torrentID){

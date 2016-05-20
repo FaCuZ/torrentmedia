@@ -1,0 +1,20 @@
+{
+	"paging": false,
+	"lengthChange": true,
+	"searching": false,
+	"ordering": true,
+	"info": true,
+	"autoWidth": true,
+	"bInfo": false,
+	"columns": [
+		{ "title": "#",  "className": "column-id"},
+		{ "title": "Nombre", "className": "column-name" },
+		{ "title": "Tamaño" },
+		{ "title": "Progreso" },
+		{ "title": "Descarga" },
+		{ "title": "Subida" },
+		{ "title": "Peers" },
+		{ "title": "Ratio" },
+		{ "title": "Estimado" }
+	]
+}
