@@ -107,10 +107,10 @@
 							</ul>
 						</li> -->
 						<!--  <li class="header">CANALES</li> -->
-						<li id="btn-main" class="active"><a href="#"><i class="fa fa-files-o"></i> Descargas</a></li>						
-						<li id="btn-stats"><a href="#"><i class="fa fa-bar-chart"></i> Estadisticas</a></li>						
-						<li id="btn-autofeeds"><a href="#"><i class="fa fa-feed"></i> Autofeeds</a></li>
-						<li id="btn-channels"><a href="#"><i class="fa fa-plug"></i> Canales</a></li>						
+						<li onclick="call.btn_nav_main()" class="active"><a href="#"><i class="fa fa-files-o"></i> Descargas</a></li>						
+						<li onclick="call.btn_nav_stats()"><a href="#"><i class="fa fa-bar-chart"></i> Estadisticas</a></li>						
+						<li onclick="call.btn_nav_autofeeds()"><a href="#"><i class="fa fa-feed"></i> Autofeeds</a></li>
+						<li onclick="call.btn_nav_channels()"><a href="#"><i class="fa fa-plug"></i> Canales</a></li>						
 					</ul><!-- /.sidebar-menu -->
 				</section>
 				<!-- /.sidebar -->
@@ -129,15 +129,15 @@
 					<div class="breadcrumb breadcrumb-botones">
 						
 						<span id="btns-hided" class="hide-btns">
-							<button type="button" id="btn-pause" class="btn btn-default"><i class="fa fa-pause"></i></button>
+							<button type="button" onclick="call.btn_pause()" class="btn btn-default"><i class="fa fa-pause"></i></button>
 							<!-- TODO: Cambio a fa-play -->
 
 							<div class="btn-group">
-								<button type="button" id="btn-position-up" class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
-								<button type="button" id="btn-position-down" class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
+								<button type="button" onclick="call.btn_position_up()" class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
+								<button type="button" onclick="call.btn_position_down()" class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
 							</div>
 							
-							<button type="button"  id="btn-remove" class="btn btn-default"><i class="fa fa-remove"></i></button>
+							<button type="button" onclick="call.btn_remove()" class="btn btn-default"><i class="fa fa-remove"></i></button>
 						</span>
 
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
@@ -161,7 +161,7 @@
 											<div class="input-group">
 												<input type="text" class="form-control" id="tb-agregar-file" placeholder="Magnet, Archivo, Url o Infohash" >
 												<div class="input-group-btn">
-													<button type="button" class="btn btn-default" id="btn-agregar-fileDialog">
+													<button type="button" class="btn btn-default" onclick="call.btn_add_fileDialog()">
 														<i class="fa fa-fw fa-file-o"></i>
 													</button>
 												</div>
@@ -173,7 +173,7 @@
 											<div class="input-group">
 												<input type="text" class="form-control" id="tb-agregar-folder">
 												<div class="input-group-btn">
-													<button type="button" class="btn btn-default" id="btn-agregar-folderDialog">
+													<button type="button" class="btn btn-default" onclick="call.btn_add_folderDialog()">
 														<i class="fa fa-fw fa-folder-open-o"></i>
 													</button>
 												</div>
@@ -185,7 +185,7 @@
 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-primary" id="btn-agregar-download" data-dismiss="modal">Descargar</button>
+									<button type="button" class="btn btn-primary" onclick="call.btn_add_download()" data-dismiss="modal">Descargar</button>
 								</div>
 
 							</div>

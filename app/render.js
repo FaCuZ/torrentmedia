@@ -39,90 +39,48 @@ $('#table tbody').on( 'click', 'tr', function () {
 	}
 })
 
-$('body').on('click', function (event){
-	let target = event.target.id
-	if(!target) target = event.target.parentNode.id
-
-	switch(target) {
-		///- BUTTON: ADD TORRENT: FILE DIALOG -///
-		case 'btn-agregar-fileDialog': 
+var call = {
+		btn_add_download: () => addTorrent($('#tb-agregar-file').val()),
+		btn_remove: () => removeTorrent(table.row('tr.selected')),
+		btn_pause: () => pauseTorrent(table.row('tr.selected')),	
+		btn_position_up: () => torrents[torrentSelected.infoHash].up(),
+		btn_position_down: () => torrents[torrentSelected.infoHash].down(),
+		btn_add_fileDialog: () => {
 			filtros = { title: 'Please select a torrent',
 						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
 						defaultPath: app.getPath('downloads'),
 						properties: ['openFile']
 					  }
-
 			dialog.showOpenDialog(filtros, function (fileName) {
 				$('#tb-agregar-file').val(fileName)
 			})		
-			break
-
-		///- BUTTON: ADD TORRENT: FOLDER DIALOG -///
-		case 'btn-agregar-folderDialog':
+		}, 
+		btn_add_folderDialog: () => {
 			filtros = { title: 'Please select a folder',
 						defaultPath: app.getPath('downloads'),
 						properties: ['openDirectory', 'createDirectory']
-					  }
-			
+					  }			
 			dialog.showOpenDialog(filtros, function (folderName) {
 				$('#tb-agregar-folder').val(folderName)
 			})		
-			break
-
-		///- BUTTON: ADD TORRENT: DOWNLOAD -///
-		case 'btn-agregar-download': 
-			addTorrent($('#tb-agregar-file').val())			
-			break
-
-		///- BUTTON: REMOVE TORRENT -///
-		case 'btn-remove': 
-			removeTorrent(table.row('tr.selected'))			
-			break
-
-		///- BUTTON: REMOVE TORRENT -///
-		case 'btn-pause': 
-			pauseTorrent(table.row('tr.selected'))			
-			break
-		
-		///- BUTTON: POSITION UP -///
-		case 'btn-position-up': 
-			torrents[torrentSelected.infoHash].up()
-			break
-		
-		///- BUTTON: POSITION DOWN -///
-		case 'btn-position-down': 
-			torrents[torrentSelected.infoHash].down()
-			break
-		
-		///- NAV BUTTON: STATS -///
-		case 'btn-main': 
+		},
+		btn_nav_main: () => {
 			$('.content-wrapper').hide()
 			$('.content-wrapper-main').show()
-			break
-
-		///- NAV BUTTON: STATS -///
-		case 'btn-stats': 
+		},
+		btn_nav_stats: () => {
 			$('.content-wrapper').hide()
 			$('.content-wrapper-stats').show()
-			break
-
-		///- NAV BUTTON: AUTOFEEDS -///
-		case 'btn-autofeeds': 
+		},
+		btn_nav_autofeeds: () => {
 			$('.content-wrapper').hide()
 			$('.content-wrapper-autofeeds').show()
-			break
-
-		///- NAV BUTTON: CHANNELS -///
-		case 'btn-channels': 
+		},
+		btn_nav_channels: () => {
 			$('.content-wrapper').hide()
 			$('.content-wrapper-channels').show()
-			break
-
-		default:
-			break
-	}
-
-})
+		}
+}
 
 
 ///////////////////////
@@ -152,31 +110,31 @@ function addTorrent(torrentID){
 		'-'
 	]).draw()
 	
-	let torrent = client.add(torrentID, function (torrent) {
-	})
+	let torrent = client.add(torrentID, torrent => {  })
 
-
-	torrent.on('infoHash', function (error) {
+	torrent.on('infoHash', error => {
 		$(temp.node()).attr('data-hash', torrent.infoHash)
 		if(!torrents[torrent.infoHash]) torrents[torrent.infoHash] = new Torrent()
 	})
 
-
-	torrent.on('error', function (error) {
+	torrent.on('error', error => {
 		temp.row().remove().draw()
+		setTray(false, 'red')
 		alert(error)
 	})
 
-	torrent.on('done', function () {
-		settings['tray_blink'] = true
-		settings['tray_color'] = 'green'
-	})
+	torrent.on('done', () => { setTray(true, 'green') })
 
+}
+
+function setTray(blink, color){
+	settings['tray_blink'] = blink
+	settings['tray_color'] = color
 }
 
 function removeTorrent(row){
 	// TODO: Preguntar si esta seguro, y si quiere borrar los archivos tambien
-	torrentSelected.destroy(function(){
+	torrentSelected.destroy( () => {
 		row.remove().draw()
 		$('#btns-hided').hide()
 		//if(client.torrents.length === 0) 
@@ -199,7 +157,7 @@ function fixRatio(ratio){
 	return Humanize.formatNumber(ratio, 2)	
 }
 
-function progressBar(progress, element, torrent = null){ //progress-bar-info progress-bar-striped
+function progressBar(progress, element, torrent = null){ 
 
 	let size = element.find('.progress').outerWidth()
 	let style = ''	
@@ -244,7 +202,7 @@ function generalFoot (){
 ///////////////////////
 ////-- INTERVALS --////
 ///////////////////////
-var interval = setInterval(function () {
+var interval = setInterval( () => {
 	let count = client.torrents.length 
 	if(count > 0){
 		for (var i = count - 1; i >= 0; i--) {
@@ -268,7 +226,7 @@ var interval = setInterval(function () {
 
 }, settings.interval_refresh)
 
-var intervalTray = setInterval(function () {
+var intervalTray = setInterval( () => {
 	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
 	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
 
@@ -295,14 +253,15 @@ class Torrent {
 }
 
 
-
+///////////////////
 ////** DEBUG **////
-var torrentId = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
-var torrentId1 = "magnet:?xt=urn:btih:DF19459B13F9E6B57347DBEE54F2DBBD751B914A&dn=10+cloverfield+lane+2016+1080p+hdrip+x264+aac+jyk&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce"
-var torrentId2 = "/home/facuz/Descargas/sintel.torrent"
+///////////////////
+var tId0 = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
+var tId1 = "magnet:?xt=urn:btih:DF19459B13F9E6B57347DBEE54F2DBBD751B914A&dn=10+cloverfield+lane+2016+1080p+hdrip+x264+aac+jyk&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce"
+var tId2 = "/home/facuz/Descargas/sintel.torrent"
 
-$('#tb-agregar-file').val(torrentId)
+$('#tb-agregar-file').val(tId0)
 
-addTorrent(torrentId)
-addTorrent(torrentId1)
+addTorrent(tId0)
+addTorrent(tId1)
 ////** END DEBUG **////
