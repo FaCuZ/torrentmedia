@@ -62,6 +62,14 @@ app.on('ready', function() {
 
 })
 
+app.on('will-quit', function () {
+    // This is a good place to add tests insuring the app is still
+    // responsive and all windows are closed.
+    // Guadar las estadisticas en un archivo
+    console.log("will-quit");
+    mainWindow = null;
+});
+
 ipcMain.on('tray', function (event, text, blink = false, color = white) {	
 	appIcon.setToolTip(text)
 

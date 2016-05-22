@@ -6,19 +6,30 @@ const remote = require('remote'),
 	  fs = require('fs'),
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
-	  Humanize = require('humanize-plus')
+	  Humanize = require('humanize-plus'),
+	  datatableJSON = require('../json/datatable.json')
 
 var client = new WebTorrent(),
 	esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true }),
-	datatableJSON = require('../json/datatable.json')
+	table = $('#table').DataTable(datatableJSON),
 	configPath = app.getPath('userData'),
 	settings = loadSettings(),
-	torrents = {},
-	i18n = {}
+	footer = $(".main-footer").html(generalFoot()),
+	i18n = {},
+	torrents = {
+		find: position => {
+			for (var i in torrents) 
+				if(torrents[i].position===position)
+					return torrents[i]
+		},
+		length: () => {
+			let length = -2
+			for (var i in torrents)	length++
+			return length
+		}
+	}
 
-table = $('#table').DataTable(datatableJSON)
 
-$(".main-footer").html(generalFoot())
 
 
 ////////////////////
@@ -46,21 +57,21 @@ var call = {
 		btn_position_up: () => torrents[torrentSelected.infoHash].up(),
 		btn_position_down: () => torrents[torrentSelected.infoHash].down(),
 		btn_add_fileDialog: () => {
-			filtros = { title: 'Please select a torrent',
+			let filtros = { title: 'Please select a torrent',
 						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
 						defaultPath: app.getPath('downloads'),
 						properties: ['openFile']
 					  }
-			dialog.showOpenDialog(filtros, function (fileName) {
+			dialog.showOpenDialog(filtros, fileName => {
 				$('#tb-agregar-file').val(fileName)
 			})		
 		}, 
 		btn_add_folderDialog: () => {
-			filtros = { title: 'Please select a folder',
+			let filtros = { title: 'Please select a folder',
 						defaultPath: app.getPath('downloads'),
 						properties: ['openDirectory', 'createDirectory']
 					  }			
-			dialog.showOpenDialog(filtros, function (folderName) {
+			dialog.showOpenDialog(filtros, folderName => {
 				$('#tb-agregar-folder').val(folderName)
 			})		
 		},
@@ -240,17 +251,31 @@ var intervalTray = setInterval( () => {
 /////////////////////
 class Torrent { 
 	constructor() {	
-		this._position = '99'
-		this.progress = '50'
+		this._position = torrents.length()
+		this.progress = 50
 	}
 	
 	get position() { return this._position }
 	set position(value) { this._position = value }
 
-	up() { this._position++ }
-	down() { this._position-- }
+	up() { 
+		let nextTorrent = torrents.find(this._position+1)
+		if(nextTorrent){
+			this._position++
+			nextTorrent._position--
+		} else return null
+	}
+	down() {
+		let prevTorrent = torrents.find(this._position-1)
+		if(prevTorrent){
+			this._position--
+			prevTorrent._position++
+		} else return null
+	}
 
 }
+
+
 
 
 ///////////////////
