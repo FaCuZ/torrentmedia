@@ -1,4 +1,6 @@
 {
+	"start_hide": true,
+
 	"interval_refresh": 500,
 	"interval_tray": 1000,
 
@@ -6,6 +8,8 @@
 	"base_lang": "es",
 
 	"tray_blink": false,
-	"tray_color": "white"
+	"tray_color": "white",
+
+	"dir_downloads": ""
 }
 

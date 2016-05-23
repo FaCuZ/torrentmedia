@@ -1,9 +1,7 @@
 const remote = require('remote'),
 	  dialog = remote.require('dialog'),
-	  app = remote.require('app'),	  
 	  Path = require('path'),
 	  ipcRenderer = require('electron').ipcRenderer,
-	  fs = require('fs'),
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
 	  Humanize = require('humanize-plus'),
@@ -12,8 +10,7 @@ const remote = require('remote'),
 var client = new WebTorrent(),
 	esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true }),
 	table = $('#table').DataTable(datatableJSON),
-	configPath = app.getPath('userData'),
-	settings = loadSettings(),
+	settings = remote.getGlobal('settings')
 	footer = $(".main-footer").html(generalFoot()),
 	i18n = {},
 	torrents = {
@@ -28,9 +25,6 @@ var client = new WebTorrent(),
 			return length
 		}
 	}
-
-
-
 
 ////////////////////
 ////-- EVENTS --////
@@ -51,61 +45,49 @@ $('#table tbody').on( 'click', 'tr', function () {
 })
 
 var call = {
-		btn_add_download: () => addTorrent($('#tb-agregar-file').val()),
-		btn_remove: () => removeTorrent(table.row('tr.selected')),
-		btn_pause: () => pauseTorrent(table.row('tr.selected')),	
-		btn_position_up: () => torrents[torrentSelected.infoHash].up(),
-		btn_position_down: () => torrents[torrentSelected.infoHash].down(),
-		btn_add_fileDialog: () => {
-			let filtros = { title: 'Please select a torrent',
-						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
-						defaultPath: app.getPath('downloads'),
-						properties: ['openFile']
-					  }
-			dialog.showOpenDialog(filtros, fileName => {
-				$('#tb-agregar-file').val(fileName)
-			})		
-		}, 
-		btn_add_folderDialog: () => {
-			let filtros = { title: 'Please select a folder',
-						defaultPath: app.getPath('downloads'),
-						properties: ['openDirectory', 'createDirectory']
-					  }			
-			dialog.showOpenDialog(filtros, folderName => {
-				$('#tb-agregar-folder').val(folderName)
-			})		
-		},
-		btn_nav_main: () => {
-			$('.content-wrapper').hide()
-			$('.content-wrapper-main').show()
-		},
-		btn_nav_stats: () => {
-			$('.content-wrapper').hide()
-			$('.content-wrapper-stats').show()
-		},
-		btn_nav_autofeeds: () => {
-			$('.content-wrapper').hide()
-			$('.content-wrapper-autofeeds').show()
-		},
-		btn_nav_channels: () => {
-			$('.content-wrapper').hide()
-			$('.content-wrapper-channels').show()
-		}
+		btn_add_download: 	 () => addTorrent($('#tb-agregar-file').val()),
+		btn_remove: 		 () => removeTorrent(table.row('tr.selected')),
+		btn_pause: 			 () => pauseTorrent(table.row('tr.selected')),	
+		btn_position_up: 	 () => torrents[torrentSelected.infoHash].up(),
+		btn_position_down: 	 () => torrents[torrentSelected.infoHash].down(),
+		btn_nav_main: 		 () => changeContent('main'),
+		btn_nav_stats: 		 () => changeContent('stats'),
+		btn_nav_autofeeds: 	 () => changeContent('autofeeds'),
+		btn_nav_channels: 	 () => changeContent('channels'),
+		btn_add_fileDialog:  () => getDialog(), 
+		btn_add_folderDialog:() => getDialog(true)
 }
 
 
 ///////////////////////
 ////-- FUNCTIONS --////
 ///////////////////////
-function loadSettings(){
-	try	{
-		let path = configPath + '/settings.json'
-		fs.openSync(path, 'r+')
-		return JSON.parse(fs.readFileSync(path, 'utf8'))
-	} catch (error) {
-		return require('../json/settings.default.json')
+function changeContent(type){
+	$('.content-wrapper').hide()
+	$('.content-wrapper-' + type).show()
+	$('.sidebar-menu li').removeClass('active')
+	$('#btn_nav_' + type).addClass('active')	
+}
+
+function getDialog(folder = false){
+	let config, tb
+	alert(settings.dir_downloads)
+	if(!folder) {
+		config = {	title: 'Please select a torrent',
+						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
+						defaultPath: settings.dir_downloads,
+						properties: ['openFile']
+					  }
+		tb = $('#tb-agregar-file')
+	} else {
+		config = {  title: 'Please select a folder',
+						defaultPath: settings.dir_downloads,
+						properties: ['openDirectory', 'createDirectory']
+					 }		
+		tb = $('#tb-agregar-folder')
 	}
 
+	dialog.showOpenDialog(config, name => tb.val(name))	
 }
 
 function addTorrent(torrentID){
@@ -134,13 +116,13 @@ function addTorrent(torrentID){
 		alert(error)
 	})
 
-	torrent.on('done', () => { setTray(true, 'green') })
+	torrent.on('done', () => setTray(true, 'green'))
 
 }
 
 function setTray(blink, color){
-	settings['tray_blink'] = blink
-	settings['tray_color'] = color
+	settings.tray_blink = blink
+	settings.tray_color = color
 }
 
 function removeTorrent(row){

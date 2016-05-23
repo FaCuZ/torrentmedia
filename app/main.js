@@ -2,8 +2,9 @@
 
 const Electron = require('electron'),
 	  Path = require('path'),
-	  ipcMain = Electron.ipcMain,
+	  fs = require('fs'),
 	  app = Electron.app,
+	  ipcMain = Electron.ipcMain,
 	  Menu = Electron.Menu,
 	  MenuItem = Electron.MenuItem,
 	  Tray = Electron.Tray,
@@ -13,13 +14,18 @@ var mainWindow = null,
 	appIcon = null,
 	flag = true
 
-app.on('window-all-closed', function() {
+global.settings = loadSettings()
+
+global.settings.dir_downloads = app.getPath('downloads') // TODO: Definir solo en el defalut
+
+app.on('window-all-closed', () => {
 	if (process.platform != 'darwin') {
 		app.quit()
 	}
-});
+})
 
-app.on('ready', function() {
+
+app.on('ready', () => {
 	mainWindow = new BrowserWindow ({
 									width: 1200,
 									height: 800,
@@ -29,19 +35,28 @@ app.on('ready', function() {
 
 	mainWindow.loadURL('file://' + __dirname + '/front/index.html')
 
-	mainWindow.webContents.openDevTools() // Abre DevTools
+	mainWindow.maximize()
 
-	mainWindow.on('closed', function() {
+	//mainWindow.webContents.openDevTools() // Abre DevTools
+
+	mainWindow.on('closed', () => {
 		// Dereference the window object, usually you would store windows
 		// in an array if your app supports multi windows, this is the time
 		// when you should delete the corresponding element.
 		mainWindow = null
 	})
 
+
+
 	////-- TRAY ICON--////
 	appIcon = new Tray(getIconPath('white'))
 
 	const menuTray = [{
+						label: "Show",
+						click: function(){
+							mainWindow.show()
+						}
+					 },{
 						label: "DevTools",
 						accelerator: "Alt+Command+I",
 						click: function(){
@@ -51,7 +66,7 @@ app.on('ready', function() {
 					 },{
 						type: "separator"
 					 },{
-						label: "Cerrar",
+						label: "Close",
 						accelerator: "Command+Q",
 						click: function(){
 							mainWindow.close()
@@ -60,17 +75,24 @@ app.on('ready', function() {
 	appIcon.setToolTip('TorrentMedia')
 	appIcon.setContextMenu(Menu.buildFromTemplate(menuTray))
 
+	appIcon.on('click', (event, bounds) => {
+		global.settings.tray_blink = false
+		global.settings.tray_color = 'white'
+
+		if(mainWindow.isVisible()) mainWindow.hide()
+		else mainWindow.show()
+	})
 })
 
 app.on('will-quit', function () {
     // This is a good place to add tests insuring the app is still
     // responsive and all windows are closed.
-    // Guadar las estadisticas en un archivo
+    // Guardar las estadisticas en un archivo
     console.log("will-quit");
     mainWindow = null;
 });
 
-ipcMain.on('tray', function (event, text, blink = false, color = white) {	
+ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{	
 	appIcon.setToolTip(text)
 
 	if(blink){
@@ -84,6 +106,19 @@ ipcMain.on('tray', function (event, text, blink = false, color = white) {
 	}
 })
 
+
 function getIconPath(color){
 	return Path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
+}
+
+
+function loadSettings(){
+	try	{
+		let path = app.getPath('userData') + '/settings.json'
+		fs.openSync(path, 'r+')
+		return JSON.parse(fs.readFileSync(path, 'utf8'))
+	} catch (error) {
+		return require('./json/settings.default.json')
+	}
+
 }
