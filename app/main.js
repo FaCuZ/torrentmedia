@@ -36,10 +36,14 @@ app.on('ready', () => {
 									title: "TorrentMedia",
 									icon: getIconPath('white')
 									})
+	
+	if(global.settings.start_hide) mainWindow.hide()
+	else {
+		if(global.settings.start_maximized) mainWindow.maximize()
+		else if(global.settings.start_minimized) mainWindow.minimize()
+	} 
 
 	mainWindow.loadURL('file://' + __dirname + '/front/index.html')
-
-	mainWindow.maximize()
 
 	//mainWindow.webContents.openDevTools() // Abre DevTools
 

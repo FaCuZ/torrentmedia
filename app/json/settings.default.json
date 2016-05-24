@@ -1,5 +1,7 @@
 {
-	"start_hide": true,
+	"start_hide": false,
+	"start_maximized": true,
+	"start_minimized": false,
 
 	"interval_refresh": 500,
 	"interval_tray": 1000,
