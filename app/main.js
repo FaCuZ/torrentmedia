@@ -3,6 +3,7 @@
 const Electron = require('electron'),
 	  Path = require('path'),
 	  fs = require('fs'),
+	  dialog = require('dialog'),
 	  app = Electron.app,
 	  ipcMain = Electron.ipcMain,
 	  Menu = Electron.Menu,
@@ -11,6 +12,7 @@ const Electron = require('electron'),
 	  BrowserWindow = Electron.BrowserWindow
 
 var mainWindow = null,
+	force_quit = false,
 	appIcon = null,
 	flag = true
 
@@ -19,18 +21,20 @@ global.settings = loadSettings()
 global.settings.dir_downloads = app.getPath('downloads') // TODO: Definir solo en el defalut
 
 app.on('window-all-closed', () => {
-	if (process.platform != 'darwin') {
+	if(process.platform != 'darwin'){
 		app.quit()
 	}
 })
 
+app.on('activate-with-no-open-windows', () => mainWindow.show())
 
 app.on('ready', () => {
 	mainWindow = new BrowserWindow ({
 									width: 1200,
 									height: 800,
 									autoHideMenuBar: true,
-									title: "TorrentMedia"
+									title: "TorrentMedia",
+									icon: getIconPath('white')
 									})
 
 	mainWindow.loadURL('file://' + __dirname + '/front/index.html')
@@ -46,6 +50,20 @@ app.on('ready', () => {
 		mainWindow = null
 	})
 
+	mainWindow.on('close', event => {
+		if(!force_quit){
+			event.preventDefault()
+			mainWindow.hide()
+		} else {
+			let select = dialog.showMessageBox({
+				type: "question",
+				title: "TorrentMedia",
+				message: "¿Esta seguro que desea cerrar la aplicacion?",
+				buttons: ["cancel", "OK"]
+			})
+			if(select === 0) event.preventDefault()
+		}
+	})
 
 
 	////-- TRAY ICON--////
@@ -69,7 +87,9 @@ app.on('ready', () => {
 						label: "Close",
 						accelerator: "Command+Q",
 						click: function(){
-							mainWindow.close()
+							//mainWindow.close()
+							force_quit = true
+							app.quit()
 						}
 					 }]
 	appIcon.setToolTip('TorrentMedia')
@@ -83,14 +103,6 @@ app.on('ready', () => {
 		else mainWindow.show()
 	})
 })
-
-app.on('will-quit', function () {
-    // This is a good place to add tests insuring the app is still
-    // responsive and all windows are closed.
-    // Guardar las estadisticas en un archivo
-    console.log("will-quit");
-    mainWindow = null;
-});
 
 ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{	
 	appIcon.setToolTip(text)

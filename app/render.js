@@ -74,16 +74,16 @@ function getDialog(folder = false){
 	alert(settings.dir_downloads)
 	if(!folder) {
 		config = {	title: 'Please select a torrent',
-						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
-						defaultPath: settings.dir_downloads,
-						properties: ['openFile']
-					  }
+					filters: [{ name: 'Torrents', extensions: ['torrent'] }],
+					defaultPath: settings.dir_downloads,
+					properties: ['openFile']
+				 }
 		tb = $('#tb-agregar-file')
 	} else {
 		config = {  title: 'Please select a folder',
-						defaultPath: settings.dir_downloads,
-						properties: ['openDirectory', 'createDirectory']
-					 }		
+					defaultPath: settings.dir_downloads,
+					properties: ['openDirectory', 'createDirectory']
+				 }		
 		tb = $('#tb-agregar-folder')
 	}
 
@@ -114,6 +114,8 @@ function addTorrent(torrentID){
 		temp.row().remove().draw()
 		setTray(false, 'red')
 		alert(error)
+		//TODO: cambiar el alert por:
+		//dialog.showErrorBox(title, content)
 	})
 
 	torrent.on('done', () => setTray(true, 'green'))
@@ -196,26 +198,26 @@ function generalFoot (){
 ////-- INTERVALS --////
 ///////////////////////
 var interval = setInterval( () => {
-	let count = client.torrents.length 
-	if(count > 0){
-		for (var i = count - 1; i >= 0; i--) {
-			torrent = client.torrents[i]
-			table.row(i).data([
-				torrents[torrent.infoHash].position,//i,
-				torrent.name,
-				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
-				Humanize.fileSize(torrent.downloadSpeed) + "/s",
-				Humanize.fileSize(torrent.uploadSpeed) + "/s",
-				torrent.numPeers,
-				fixRatio(torrent.ratio),
-				esHumanTime(torrent.timeRemaining)
-			]).draw()
-		}
+	let count = client.torrents.length
+	
+	if(count <= 0) return null
 
-	$(".main-footer").html(generalFoot())
-
+	for (var i = count - 1; i >= 0; i--) {
+		torrent = client.torrents[i]
+		table.row(i).data([
+			torrents[torrent.infoHash].position,
+			torrent.name,
+			Humanize.fileSize(torrent.downloaded),
+			progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
+			Humanize.fileSize(torrent.downloadSpeed) + "/s",
+			Humanize.fileSize(torrent.uploadSpeed) + "/s",
+			torrent.numPeers,
+			fixRatio(torrent.ratio),
+			esHumanTime(torrent.timeRemaining)
+		]).draw()
 	}
+
+	$(".main-footer").html(generalFoot())	
 
 }, settings.interval_refresh)
 
