@@ -12,6 +12,19 @@
 	"tray_blink": false,
 	"tray_color": "white",
 
-	"dir_downloads": ""
+	"dir_downloads": "",
+	
+	"search_with": "Torrentz",
+	"searchers": {
+		"Torrentz": "https://www.torrentz.eu/search?q=",
+		"Google": "http://google.com/search?q=filetype%3Atorrent+",
+		"BitTorrent": "http://www.bittorrent.com/search?client=%v&search=",
+		"Mininova": "http://www.mininova.org/search/?cat=0&search=",
+		"PirateBay": "https://thepiratebay.org/search/",
+		"IsoHunt": "https://isohunt.com/torrents.php?ext=&op=and&ihq=",
+		"YIFY": "https://yts.ag/browse-movies/",
+		"KAT": "https://kat.ph/torrents/usearch/?q="
+	}
+
 }
 

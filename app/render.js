@@ -1,7 +1,9 @@
-const remote = require('remote'),
+const Electron = require('electron'),
+	  remote = require('remote'),
 	  dialog = remote.require('dialog'),
+	  ipcRenderer = Electron.ipcRenderer,
+	  shell = Electron.shell;
 	  Path = require('path'),
-	  ipcRenderer = require('electron').ipcRenderer,
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
 	  Humanize = require('humanize-plus'),
@@ -45,17 +47,18 @@ $('#table tbody').on( 'click', 'tr', function () {
 })
 
 var call = {
-		btn_add_download: 	 () => addTorrent($('#tb-agregar-file').val()),
-		btn_remove: 		 () => removeTorrent(table.row('tr.selected')),
-		btn_pause: 			 () => pauseTorrent(table.row('tr.selected')),	
-		btn_position_up: 	 () => torrents[torrentSelected.infoHash].up(),
-		btn_position_down: 	 () => torrents[torrentSelected.infoHash].down(),
-		btn_nav_main: 		 () => changeContent('main'),
-		btn_nav_stats: 		 () => changeContent('stats'),
-		btn_nav_autofeeds: 	 () => changeContent('autofeeds'),
-		btn_nav_channels: 	 () => changeContent('channels'),
-		btn_add_fileDialog:  () => getDialog(), 
-		btn_add_folderDialog:() => getDialog(true)
+		btn_add_download 	:()=> addTorrent($('#tb-agregar-file').val()),
+		btn_remove	 		:()=> removeTorrent(table.row('tr.selected')),
+		btn_pause			:()=> pauseTorrent(table.row('tr.selected')),	
+		btn_position_up 	:()=> torrents[torrentSelected.infoHash].up(),
+		btn_position_down 	:()=> torrents[torrentSelected.infoHash].down(),
+		btn_nav_main 		:()=> changeContent('main'),
+		btn_nav_stats 		:()=> changeContent('stats'),
+		btn_nav_autofeeds 	:()=> changeContent('autofeeds'),
+		btn_nav_channels 	:()=> changeContent('channels'),
+		btn_add_fileDialog	:()=> getDialog(), 
+		btn_add_folderDialog:()=> getDialog(true),
+		btn_search	 		:()=> searchTorrent()
 }
 
 
@@ -67,6 +70,10 @@ function changeContent(type){
 	$('.content-wrapper-' + type).show()
 	$('.sidebar-menu li').removeClass('active')
 	$('#btn_nav_' + type).addClass('active')	
+}
+
+function searchTorrent(){
+	shell.openExternal(settings.searchers[settings.search_with] + $('#tb-search').val())
 }
 
 function getDialog(folder = false){
