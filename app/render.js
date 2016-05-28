@@ -1,6 +1,6 @@
 const Electron = require('electron'),
-	  remote = require('remote'),
-	  dialog = remote.require('dialog'),
+	  remote = Electron.remote,
+	  dialog = remote.dialog,
 	  ipcRenderer = Electron.ipcRenderer,
 	  shell = Electron.shell;
 	  Path = require('path'),
@@ -78,7 +78,6 @@ function searchTorrent(){
 
 function getDialog(folder = false){
 	let config, tb
-	alert(settings.dir_downloads)
 	if(!folder) {
 		config = {	title: 'Please select a torrent',
 					filters: [{ name: 'Torrents', extensions: ['torrent'] }],
@@ -145,7 +144,7 @@ function removeTorrent(row){
 }
 
 function pauseTorrent(row){
-	$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play') 
+	$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play')
 
 	// NOTE: Pausa pero no funciona
 	console.log(torrentSelected.paused)

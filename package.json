@@ -22,11 +22,11 @@
     "Files"
   ],
   "devDependencies": {
-    "electron-prebuilt": "^0.37.8"
+    "electron-prebuilt": "1.2.0"
   },
   "dependencies": {
-    "humanize-duration": "^3.7.1",
+    "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
-    "webtorrent": "^0.93.1"
+    "webtorrent": "^0.94.1"
   }
 }

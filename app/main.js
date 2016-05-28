@@ -3,7 +3,7 @@
 const Electron = require('electron'),
 	  Path = require('path'),
 	  fs = require('fs'),
-	  dialog = require('dialog'),
+	  dialog = Electron.dialog,
 	  app = Electron.app,
 	  ipcMain = Electron.ipcMain,
 	  Menu = Electron.Menu,
@@ -29,6 +29,7 @@ app.on('window-all-closed', () => {
 app.on('activate-with-no-open-windows', () => mainWindow.show())
 
 app.on('ready', () => {
+	console.log(process.versions.electron)
 	mainWindow = new BrowserWindow ({
 									width: 1200,
 									height: 800,
