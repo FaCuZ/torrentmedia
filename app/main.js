@@ -103,6 +103,8 @@ app.on('ready', () => {
 		global.settings.tray_blink = false
 		global.settings.tray_color = 'white'
 
+		appIcon.setImage(getIconPath('white'))
+
 		if(mainWindow.isVisible()) mainWindow.hide()
 		else mainWindow.show()
 	})
