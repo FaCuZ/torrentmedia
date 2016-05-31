@@ -2,13 +2,7 @@
 
 Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha.
 
-
-## Componentes de terceros
-* [WebTorrent](https://github.com/feross/webtorrent)
-* [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
-* [Humanizer-plus](https://github.com/HubSpot/humanize)
-
-## Comandos
+### Comandos
 
 Clonar el proyecto:
 
@@ -21,7 +15,12 @@ Clonar el proyecto:
 
 El comando `sudo npm adminlte` sirve para evitar que el template carge fonts desde la web. 
 
-## Licencia
+### Componentes de terceros
+* [WebTorrent](https://github.com/feross/webtorrent)
+* [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
+* [Humanizer-plus](https://github.com/HubSpot/humanize)
+
+### Licencia
 ```
 The MIT License (MIT)
 

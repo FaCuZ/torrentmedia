@@ -4,25 +4,15 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>TorrentMedia</title>
-		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<!-- Bootstrap 3.3.5 -->
-		<link rel="stylesheet" href="../../node_modules/admin-lte/bootstrap/css/bootstrap.min.css">
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="./icons/font-awesome/css/font-awesome.min.css">
-		<!-- Ionicons -->
-		<link rel="stylesheet" href="./icons/ionicons/css/ionicons.min.css">
-		<!-- DataTables -->
-		<link rel="stylesheet" href="../../node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.css">
-		<!-- Theme style -->
-		<link rel="stylesheet" href="../../node_modules/admin-lte/dist/css/AdminLTE.css">
-		<!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-					page. However, you can choose any other skin. Make sure you
-					apply the skin class to the body tag so the changes take effect.
-		-->
-		<link rel="stylesheet" href="../../node_modules/admin-lte/dist/css/skins/skin-blue.min.css">
-		<!-- Agregados -->
-		<link rel="stylesheet" href="base.css">
+
+
+		<link rel="stylesheet" href="css/libs.css">
+
+		<link rel="stylesheet" href="./icons/fonts/font-awesome/css/font-awesome.min.css">
+
+		<link rel="stylesheet" href="css/_all-skins.min.css">
+		<link rel="stylesheet" href="css/base.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini fixed no-select">
@@ -126,16 +116,20 @@
 					<!-- Bottom-menu -->
 					<div class="sidebar-footer">
 						<a data-original-title="Settings" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
-							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							<i class="fa fa-gear"></i>
+							<!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
 						</a>
 						<a data-original-title="FullScreen" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_fullscreen()">
-							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+							<i class="fa fa-user-secret"></i>
+							<!-- <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
 						</a>
 						<a data-original-title="Hide" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
-							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+							<i class="fa fa-eye-slash"></i>
+							<!-- <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
 						</a>
 						<a data-original-title="Close" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_close()">
-							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+							<i class="fa fa-power-off"></i>
+							<!-- <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
 						</a>
 					</div>
 					<!-- /.bottom-menu -->
@@ -420,15 +414,15 @@
 
 		<!-- REQUIRED JS SCRIPTS -->
 		<!-- jQuery 2.2.0 -->
-		<script src="../../node_modules/admin-lte/plugins/jQuery/jQuery-2.2.0.min.js" onload="if (typeof require !== 'undefined') window.$ = window.jQuery = module.exports;"></script>
+		<script src="../node_modules/admin-lte/plugins/jQuery/jQuery-2.2.0.min.js" onload="if (typeof require !== 'undefined') window.$ = window.jQuery = module.exports;"></script>
 
-		<script src="../js/libs.js"></script>
+		<script src="js/libs.js"></script>
 
 		<!-- DataTables -->
-		<script src="../../node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js"></script>
-		<script src="../../node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="../node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="../node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.min.js"></script>
 			
-		<script src="../render.js"></script>
+		<script src="render.js"></script>
 
 
 	</body>

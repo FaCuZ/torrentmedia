@@ -7,7 +7,7 @@ const Electron = require('electron'),
 	  WebTorrent = require('webtorrent'),
 	  humanizeDuration = require('humanize-duration'),
 	  Humanize = require('humanize-plus'),
-	  datatableJSON = require('../json/datatable.json')
+	  datatableJSON = require('./json/datatable.json')
 
 var client = new WebTorrent(),
 	esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true }),

@@ -6,17 +6,30 @@ var gulp = require('gulp'),
 
 var paths = {
 	scripts:[
-			 './node_modules/admin-lte/bootstrap/js/bootstrap.min.js', // Bootstrap 3.3.5
-			 './node_modules/admin-lte/dist/js/app.min.js', // AdminLTE
-			 './node_modules/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js', // SlimScroll 1.3.0
-			 './node_modules/admin-lte/plugins/fastclick/fastclick.min.js', // FastClick
-			 //'./node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js', // DataTables
-			 //'./node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.min.js'
+			'./node_modules/admin-lte/bootstrap/js/bootstrap.min.js', 				//> Bootstrap 3.3.5
+			'./node_modules/admin-lte/dist/js/app.min.js', 							//> AdminLTE
+			'./node_modules/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js',	//> SlimScroll 1.3.0
+			'./node_modules/admin-lte/plugins/fastclick/fastclick.min.js' 			//> FastClick
 			],
-	styles: 'css/**/*.css',
+	datatable:[
+			  './node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js', 
+			  './node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.min.js'
+			  ],
+	styles: [
+			'./node_modules/admin-lte/bootstrap/css/bootstrap.min.css',				//> Bootstrap 3.3.5 
+			'./node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.css',	//> DataTables
+			'./node_modules/admin-lte/dist/css/AdminLTE.css' 						//> Theme style
+			],
+	fonts: [
+			'./app/icons/fonts/font-awesome/css/font-awesome.min.css', 				//> Font Awesome
+			'./app/icons/fonts/ionicons/css/ionicons.min.css', 						//> Ionicons
+			],
 	app:	[
 			 'package.json',
 			 'app/**/*'
+			],
+	skins:	[
+			 './node_modules/admin-lte/dist/css/skins/_all-skins.min.css'
 			],
 	}
 
@@ -28,16 +41,31 @@ gulp.task('clean', function() {
 gulp.task('scripts', ['clean'], function() {
 	return  gulp.src(paths.scripts)
 				.pipe(concat('libs.js'))
-				.pipe(gulp.dest('dist/js/'));
-});
-
-gulp.task('copy', ['clean'], function (){
-	gulp.src(paths.app)
-		.pipe(gulp.dest('dist/'))
+				.pipe(gulp.dest('dist/js/'))
 })
 
-gulp.task('run', ['copy', 'scripts'], function(){
-	return gulp.src("dist").pipe(run())
+gulp.task('styles', ['clean'], function() {
+	return  gulp.src(paths.styles)
+				.pipe(concat('libs.css'))
+				.pipe(gulp.dest('dist/css/'))
+})
+
+gulp.task('copy', ['clean'], function (){
+	return  gulp.src(paths.app)
+				.pipe(gulp.dest('dist/'))
+
+})
+
+gulp.task('skins', ['clean'], function (){
+	return  gulp.src(paths.skins)
+				.pipe(gulp.dest('dist/css/'))
+
+})
+
+	
+gulp.task('run', ['copy', 'styles', 'skins', 'scripts'], function(){
+	return 	gulp.src("dist")
+				.pipe(run())
 })
 
 gulp.task('default', ['run'])

@@ -44,7 +44,7 @@ app.on('ready', () => {
 		else if(global.settings.start_minimized) mainWindow.minimize()
 	} 
 
-	mainWindow.loadURL('file://' + __dirname + '/front/index.html')
+	mainWindow.loadURL('file://' + __dirname + '/index.html')
 
 	//mainWindow.webContents.openDevTools() // Abre DevTools
 
@@ -144,7 +144,7 @@ ipcMain.on('control', (event, action) =>{
 
 
 function getIconPath(color){
-	return Path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
+	return Path.join(__dirname, 'icons/png/icon-down-' + color + '.png')
 }
 
 
