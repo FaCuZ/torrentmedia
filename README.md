@@ -15,15 +15,11 @@ Clonar el proyecto:
 ```
 	$ git clone https://github.com/FaCuZ/torrentmedia.git
 	$ cd torrentmedia
-	$ adminlte-reset
+	$ sudo npm install
+	$ adminlte
 ```
 
-La carpeta AdminLTE *no* se debe tocar, si queremos actualizar el template utilizamos el comando: 
-
-```
-	$ npm run adminlte
-```
-
+El comando `sudo npm adminlte` sirve para evitar que el template carge fonts desde la web. 
 
 ## Licencia
 ```

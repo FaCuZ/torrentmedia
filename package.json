@@ -12,8 +12,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "adminlte": "echo 'Updating AdminLTE...' && cd AdminLTE/dist/css/ && git pull origin && sed -i '1i/*' AdminLTE.css",
-    "adminlte-reset": "echo 'Reseting AdminLTE...' && rm -rf AdminLTE && git clone git@github.com:almasaeed2010/AdminLTE.git && npm run adminlte",
+    "adminlte": "echo 'Making offline AdminLTE...' && cd node_modules/admin-lte/dist/css/ && sed -i '1i/*' AdminLTE.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -25,6 +24,7 @@
     "electron-prebuilt": "1.2.0"
   },
   "dependencies": {
+    "admin-lte": "^2.3.3",
     "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
     "webtorrent": "^0.94.1"
