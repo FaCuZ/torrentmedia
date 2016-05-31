@@ -4,14 +4,14 @@
   "author": "Facundo Zaldo",
   "license": "MIT",
   "description": "Cliente de bitorrent con webtorrent",
-  "main": "app/main.js",
+  "main": "main.js",
   "app-id": "com.facuz.torrentmedia",
   "repository": {
     "type": "git",
     "url": "git://github.com/FaCuZ/torrentmedia.git"
   },
   "scripts": {
-    "start": "electron .",
+    "start": "gulp",
     "adminlte": "echo 'Making offline AdminLTE...' && cd node_modules/admin-lte/dist/css/ && sed -i '1i/*' AdminLTE.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +21,12 @@
     "Files"
   ],
   "devDependencies": {
-    "electron-prebuilt": "1.2.0"
+    "del": "^2.2.0",
+    "electron-prebuilt": "1.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-run-electron": "^2.0.0",
+    "gulp-watch": "^4.3.6"
   },
   "dependencies": {
     "admin-lte": "^2.3.3",
