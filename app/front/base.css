@@ -16,7 +16,7 @@ body{
 }
 
 #table{
-    width: 100%;
+	width: 100%;
 }
 
 table.dataTable thead th.sorting:after,
@@ -73,6 +73,7 @@ tr.selected{
 .content-wrapper-stats,
 .content-wrapper-autofeeds,
 .content-wrapper-channels,
+.content-wrapper-settings,
 .hide-btns{
 	display: none;
 }
@@ -86,7 +87,7 @@ tr.selected{
 	overflow: hidden;
 	margin: 0px !important;	
 	box-shadow: inset 0px 0px 1px gray;
-    margin: auto;
+	margin: auto;
 }
 
 .progress .p-black {
@@ -135,9 +136,36 @@ tr.selected{
 	position: fixed;
 	padding: 10px 15px;
 	bottom: 0px;
-    left: 0px;
-    right: 0px;
+	left: 0px;
+	right: 0px;
 }
+
+
+.sidebar-footer {
+	bottom: 0px;
+	clear: both;
+	display: block;
+	padding: 1px 0 0 0;
+	position: fixed;
+	width: 230px;
+	background: #1E272B;
+}
+
+.sidebar-footer a {
+	padding: 11px 0 5px;
+	text-align: center;
+	width: 25%;
+	font-size: 17px;
+	display: block;
+	float: left;
+	background: #28343A;
+	cursor: pointer;
+}
+
+.sidebar-footer a:hover{
+	background: #222D32;
+}
+
 
 @media (max-width: 991px){	
 

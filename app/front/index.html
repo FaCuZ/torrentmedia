@@ -67,13 +67,13 @@
 											<li><a href="#"><i class="fa fa-shopping-cart text-green"></i> 25 sales made</a></li>
 											<li><a href="#"><i class="fa fa-user text-red"></i> You changed your username</a></li>
 										</ul>
-								  	</li>
-								  	<li class="footer"><a href="#">View all</a></li>
+									</li>
+									<li class="footer"><a href="#">View all</a></li>
 								</ul>
 							</li>
 							<!-- FIN DE EJEMPLO -->
 
-							<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a></li>
+							<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-share-alt"></i></a></li>
 						</ul>
 					</div>
 				</nav>
@@ -122,8 +122,27 @@
 							<a href="#"><i class="fa fa-plug"></i> <span>Canales</span></a>
 						</li>						
 					</ul><!-- /.sidebar-menu -->
+					
+					<!-- Bottom-menu -->
+					<div class="sidebar-footer">
+						<a data-original-title="Settings" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						</a>
+						<a data-original-title="FullScreen" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_fullscreen()">
+							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+						</a>
+						<a data-original-title="Hide" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
+							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+						</a>
+						<a data-original-title="Close" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_close()">
+							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+						</a>
+					</div>
+					<!-- /.bottom-menu -->
+
 				</section>
 				<!-- /.sidebar -->
+
 			</aside>
 
 
@@ -302,6 +321,32 @@
 				</section><!-- /.content -->
 			</div><!-- /.content-wrapper -->
 
+
+			<!--/////// DYNAMIC CONTENT: SETTINGS ///////-->
+			<div class="content-wrapper content-wrapper-settings">
+
+				<!-- Content Header (Page header) -->
+				<section class="content-header content-header-main">
+						
+					<h1>Configuracion <small class="db-download">General </small></h1>
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content content-main">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<div class="box-body sin-padding">
+									Seccion de configuracion
+								</div><!-- /.box-body -->
+							</div><!-- /.box -->			  
+						</div><!-- /.col -->
+					</div><!-- /.row -->			
+				
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
 
 
 			<!-- Main Footer -->

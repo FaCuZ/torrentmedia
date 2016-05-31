@@ -125,6 +125,23 @@ ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{
 	}
 })
 
+ipcMain.on('control', (event, action) =>{	
+	switch(action) {
+		case 'close':
+			force_quit = true
+			app.quit()
+			break
+		case 'hide':
+			mainWindow.hide()
+			break
+		case 'fullscreen':
+			if(mainWindow.isFullScreen()) mainWindow.setFullScreen(false)
+			else mainWindow.setFullScreen(true)
+			break
+	} 
+})
+
+
 
 function getIconPath(color){
 	return Path.join(__dirname, 'front/icons/png/icon-down-' + color + '.png')
