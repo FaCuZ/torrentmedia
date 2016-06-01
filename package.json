@@ -21,18 +21,19 @@
     "Files"
   ],
   "devDependencies": {
-    "electron-prebuilt": "1.2.0",
     "del": "^2.2.0",
+    "electron-prebuilt": "1.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-file-include": "^0.13.7",
     "gulp-run-electron": "^2.0.0",
     "gulp-watch": "^4.3.6"
   },
   "dependencies": {
     "admin-lte": "^2.3.3",
+    "font-awesome": "^4.6.3",
     "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
-    "mdi": "^1.6.50",
     "webtorrent": "^0.94.1"
   }
 }
