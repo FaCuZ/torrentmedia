@@ -11,6 +11,7 @@ const Electron = require('electron'),
 	  Tray = Electron.Tray,
 	  BrowserWindow = Electron.BrowserWindow
 
+
 var mainWindow = null,
 	force_quit = false,
 	appIcon = null,
@@ -48,6 +49,8 @@ app.on('ready', () => {
 
 	//mainWindow.webContents.openDevTools() // Abre DevTools
 
+	live.create(mainWindow) // Livereaload con electron-conect
+
 	mainWindow.on('closed', () => {
 		// Dereference the window object, usually you would store windows
 		// in an array if your app supports multi windows, this is the time
@@ -56,17 +59,20 @@ app.on('ready', () => {
 	})
 
 	mainWindow.on('close', event => {
+		if(global.settings.exit_forced) force_quit = true			
 		if(!force_quit){
 			event.preventDefault()
 			mainWindow.hide()
 		} else {
-			let select = dialog.showMessageBox({
-				type: "question",
-				title: "TorrentMedia",
-				message: "¿Esta seguro que desea cerrar la aplicacion?",
-				buttons: ["cancel", "OK"]
-			})
-			if(select === 0) event.preventDefault()
+			if(!global.settings.exit_without_ask){
+				let select = dialog.showMessageBox({
+					type: "question",
+					title: "TorrentMedia",
+					message: "¿Esta seguro que desea cerrar la aplicacion?",
+					buttons: ["cancel", "OK"]
+				})
+				if(select === 0) event.preventDefault()
+			}
 		}
 	})
 

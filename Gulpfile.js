@@ -20,10 +20,6 @@ var paths = {
 			'./node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.css',	//> DataTables
 			'./node_modules/admin-lte/dist/css/AdminLTE.css' 						//> Theme style
 			],
-	fonts: [
-			'./app/icons/fonts/font-awesome/css/font-awesome.min.css', 				//> Font Awesome
-			'./app/icons/fonts/ionicons/css/ionicons.min.css', 						//> Ionicons
-			],
 	app:	[
 			 'package.json',
 			 'app/**/*'
@@ -61,11 +57,14 @@ gulp.task('skins', ['clean'], function (){
 				.pipe(gulp.dest('dist/css/'))
 
 })
-
 	
 gulp.task('run', ['copy', 'styles', 'skins', 'scripts'], function(){
 	return 	gulp.src("dist")
 				.pipe(run())
+})
+
+gulp.task('watch', ['run'], function(){
+	gulp.watch('./app/**/*', [run.rerun])
 })
 
 gulp.task('default', ['run'])

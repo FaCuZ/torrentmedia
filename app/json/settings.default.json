@@ -1,4 +1,7 @@
 {
+	"exit_without_ask": true,
+	"exit_forced": true,
+	
 	"start_hide": false,
 	"start_maximized": true,
 	"start_minimized": false,
