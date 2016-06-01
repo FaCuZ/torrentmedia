@@ -61,6 +61,7 @@ var call = {
 		btn_search	 		 :()=> searchTorrent(),
 		btn_bottom_settings	 :()=> changeContent('settings'),
 		btn_bottom_fullscreen:()=> ipcRenderer.send('control', 'fullscreen'),
+		btn_bottom_private	 :()=> alert('private'),
 		btn_bottom_hide		 :()=> ipcRenderer.send('control', 'hide'),
 		btn_bottom_close	 :()=> ipcRenderer.send('control', 'close'),
 		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle()

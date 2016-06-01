@@ -1,0 +1,43 @@
+{
+	"downloads": {
+		"title": "Descargas",
+		"all": "Todas",
+		"actives": "Activos",
+		"paused": "Pausados",
+		"Completed": "Compretados",		
+	},
+	"stats": {
+		"title": "Estadisticas",
+	},
+	"autofeeds": {
+		"title": "Autofeeds",
+	},
+	"channels": {
+		"title": "Canales",
+	},
+	"settings": {
+		"title": "Configuracion",
+	},
+	"nav": {
+		"search": "Buscar...",
+		"downloads": "Descargas",
+		"stats": "Estadisticas",
+		"autofeeds": "Autofeeds",
+		"channels": "Canales",
+		"settings": "Configuracion",
+		"private": "Torrents ocultos",
+		"hide": "Ocultar",
+		"close": "Cerrar",
+	},
+	"table": {
+		"position": "#",
+		"name": "Nombre",
+		"size": "Tamaño",
+		"progress": "Progreso",
+		"download": "Descarga",
+		"upload": "Subida",
+		"peers": "Peers",
+		"ratio": "Ratio",
+		"estimated": "Estimado",
+	}
+}

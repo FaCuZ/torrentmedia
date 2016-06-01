@@ -2,7 +2,7 @@ var gulp 	= require('gulp'),
 	watch 	= require('gulp-watch'),
 	concat  = require('gulp-concat'),
 	run 	= require('gulp-run-electron'),
-	include = require('gulp-file-include')
+	include = require('gulp-file-include'),
 	del 	= require('del')
 
 var paths = {
@@ -23,7 +23,8 @@ var paths = {
 			],
 	app:	[
 			 'package.json',
-			 'app/**/*'
+			 'app/**/*',
+			 '!app/tpl/**/*'
 			],
 	fonts:	[
 			 './node_modules/font-awesome/fonts/*',
@@ -39,6 +40,13 @@ var paths = {
 ////////////////////////
 gulp.task('dist:clean', function() {
 	return del(['dist'])
+})
+
+gulp.task('dist:html', ['dist:clean'], function() {
+	return  gulp.src(['./app/tpl/index.html'])
+				.pipe(include({ prefix: '{{', suffix: '}}', basepath: '@file'}))
+				.pipe(gulp.dest('dist/')) 
+				
 })
 
 gulp.task('dist:scripts', ['dist:clean'], function() {
@@ -67,7 +75,7 @@ gulp.task('dist:fonts', ['dist:clean'], function (){
 
 })
 
-gulp.task('dist', ['dist:copy', 'dist:styles', 'dist:fonts', 'dist:scripts'] )
+gulp.task('dist', ['dist:copy', 'dist:html', 'dist:styles', 'dist:fonts', 'dist:scripts'] )
 
 ////////////////////////
 ///////> relese <///////

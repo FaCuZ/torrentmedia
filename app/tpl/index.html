@@ -1,3 +1,5 @@
+	
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -118,19 +120,15 @@
 					<div class="sidebar-footer">
 						<a data-original-title="Settings" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
 							<i class="fa fa-gear"></i>
-							<!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
 						</a>
-						<a data-original-title="FullScreen" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_fullscreen()">
+						<a data-original-title="Private" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_private()">
 							<i class="fa fa-user-secret"></i>
-							<!-- <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
 						</a>
 						<a data-original-title="Hide" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
 							<i class="fa fa-eye-slash"></i>
-							<!-- <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
 						</a>
 						<a data-original-title="Close" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_close()">
 							<i class="fa fa-power-off"></i>
-							<!-- <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
 						</a>
 					</div>
 					<!-- /.bottom-menu -->
@@ -140,209 +138,15 @@
 
 			</aside>
 
+			{{ include('./pages/main.tpl') }}
 
-			<!--/////// DYNAMIC CONTENT: MAIN ///////-->
-			<div class="content-wrapper content-wrapper-main">
+			{{ include('./pages/stats.tpl') }}
 
-				<!-- Content Header (Page header) -->
-				<section class="content-header content-header-main">
-						
-					<h1>Descargas <small class="db-download">Todas <i class="fa fa-angle-down"></i></small></h1>
-					<!-- TODO: Cambio a fa-angle-down -->
+			{{ include('./pages/autofeed.tpl') }}
+			
+			{{ include('./pages/channels.tpl') }}
 
-					<div class="breadcrumb breadcrumb-botones">
-						
-						<span id="btns-hided" class="hide-btns">
-							<button type="button" onclick="call.btn_pause()" class="btn btn-default" id="btn-pause"><i class="fa fa-pause"></i></button>
-							<!-- TODO: Cambio a fa-play -->
-
-							<div class="btn-group">
-								<button type="button" onclick="call.btn_position_up()" class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
-								<button type="button" onclick="call.btn_position_down()" class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
-							</div>
-							
-							<button type="button" onclick="call.btn_remove()" class="btn btn-default"><i class="fa fa-remove"></i></button>
-						</span>
-
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
-					</div>
-
-
-					<!-- MODAL: Agregar Torrent -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Agregar nuevo torrent</h4>
-								</div>
-
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="torrent-tb" class="control-label">Torrent:</label>
-											<div class="input-group">
-												<input type="text" class="form-control" id="tb-agregar-file" placeholder="Magnet, Archivo, Url o Infohash" >
-												<div class="input-group-btn">
-													<button type="button" class="btn btn-default" onclick="call.btn_add_fileDialog()">
-														<i class="fa fa-fw fa-file-o"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label for="ubicacion-tb" class="control-label">Descarga en:</label>
-											<div class="input-group">
-												<input type="text" class="form-control" id="tb-agregar-folder">
-												<div class="input-group-btn">
-													<button type="button" class="btn btn-default" onclick="call.btn_add_folderDialog()">
-														<i class="fa fa-fw fa-folder-open-o"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-
-									</form>
-								</div>
-
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-primary" onclick="call.btn_add_download()" data-dismiss="modal">Descargar</button>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<!-- MODAL END -->
-
-
-
-				</section>
-
-				<!-- Main content -->
-				<section class="content content-main">
-
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body sin-padding">
-									<table id="table" class="table table-striped table-hover"><!-- TABLA DE TORRENTS --></table>
-								</div><!-- /.box-body -->
-							</div><!-- /.box -->			  
-						</div><!-- /.col -->
-					</div><!-- /.row -->			
-				
-				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
-
-
-			<!--/////// DYNAMIC CONTENT: STATS ///////-->
-			<div class="content-wrapper content-wrapper-stats">
-
-				<!-- Content Header (Page header) -->
-				<section class="content-header content-header-main">
-						
-					<h1>Estadisticas <small class="db-download">Todas </small></h1>
-
-				</section>
-
-				<!-- Main content -->
-				<section class="content content-main">
-
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body sin-padding">
-									Aca van las Estadisticas!!!!!!!!!!
-								</div><!-- /.box-body -->
-							</div><!-- /.box -->			  
-						</div><!-- /.col -->
-					</div><!-- /.row -->			
-				
-				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
-
-			<!--/////// DYNAMIC CONTENT: AUTOFEEDS ///////-->
-			<div class="content-wrapper content-wrapper-autofeeds">
-
-				<!-- Content Header (Page header) -->
-				<section class="content-header content-header-main">
-						
-					<h1>Autofeeds <small class="db-download">Todas </small></h1>
-
-				</section>
-
-				<!-- Main content -->
-				<section class="content content-main">
-
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body sin-padding">
-									AutoFeeds: Aca va la configuracion de las descargas automaticas <br/> Se utilizara los channels para configurarlas
-								</div><!-- /.box-body -->
-							</div><!-- /.box -->			  
-						</div><!-- /.col -->
-					</div><!-- /.row -->			
-				
-				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
-
-			<!--/////// DYNAMIC CONTENT: CHANNELS ///////-->
-			<div class="content-wrapper content-wrapper-channels">
-
-				<!-- Content Header (Page header) -->
-				<section class="content-header content-header-main">
-						
-					<h1>Canales <small class="db-download">Todas </small></h1>
-
-				</section>
-
-				<!-- Main content -->
-				<section class="content content-main">
-
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body sin-padding">
-									En esta seccion de puede instalar y configurar los canales.
-								</div><!-- /.box-body -->
-							</div><!-- /.box -->			  
-						</div><!-- /.col -->
-					</div><!-- /.row -->			
-				
-				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
-
-
-			<!--/////// DYNAMIC CONTENT: SETTINGS ///////-->
-			<div class="content-wrapper content-wrapper-settings">
-
-				<!-- Content Header (Page header) -->
-				<section class="content-header content-header-main">
-						
-					<h1>Configuracion <small class="db-download">General </small></h1>
-
-				</section>
-
-				<!-- Main content -->
-				<section class="content content-main">
-
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body sin-padding">
-									Seccion de configuracion
-								</div><!-- /.box-body -->
-							</div><!-- /.box -->			  
-						</div><!-- /.col -->
-					</div><!-- /.row -->			
-				
-				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
-
+			{{ include('./pages/settings.tpl') }}
 
 			<!-- Main Footer -->
 			<footer class="main-footer">
