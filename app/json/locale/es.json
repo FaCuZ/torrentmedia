@@ -1,22 +1,32 @@
 {
+	"name": "TorrentMedia",
+	"cancel": "Cancelar",
+	"download": "Descargar",
 	"downloads": {
 		"title": "Descargas",
 		"all": "Todas",
 		"actives": "Activos",
 		"paused": "Pausados",
-		"Completed": "Compretados",		
+		"Completed": "Compretados",
+		"new_torrent": "Agregar nuevo torrent",
+		"download_torrent": "Torrent:",
+		"donwload_folder": "Descarga en:"
 	},
 	"stats": {
 		"title": "Estadisticas",
+		"all": "Todas"
 	},
 	"autofeeds": {
 		"title": "Autofeeds",
+		"all": "Todos"
 	},
 	"channels": {
 		"title": "Canales",
+		"all": "Todos"
 	},
 	"settings": {
 		"title": "Configuracion",
+		"general": "General"
 	},
 	"nav": {
 		"search": "Buscar...",
@@ -27,7 +37,7 @@
 		"settings": "Configuracion",
 		"private": "Torrents ocultos",
 		"hide": "Ocultar",
-		"close": "Cerrar",
+		"close": "Cerrar"
 	},
 	"table": {
 		"position": "#",
@@ -38,6 +48,6 @@
 		"upload": "Subida",
 		"peers": "Peers",
 		"ratio": "Ratio",
-		"estimated": "Estimado",
+		"estimated": "Estimado"
 	}
 }

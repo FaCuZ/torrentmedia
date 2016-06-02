@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>Estadisticas <small class="db-download">Todas </small></h1>
+		<h1>{{ stats.title }} <small class="db-download">{{ stats.all }} </small></h1>
 
 	</section>
 

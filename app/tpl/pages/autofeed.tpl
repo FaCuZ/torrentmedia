@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>Autofeeds <small class="db-download">Todas </small></h1>
+		<h1>{{ autofeeds.title }} <small class="db-download">{{ autofeeds.all }} </small></h1>
 
 	</section>
 

@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>Descargas <small class="db-download">Todas <i class="fa fa-angle-down"></i></small></h1>
+		<h1>{{ downloads.title }}<small class="db-download">{{ downloads.all }}<i class="fa fa-angle-down"></i></small></h1>
 		<!-- TODO: Cambio a fa-angle-down -->
 
 		<div class="breadcrumb breadcrumb-botones">
@@ -32,13 +32,13 @@
 
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Agregar nuevo torrent</h4>
+						<h4 class="modal-title" id="myModalLabel">{{ downloads.new_torrent }}</h4>
 					</div>
 
 					<div class="modal-body">
 						<form>
 							<div class="form-group">
-								<label for="torrent-tb" class="control-label">Torrent:</label>
+								<label for="torrent-tb" class="control-label">{{ downloads.donwload_torrent }}</label>
 								<div class="input-group">
 									<input type="text" class="form-control" id="tb-agregar-file" placeholder="Magnet, Archivo, Url o Infohash" >
 									<div class="input-group-btn">
@@ -50,7 +50,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="ubicacion-tb" class="control-label">Descarga en:</label>
+								<label for="ubicacion-tb" class="control-label">{{ downloads.donwload_folder }}</label>
 								<div class="input-group">
 									<input type="text" class="form-control" id="tb-agregar-folder">
 									<div class="input-group-btn">
@@ -65,8 +65,8 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary" onclick="call.btn_add_download()" data-dismiss="modal">Descargar</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">{{ cancel }}</button>
+						<button type="button" class="btn btn-primary" onclick="call.btn_add_download()" data-dismiss="modal">{{ download }}</button>
 					</div>
 
 				</div>

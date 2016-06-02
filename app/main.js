@@ -32,18 +32,16 @@ app.on('activate-with-no-open-windows', () => mainWindow.show())
 app.on('ready', () => {
 	console.log(process.versions.electron)
 	mainWindow = new BrowserWindow ({
-									width: 1200,
-									height: 800,
-									autoHideMenuBar: true,
-									title: "TorrentMedia",
-									icon: getIconPath('white')
+									 width: 1200,
+									 height: 800,
+									 autoHideMenuBar: true,
+									 show: !global.settings.start_hide,
+									 title: "TorrentMedia",
+									 icon: getIconPath('white')
 									})
 	
-	if(global.settings.start_hide) mainWindow.hide()
-	else {
-		if(global.settings.start_maximized) mainWindow.maximize()
-		else if(global.settings.start_minimized) mainWindow.minimize()
-	} 
+	if(global.settings.start_maximized) mainWindow.maximize()
+	else if(global.settings.start_minimized) mainWindow.minimize()
 
 	mainWindow.loadURL('file://' + __dirname + '/index.html')
 

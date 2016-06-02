@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>Canales <small class="db-download">Todas </small></h1>
+		<h1>{{ channels.title }} <small class="db-download">{{ channels.all }} </small></h1>
 
 	</section>
 

@@ -3,7 +3,9 @@ var gulp 	= require('gulp'),
 	concat  = require('gulp-concat'),
 	run 	= require('gulp-run-electron'),
 	include = require('gulp-file-include'),
-	del 	= require('del')
+	del 	= require('del'),
+	locale	= require('./app/json/locale/es.json'),
+	i18n	= ['es', 'en']
 
 var paths = {
 	scripts:[
@@ -24,7 +26,7 @@ var paths = {
 	app:	[
 			 'package.json',
 			 'app/**/*',
-			 '!app/tpl/**/*'
+			 '!app/{tpl,tpl/**}' 
 			],
 	fonts:	[
 			 './node_modules/font-awesome/fonts/*',
@@ -44,7 +46,7 @@ gulp.task('dist:clean', function() {
 
 gulp.task('dist:html', ['dist:clean'], function() {
 	return  gulp.src(['./app/tpl/index.html'])
-				.pipe(include({ prefix: '{{', suffix: '}}', basepath: '@file'}))
+				.pipe(include({ prefix: '{{', suffix: '}}', basepath: '@file', context: locale }))
 				.pipe(gulp.dest('dist/')) 
 				
 })

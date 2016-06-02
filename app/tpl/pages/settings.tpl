@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>Configuracion <small class="db-download">General </small></h1>
+		<h1>{{ settings.title }} <small class="db-download">{{ settings.general }} </small></h1>
 
 	</section>
 
