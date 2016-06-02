@@ -20,12 +20,23 @@ var mainWindow = null,
 global.settings = loadSettings()
 
 global.settings.dir_downloads = app.getPath('downloads') // TODO: Definir solo en el defalut
+console.log(app.getLocale())
 
 app.on('window-all-closed', () => {
 	if(process.platform != 'darwin'){
 		app.quit()
 	}
 })
+
+if(app.makeSingleInstance((commandLine, workingDirectory) => {
+	if (mainWindow) {
+		if(mainWindow.isMinimized()) mainWindow.restore()
+		if(!mainWindow.isVisible())  mainWindow.show()
+		mainWindow.focus()
+	}
+})){
+	return app.quit()
+}
 
 app.on('activate-with-no-open-windows', () => mainWindow.show())
 
