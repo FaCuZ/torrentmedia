@@ -38,9 +38,9 @@
 					<div class="modal-body">
 						<form>
 							<div class="form-group">
-								<label for="torrent-tb" class="control-label">{{ downloads.donwload_torrent }}</label>
+								<label for="torrent-tb" class="control-label">{{ downloads.download_torrent}}</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="tb-agregar-file" placeholder="Magnet, Archivo, Url o Infohash" >
+									<input type="text" class="form-control" id="tb-agregar-file" placeholder="{{ downloads.download_torrent_ph }}" >
 									<div class="input-group-btn">
 										<button type="button" class="btn btn-default" onclick="call.btn_add_fileDialog()">
 											<i class="fa fa-fw fa-file-o"></i>
@@ -50,7 +50,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="ubicacion-tb" class="control-label">{{ downloads.donwload_folder }}</label>
+								<label for="ubicacion-tb" class="control-label">{{ downloads.download_folder }}</label>
 								<div class="input-group">
 									<input type="text" class="form-control" id="tb-agregar-folder">
 									<div class="input-group-btn">

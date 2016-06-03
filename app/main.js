@@ -55,7 +55,7 @@ app.on('ready', () => {
 	//console.log(global.settings.locale)
 	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
 
-	//mainWindow.webContents.openDevTools() // Abre DevTools
+	mainWindow.webContents.openDevTools() // Abre DevTools
 
 	mainWindow.on('closed', () => {
 		// Dereference the window object, usually you would store windows
@@ -104,7 +104,6 @@ app.on('ready', () => {
 						label: "Close",
 						accelerator: "Command+Q",
 						click: function(){
-							//mainWindow.close()
 							force_quit = true
 							app.quit()
 						}
@@ -118,7 +117,8 @@ app.on('ready', () => {
 
 		appIcon.setImage(getIconPath('white'))
 
-		if(mainWindow.isVisible()) mainWindow.hide()
+		if(mainWindow.isMinimized()) mainWindow.restore()
+		else if(mainWindow.isVisible()) mainWindow.hide()
 		else mainWindow.show()
 	})
 })

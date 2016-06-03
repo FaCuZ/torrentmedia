@@ -3,6 +3,7 @@
 	"cancel": "Cancel",
 	"download": "Download",
 	"search": "Search...",
+	"loading": "Loading...",
 
 	"tooltip": {
 		"settings": "Settings",
@@ -19,7 +20,8 @@
 		"Completed": "Completed",
 		"new_torrent": "Add new torrent",
 		"download_torrent": "Torrent:",
-		"donwload_folder": "Download folder:"
+		"download_torrent_ph": "Magnet, File, Url or Infohash",
+		"download_folder": "Download folder:"
 	},
 	
 	"stats": {

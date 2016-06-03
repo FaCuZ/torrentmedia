@@ -2,7 +2,8 @@
 	"name": "TorrentMedia",
 	"cancel": "Cancelar",
 	"download": "Descargar",
-	"search": "Buscar...",
+	"search": "Buscar...",	
+	"loading": "Cargando...",
 	
 	"tooltip": {
 		"settings": "Configuracion",
@@ -19,7 +20,8 @@
 		"Completed": "Compretados",
 		"new_torrent": "Agregar nuevo torrent",
 		"download_torrent": "Torrent:",
-		"donwload_folder": "Descarga en:"
+		"download_torrent_ph": "Magnet, Archivo, Url o Infohash",
+		"download_folder": "Descarga en:"
 	},
 	
 	"stats": {

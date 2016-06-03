@@ -1,32 +1,20 @@
-const Electron = require('electron'),
-	  remote = Electron.remote,
-	  dialog = remote.dialog,
-	  ipcRenderer = Electron.ipcRenderer,
-	  shell = Electron.shell;
-	  Path = require('path'),
-	  WebTorrent = require('webtorrent'),
-	  humanizeDuration = require('humanize-duration'),
-	  Humanize = require('humanize-plus'),
-	  datatableJSON = require('./json/datatable.json')
+const Electron 		= require('electron'),
+	  remote 		= Electron.remote,
+	  dialog 		= remote.dialog,
+	  ipcRenderer 	= Electron.ipcRenderer,
+	  shell 		= Electron.shell;
+	  Path 			= require('path'),
+	  WebTorrent 	= require('webtorrent'),
+	  Humanize 		= require('humanize-plus')
 
-var client = new WebTorrent(),
-	esHumanTime = humanizeDuration.humanizer({ language: 'es', largest: 1, round: true }),
-	table = $('#table').DataTable(datatableJSON),
-	settings = remote.getGlobal('settings')
-	footer = $(".main-footer").html(generalFoot()),
-	i18n = {},
-	torrents = {
-		find: position => {
-			for (var i in torrents) 
-				if(torrents[i].position === position)
-					return torrents[i]
-		},
-		length: () => {
-			let length = -2
-			for (var i in torrents)	length++
-			return length
-		}
-	}
+var client 		= new WebTorrent(),
+	settings 	= remote.getGlobal('settings'),  
+	locale 		= require('./json/locale/' + settings.locale + '.json'),
+	humanTime 	= require('humanize-duration').humanizer({ language: settings.locale, largest: 1, round: true }),
+	table 		= $('#table').DataTable(tableConfig()),
+	footer 		= $(".main-footer").html(generalFoot()),
+	torrents 	= initTorrents()
+
 
 ////////////////////
 ////-- EVENTS --////
@@ -71,6 +59,31 @@ var call = {
 ///////////////////////
 ////-- FUNCTIONS --////
 ///////////////////////
+function initTorrents(){
+	return {
+			find: position => {
+				for (var i in torrents) 
+					if(torrents[i].position === position)
+						return torrents[i]
+				},
+			length: () => {
+				let length = -2
+				for (var i in torrents)	length++
+				return length
+				}
+			}
+}
+
+function tableConfig(){
+	let json = require('./json/datatable.json')
+
+	for (var i = json.columns.length - 1; i >= 0; i--) {
+		json.columns[i].title = locale.table[json.columns[i].title]
+	}
+	return json
+
+}
+
 function changeContent(type){
 	$('.content-wrapper').hide()
 	$('.content-wrapper-' + type).show()
@@ -104,8 +117,8 @@ function getDialog(folder = false){
 
 function addTorrent(torrentID){
 	let temp = table.row.add([
-		'#',
-		'Cargando...',
+		' ',
+		locale.loading,
 		'0 Kb/s',
 		progressBar(0, $('#table')),
 		'0 Kb/s',
@@ -225,7 +238,7 @@ var interval = setInterval( () => {
 			Humanize.fileSize(torrent.uploadSpeed) + "/s",
 			torrent.numPeers,
 			fixRatio(torrent.ratio),
-			esHumanTime(torrent.timeRemaining)
+			humanTime(torrent.timeRemaining)
 		]).draw()
 	}
 
