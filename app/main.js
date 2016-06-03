@@ -19,8 +19,6 @@ var mainWindow = null,
 
 global.settings = loadSettings()
 
-global.settings.dir_downloads = app.getPath('downloads') // TODO: Definir solo en el defalut
-console.log(app.getLocale())
 
 app.on('window-all-closed', () => {
 	if(process.platform != 'darwin'){
@@ -54,7 +52,8 @@ app.on('ready', () => {
 	if(global.settings.start_maximized) mainWindow.maximize()
 	else if(global.settings.start_minimized) mainWindow.minimize()
 
-	mainWindow.loadURL('file://' + __dirname + '/index.html')
+	//console.log(global.settings.locale)
+	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
 
 	//mainWindow.webContents.openDevTools() // Abre DevTools
 
@@ -138,7 +137,7 @@ ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{
 	}
 })
 
-ipcMain.on('control', (event, action) =>{	
+ipcMain.on('control', (event, action) => {	
 	switch(action) {
 		case 'close':
 			force_quit = true
@@ -167,7 +166,18 @@ function loadSettings(){
 		fs.openSync(path, 'r+')
 		return JSON.parse(fs.readFileSync(path, 'utf8'))
 	} catch (error) {
-		return require('./json/settings.default.json')
+		let def = require('./json/settings.default.json')
+		return installSettings(def)
+		//return require('./json/settings.default.json')
 	}
 
+}
+
+function installSettings(def){
+	// TODO: Copiar y renombrar settings.json a appdata
+
+	def.dir_downloads = app.getPath('downloads') 
+	//osLocale((err, locale) => def.locale = locale)
+
+	return def
 }

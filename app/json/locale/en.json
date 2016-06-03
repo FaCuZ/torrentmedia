@@ -1,0 +1,64 @@
+{
+	"name": "TorrentMedia",
+	"cancel": "Cancel",
+	"download": "Download",
+	"search": "Search...",
+
+	"tooltip": {
+		"settings": "Settings",
+		"private": "Private",
+		"hide": "Hide",
+		"close": "Close"
+	},
+	
+	"downloads": {
+		"title": "Downloads",
+		"all": "All",
+		"actives": "Actives",
+		"paused": "Paused",
+		"Completed": "Completed",
+		"new_torrent": "Add new torrent",
+		"download_torrent": "Torrent:",
+		"donwload_folder": "Download folder:"
+	},
+	
+	"stats": {
+		"title": "Stats",
+		"all": "All"
+	},
+	
+	"autofeeds": {
+		"title": "Autofeeds",
+		"all": "All"
+	},
+	
+	"channels": {
+		"title": "Channels",
+		"all": "All"
+	},
+	
+	"settings": {
+		"title": "Settings",
+		"general": "General"
+	},
+	
+	"nav": {
+		"search": "Search...",
+		"downloads": "Downloads",
+		"stats": "Stats",
+		"autofeeds": "Autofeeds",
+		"channels": "Channels"
+	},
+	
+	"table": {
+		"position": "#",
+		"name": "Name",
+		"size": "Size",
+		"progress": "Progress",
+		"download": "Downloads",
+		"upload": "Upload",
+		"peers": "Peers",
+		"ratio": "Ratio",
+		"estimated": "Estimated"
+	}
+}

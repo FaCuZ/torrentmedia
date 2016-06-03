@@ -18,7 +18,7 @@ var client = new WebTorrent(),
 	torrents = {
 		find: position => {
 			for (var i in torrents) 
-				if(torrents[i].position===position)
+				if(torrents[i].position === position)
 					return torrents[i]
 		},
 		length: () => {

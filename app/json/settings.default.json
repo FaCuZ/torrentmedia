@@ -10,7 +10,7 @@
 	"interval_tray": 1000,
 
 	"conections_max": 25,
-	"base_lang": "es",
+	"locale": "es",
 
 	"tray_blink": false,
 	"tray_color": "white",

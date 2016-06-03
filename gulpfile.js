@@ -1,10 +1,12 @@
 var gulp 	= require('gulp'),
 	watch 	= require('gulp-watch'),
 	concat  = require('gulp-concat'),
+	rename 	= require("gulp-rename"),
 	run 	= require('gulp-run-electron'),
 	include = require('gulp-file-include'),
+	htmlmin = require('gulp-html-minifier');
+	htmlRC	= require('gulp-remove-html-comments');
 	del 	= require('del'),
-	locale	= require('./app/json/locale/es.json'),
 	i18n	= ['es', 'en']
 
 var paths = {
@@ -26,7 +28,8 @@ var paths = {
 	app:	[
 			 'package.json',
 			 'app/**/*',
-			 '!app/{tpl,tpl/**}' 
+			 '!app/{tpl,tpl/**}',
+			 '!app/{icons/svg,icons/svg/**}' 
 			],
 	fonts:	[
 			 './node_modules/font-awesome/fonts/*',
@@ -38,17 +41,29 @@ var paths = {
 }
 
 ////////////////////////
-////////> Dist <////////
+///////-- Dist --///////
 ////////////////////////
 gulp.task('dist:clean', function() {
 	return del(['dist'])
 })
 
 gulp.task('dist:html', ['dist:clean'], function() {
-	return  gulp.src(['./app/tpl/index.html'])
-				.pipe(include({ prefix: '{{', suffix: '}}', basepath: '@file', context: locale }))
-				.pipe(gulp.dest('dist/')) 
-				
+	for (var loc in i18n) {
+		var locale = require('./app/json/locale/' + i18n[loc] + '.json')
+		var config = { 
+					  prefix: '{{',
+					  suffix: '}}',
+					  basepath: '@file',
+					  context: locale
+					 }
+
+		gulp.src(['./app/tpl/index.html'])
+			.pipe(include(config))
+			.pipe(rename({ suffix: '-' + i18n[loc] }))
+			.pipe(htmlRC())
+			.pipe(htmlmin({collapseWhitespace: true}))
+			.pipe(gulp.dest('dist/')) 
+	}
 })
 
 gulp.task('dist:scripts', ['dist:clean'], function() {
@@ -77,10 +92,10 @@ gulp.task('dist:fonts', ['dist:clean'], function (){
 
 })
 
-gulp.task('dist', ['dist:copy', 'dist:html', 'dist:styles', 'dist:fonts', 'dist:scripts'] )
+gulp.task('dist', ['dist:copy', 'dist:html', 'dist:styles', 'dist:fonts', 'dist:scripts'])
 
 ////////////////////////
-///////> relese <///////
+//////-- relese --//////
 ////////////////////////
 var version = "0.1.0-Alpha"
 
@@ -90,7 +105,7 @@ gulp.task('copile:clean', function() {
 
 
 ////////////////////////
-///////> Basic <////////
+//////-- Basic --///////
 ////////////////////////
 gulp.task('run', ['dist'], function(){
 	return 	gulp.src("dist").pipe(run())

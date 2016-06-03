@@ -26,6 +26,9 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-file-include": "^0.13.7",
+    "gulp-html-minifier": "^0.1.8",
+    "gulp-remove-html-comments": "^1.0.1",
+    "gulp-rename": "^1.2.2",
     "gulp-run-electron": "^2.0.0",
     "gulp-watch": "^4.3.6"
   },

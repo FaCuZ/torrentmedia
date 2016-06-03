@@ -80,7 +80,7 @@
 					<!-- search form (Optional) -->
 					<form action="#" method="get" class="sidebar-form" onsubmit="return false">
 						<div class="input-group">
-							<input type="text" name="q" id="tb-search" class="form-control" placeholder="Search...">
+							<input type="text" name="q" id="tb-search" class="form-control" placeholder="{{ search }}">
 							<span class="input-group-btn">
 								<button type="submit" name="search" onclick="call.btn_search()" class="btn btn-flat">
 									<i class="fa fa-search"></i>
@@ -118,16 +118,16 @@
 					
 					<!-- Bottom-menu -->
 					<div class="sidebar-footer">
-						<a data-original-title="Settings" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
+						<a data-original-title="{{ tooltip.settings }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
 							<i class="fa fa-gear"></i>
 						</a>
-						<a data-original-title="Private" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_private()">
+						<a data-original-title="{{ tooltip.private }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_private()">
 							<i class="fa fa-user-secret"></i>
 						</a>
-						<a data-original-title="Hide" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
+						<a data-original-title="{{ tooltip.hide }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
 							<i class="fa fa-eye-slash"></i>
 						</a>
-						<a data-original-title="Close" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_close()">
+						<a data-original-title="{{ tooltip.close }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_close()">
 							<i class="fa fa-power-off"></i>
 						</a>
 					</div>

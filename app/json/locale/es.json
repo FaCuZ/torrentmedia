@@ -2,6 +2,15 @@
 	"name": "TorrentMedia",
 	"cancel": "Cancelar",
 	"download": "Descargar",
+	"search": "Buscar...",
+	
+	"tooltip": {
+		"settings": "Configuracion",
+		"private": "Torrents privados",
+		"hide": "Ocultar",
+		"close": "Cerrar"
+	},
+	
 	"downloads": {
 		"title": "Descargas",
 		"all": "Todas",
@@ -12,33 +21,35 @@
 		"download_torrent": "Torrent:",
 		"donwload_folder": "Descarga en:"
 	},
+	
 	"stats": {
 		"title": "Estadisticas",
 		"all": "Todas"
 	},
+	
 	"autofeeds": {
 		"title": "Autofeeds",
 		"all": "Todos"
 	},
+	
 	"channels": {
 		"title": "Canales",
 		"all": "Todos"
 	},
+	
 	"settings": {
 		"title": "Configuracion",
 		"general": "General"
 	},
+	
 	"nav": {
 		"search": "Buscar...",
 		"downloads": "Descargas",
 		"stats": "Estadisticas",
 		"autofeeds": "Autofeeds",
-		"channels": "Canales",
-		"settings": "Configuracion",
-		"private": "Torrents ocultos",
-		"hide": "Ocultar",
-		"close": "Cerrar"
+		"channels": "Canales"
 	},
+	
 	"table": {
 		"position": "#",
 		"name": "Nombre",
