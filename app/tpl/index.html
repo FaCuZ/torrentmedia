@@ -8,14 +8,8 @@
 		<title>TorrentMedia</title>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+		{{ include('./components/styles.tpl') }}
 
-		<link rel="stylesheet" href="css/libs.css">
-
-		<link rel="stylesheet" href="icons/fonts/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="icons/fonts/icomoon/icomoon.css">
-
-		<link rel="stylesheet" href="css/_all-skins.min.css">
-		<link rel="stylesheet" href="css/base.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini fixed no-select">
@@ -216,18 +210,7 @@
 			<div class="control-sidebar-bg"></div>
 		</div><!-- ./wrapper -->
 
-		<!-- REQUIRED JS SCRIPTS -->
-		<!-- jQuery 2.2.0 -->
-		<script src="../node_modules/admin-lte/plugins/jQuery/jQuery-2.2.0.min.js" onload="if (typeof require !== 'undefined') window.$ = window.jQuery = module.exports;"></script>
-
-		<script src="js/libs.js"></script>
-
-		<!-- DataTables -->
-		<script src="../node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js"></script>
-		<script src="../node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-			
-		<script src="render.js"></script>
-
+		{{ include('./components/scripts.tpl') }}
 
 	</body>
 </html>
