@@ -9,7 +9,8 @@
 		"settings": "Configuracion",
 		"private": "Torrents privados",
 		"hide": "Ocultar",
-		"close": "Cerrar"
+		"close": "Cerrar",
+		"add_modal": "Agregar Torrent"
 	},
 	
 	"downloads": {
