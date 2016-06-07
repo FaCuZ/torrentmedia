@@ -5,7 +5,9 @@ const Electron 		= require('electron'),
 	  shell 		= Electron.shell;
 	  Path 			= require('path'),
 	  WebTorrent 	= require('webtorrent'),
-	  Humanize 		= require('humanize-plus')
+	  Humanize 		= require('humanize-plus'),
+	  intervals		= require('./js/intervals'),
+	  gui 			= require('./js/gui')
 
 var client		= new WebTorrent(),
 	settings	= remote.getGlobal('settings'),  
@@ -14,6 +16,7 @@ var client		= new WebTorrent(),
 	table		= $('#table').DataTable(tableConfig()),
 	footer		= $(".main-footer").html(generalFoot())
 
+intervals.start.all()
 
 ////////////////////
 ////-- EVENTS --////
@@ -33,10 +36,10 @@ var call = {
 		btn_add_folderDialog :()=> gui.getDialogFolder(),
 		btn_search	 		 :()=> gui.searchTorrent(),
 		btn_bottom_settings	 :()=> gui.changePage('settings'),
-		btn_bottom_fullscreen:()=> ipcRenderer.send('control', 'fullscreen'),
+		btn_bottom_fullscreen:()=> gui.send('fullscreen'),
 		btn_bottom_private	 :()=> alert('private'),
-		btn_bottom_hide		 :()=> ipcRenderer.send('control', 'hide'),
-		btn_bottom_close	 :()=> ipcRenderer.send('control', 'close'),
+		btn_bottom_hide		 :()=> gui.send('hide'),
+		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle()
 	}
 
@@ -82,50 +85,6 @@ function tableConfig(){
 	return json
 
 }
-
-var gui = {
-	addTorrentModal: () => {		
-		$('#addModal').modal('toggle')
-		$('#tb-add-folder').val(settings.dir_downloads)
-	},
-
-	changePage: type => {
-		$('.content-wrapper').hide()
-		$('.content-wrapper-' + type).show()
-		$('.sidebar-menu li').removeClass('active')
-		$('#btn_nav_' + type).addClass('active')	
-	},
-
-	searchTorrent: () => {
-		shell.openExternal(settings.searchers[settings.search_with] + $('#tb-search').val())
-	},
-
-	getDialogFile: () => {
-		let config = {	title: 'Please select a torrent',
-						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
-						defaultPath: settings.dir_downloads,
-						properties: ['openFile']
-					 }
-
-		dialog.showOpenDialog(config, name => $('#tb-add-file').val(name))	
-	},
-
-	getDialogFolder: () => {
-		let config = {  title: 'Please select a folder',
-						defaultPath: settings.dir_downloads,
-						properties: ['openDirectory', 'createDirectory']
-					 }		
-
-		dialog.showOpenDialog(config, name => $('#tb-add-folder').val(name))	
-	},
-
-	setTray: (blink, color) => {
-		settings.tray_blink = blink
-		settings.tray_color = color
-	}
-
-}
-
 
 function addTorrent(torrentID){
 	let temp = table.row.add([
@@ -224,85 +183,6 @@ function generalFoot (){
 			</div>
 			` 	
 }
-
-
-///////////////////////
-////-- INTERVALS --////
-///////////////////////
-var interval = {
-	table: null,
-	tray: null,
-	updateTable: () => {
-		let count = client.torrents.length
-		
-		if(count <= 0) return null
-
-		for (var i = count - 1; i >= 0; i--) {
-			torrent = client.torrents[i]
-			table.row(i).data([
-				torrents[torrent.infoHash].position,
-				torrent.name,
-				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
-				Humanize.fileSize(torrent.downloadSpeed) + "/s",
-				Humanize.fileSize(torrent.uploadSpeed) + "/s",
-				torrent.numPeers,
-				fixRatio(torrent.ratio),
-				humanTime(torrent.timeRemaining)
-			]).draw()
-		}
-
-		$(".main-footer").html(generalFoot())
-	},
-
-	updateTray: () => {
-		let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
-		let us = Humanize.fileSize(client.uploadSpeed) + '/s'
-
-		ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, settings.tray_blink, settings.tray_color)
-	},
-
-	startAll: () => {	
-		interval.table = setInterval(() => interval.updateTable(), settings.interval_refresh)
-		interval.tray = setInterval(() => interval.updateTray(), settings.interval_tray)
-	}
-
-}
-
-interval.startAll()
-/*
-var interval = setInterval( () => {
-	let count = client.torrents.length
-	
-	if(count <= 0) return null
-
-	for (var i = count - 1; i >= 0; i--) {
-		torrent = client.torrents[i]
-		table.row(i).data([
-			torrents[torrent.infoHash].position,
-			torrent.name,
-			Humanize.fileSize(torrent.downloaded),
-			progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
-			Humanize.fileSize(torrent.downloadSpeed) + "/s",
-			Humanize.fileSize(torrent.uploadSpeed) + "/s",
-			torrent.numPeers,
-			fixRatio(torrent.ratio),
-			humanTime(torrent.timeRemaining)
-		]).draw()
-	}
-
-	$(".main-footer").html(generalFoot())	
-
-}, settings.interval_refresh)
-
-var intervalTray = setInterval( () => {
-	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
-	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
-
-	ipcRenderer.send('tray', ' ↓ ' + ds + ' ↑ ' + us, settings.tray_blink, settings.tray_color)
-
-}, settings.interval_tray)
-*/
 
 /////////////////////
 ////-- CLASSES --////
