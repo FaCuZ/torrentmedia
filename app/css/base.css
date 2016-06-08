@@ -33,6 +33,19 @@ body{
 	text-align: right;
 }
 
+.modal-body-settings .nav-tabs-custom {
+	margin-bottom: 10px;
+	background: #f6f6f6;
+	box-shadow: none;
+	border-radius: 3px;
+}
+
+.nav-tabs-custom > .nav-tabs {
+	border-bottom-color: #ddd;
+	padding-left: 10px;
+}
+
+
 #table{
 	width: 100%;
 }

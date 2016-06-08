@@ -16,10 +16,10 @@
 				<div class="box">
 					<div class="box-body sin-padding">
 						Aca van las Estadisticas
-					</div><!-- /.box-body -->
-				</div><!-- /.box -->			  
-			</div><!-- /.col -->
-		</div><!-- /.row -->			
+					</div>
+				</div>			  
+			</div>
+		</div>		
 	
-	</section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+	</section>
+</div>

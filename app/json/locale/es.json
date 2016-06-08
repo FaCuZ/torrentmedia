@@ -2,6 +2,7 @@
 	"name": "TorrentMedia",
 	"cancel": "Cancelar",
 	"download": "Descargar",
+	"save": "Guardar",
 	"search": "Buscar...",	
 	"loading": "Cargando...",
 	
@@ -47,7 +48,9 @@
 	
 	"settings": {
 		"title": "Configuracion",
-		"general": "General"
+		"general": "General",
+		"network": "Red",
+		"advance": "Avanzado"
 	},
 	
 	"nav": {

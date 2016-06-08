@@ -15,7 +15,11 @@ module.exports = {
 
 	closeAlert: () => {
 		$('.channels-alert').fadeOut()
-		//settings.channels_warning = false
+		settings.channels_warning = false
+	},
+
+	openSettings: () => {
+		$('#modal_setting').modal('toggle')
 	},
 
 	searchTorrent: () => {
