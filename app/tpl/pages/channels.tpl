@@ -13,13 +13,20 @@
 
 		<div class="row">
 			<div class="col-xs-12">
+
+				<div class="alert alert-warning alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<h4><i class="icon fa fa-warning"></i> ¡Importante!</h4>
+					Todos los canales son externos a esta aplicacion, y son facilmente encontrados en internet. Torrent Media no tiene control sobre su contenido, es posible que encuentre contenido falso, virus o con derechos de autor. Torrent Media no puede controlar lo que ud descarga desde los canales, por lo que no es responsable por daños o perjuicos que estos podrian causar. 
+				</div>
+
 				<div class="box">
 					<div class="box-body sin-padding">
 						En esta seccion de puede instalar y configurar los canales.
-					</div><!-- /.box-body -->
-				</div><!-- /.box -->			  
-			</div><!-- /.col -->
-		</div><!-- /.row -->			
+					</div>
+				</div>		  
+			</div>
+		</div>	
 	
-	</section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+	</section>
+</div>
