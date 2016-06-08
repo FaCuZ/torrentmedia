@@ -40,7 +40,8 @@ var call = {
 		btn_bottom_private	 :()=> alert('private'),
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
-		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle()
+		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle(),
+		btn_channels_alert	 :()=> gui.closeAlert()
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {

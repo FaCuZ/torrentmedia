@@ -15,13 +15,13 @@
 			<div class="col-xs-12">
 				<div class="empty-box text-center">						
 					<p>
-						AutoFeeds te permite configurar los canales para descagar torrents automaticamente.
+						{{ autofeeds.empty_msg1 }}
 					</p>
 					<p>
-						Para empezar primero deberas instalar o crear un canal.
+						{{ autofeeds.empty_msg2 }}
 					</p> 
 					<p>
-						<a class="btn btn-app" onclick="call.btn_nav_channels()">
+						<a class="btn btn-default" onclick="call.btn_nav_channels()">
 							<i class="fa fa-plug"></i> {{ channels.title }}
 						</a>
 					</p>

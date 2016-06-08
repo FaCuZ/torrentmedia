@@ -32,7 +32,9 @@
 	
 	"autofeeds": {
 		"title": "Autofeeds",
-		"all": "All"
+		"all": "All",
+		"empty_msg1": "AutoFeeds allows you to configure the channels to automatically download torrents.",
+		"empty_msg2": "To begin you must first install or create a channel."
 	},
 	
 	"channels": {
@@ -42,7 +44,10 @@
 	
 	"settings": {
 		"title": "Settings",
-		"general": "General"
+		"general": "General",
+		"warning": "Warning!",
+		"warning_msg": "Todos los canales son externos a esta aplicacion, facilmente encontrados en internet. Torrent Media no tiene control sobre su contenido, es posible que encuentre contenido falso, virus o con derechos de autor. Torrent Media no puede controlar lo que ud descarga desde los canales, por lo que no es responsable por daños o perjuicos que estos podrian causar.All channels are external to the application, easily found on the Internet. TorrentMedia has no control over its content, you may find fake content, viruses or copyrighted. TorrentMedia can not control what you download from the channels, so it is not responsible for damage or perjuicos that they could cause.",
+		"warning_btn": "I understand the risks, and take full responsibility"
 	},
 	
 	"nav": {

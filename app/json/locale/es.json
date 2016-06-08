@@ -32,12 +32,17 @@
 	
 	"autofeeds": {
 		"title": "Autofeeds",
-		"all": "Todos"
+		"all": "Todos",
+		"empty_msg1": "AutoFeeds te permite configurar los canales para descargar torrents automáticamente.",
+		"empty_msg2": "Para empezar primero debes instalar o crear un canal."
 	},
 	
 	"channels": {
 		"title": "Canales",
-		"all": "Todos"
+		"all": "Todos",
+		"warning": "¡Advertencia!",
+		"warning_msg": "Todos los canales son externos a esta aplicacion, facilmente encontrados en internet. Torrent Media no tiene control sobre su contenido, es posible que encuentre contenido falso, virus o con derechos de autor. Torrent Media no puede controlar lo que ud descarga desde los canales, por lo que no es responsable por daños o perjuicos que estos podrian causar.",
+		"warning_btn": "Comprendo los riesgos, y asumo toda responsabilidad"
 	},
 	
 	"settings": {

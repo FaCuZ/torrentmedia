@@ -17,6 +17,8 @@
 
 	"dir_downloads": "",
 	
+	"channels_warning": true,
+
 	"search_with": "Torrentz",
 	"searchers": {
 		"Torrentz": "https://www.torrentz.eu/search?q=",

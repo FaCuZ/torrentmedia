@@ -15,7 +15,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-body sin-padding">
-						Aca van las Estadisticas!!!!!!!!!!
+						Aca van las Estadisticas
 					</div><!-- /.box-body -->
 				</div><!-- /.box -->			  
 			</div><!-- /.col -->

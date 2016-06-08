@@ -9,6 +9,13 @@ module.exports = {
 		$('.content-wrapper-' + type).show()
 		$('.sidebar-menu li').removeClass('active')
 		$('#btn_nav_' + type).addClass('active')	
+
+		if(type == 'channels' && settings.channels_warning) $('.channels-alert').fadeIn()
+	},
+
+	closeAlert: () => {
+		$('.channels-alert').fadeOut()
+		//settings.channels_warning = false
 	},
 
 	searchTorrent: () => {

@@ -21,6 +21,18 @@ body{
 	padding-top: 10%;
 }
 
+.channels-alert{
+	display: none;
+}
+
+.btn-alert{
+	margin-top: 10px;
+}
+
+.btn-wrapper{
+	text-align: right;
+}
+
 #table{
 	width: 100%;
 }
