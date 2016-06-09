@@ -26,11 +26,16 @@
 		</li> -->
 		<!--  <li class="header">CANALES</li> -->
 		<li id="btn_nav_main" onclick="call.btn_nav_main()" class="active">
-			<a href="#"><i class="fa fa-files-o"></i> <span>{{ downloads.title }}</span></a>
-		</li>						
+			<a href="#"><i class="fa fa-download"></i> <span>{{ downloads.title }}</span></a>
+		</li>			
+		<!--			
 		<li id="btn_nav_stats" onclick="call.btn_nav_stats()">
 			<a href="#"><i class="fa fa-bar-chart"></i> <span>{{ stats.title }}</span></a>
-		</li>						
+		</li>
+		-->	
+		<li id="btn_nav_mediacast" onclick="call.btn_nav_mediacast()">
+			<a href="#"><i class="fa icon-cast"></i> <span>{{ mediacast.title }}</span></a>
+		</li>			
 		<li id="btn_nav_autofeeds" onclick="call.btn_nav_autofeeds()">
 			<a href="#"><i class="fa fa-feed"></i> <span>{{ autofeeds.title }}</span></a>
 		</li>
@@ -45,8 +50,8 @@
 		<a data-original-title="{{ tooltip.settings }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_settings()">
 			<i class="fa fa-gear"></i>
 		</a>
-		<a data-original-title="{{ tooltip.private }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_private()">
-			<i class="fa fa-user-secret"></i>
+		<a data-original-title="{{ tooltip.stats }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_nav_stats()">
+			<i class="fa fa-bar-chart"></i>
 		</a>
 		<a data-original-title="{{ tooltip.hide }}" data-toggle="tooltip" data-placement="top" onclick="call.btn_bottom_hide()">
 			<i class="fa fa-eye-slash"></i>

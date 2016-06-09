@@ -46,6 +46,10 @@ body{
 }
 
 
+.btn-group{
+    padding: 0px 4px;
+}
+
 #table{
 	width: 100%;
 }
@@ -197,6 +201,10 @@ tr.selected{
 	background: #222D32;
 }
 
+.navbar-static-top{
+	font-size: 17px;
+}
+
 
 @media (max-width: 991px){	
 
@@ -215,5 +223,16 @@ tr.selected{
 
 	.box {
 		overflow: auto;
+	}
+}
+
+@media (min-width: 768px){	
+	.navbar-nav>li>a {
+		padding-top: 16px;
+		padding-bottom: 12px;
+	}
+
+	.main-header .sidebar-toggle {
+    	padding: 13px 15px;
 	}
 }

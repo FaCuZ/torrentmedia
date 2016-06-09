@@ -30,6 +30,7 @@ var call = {
 		btn_position_down 	 :()=> torrents[torrentSelected.infoHash].down(),
 		btn_nav_main 		 :()=> gui.changePage('main'),
 		btn_nav_stats 		 :()=> gui.changePage('stats'),
+		btn_nav_mediacast 	 :()=> gui.changePage('mediacast'),
 		btn_nav_autofeeds 	 :()=> gui.changePage('autofeeds'),
 		btn_nav_channels 	 :()=> gui.changePage('channels'),
 		btn_add_fileDialog	 :()=> gui.getDialogFile(), 
@@ -41,7 +42,9 @@ var call = {
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle(),
-		btn_channels_alert	 :()=> gui.closeAlert()
+		btn_channels_alert	 :()=> gui.closeAlert(),
+		btn_cast			 :()=> gui.cast(),
+		btn_share			 :()=> gui.share()
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {

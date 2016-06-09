@@ -8,7 +8,8 @@
 	
 	"tooltip": {
 		"settings": "Configuracion",
-		"private": "Torrents privados",
+		"private": "Torrents privados",		
+		"stats": "Estadisticas",
 		"hide": "Ocultar",
 		"close": "Cerrar",
 		"add_modal": "Agregar Torrent"
@@ -31,6 +32,13 @@
 		"all": "Todas"
 	},
 	
+	"mediacast": {
+		"title": "Mediacast",
+		"all": "Todos",
+		"video": "Video",
+		"music": "Musica"
+	},
+
 	"autofeeds": {
 		"title": "Autofeeds",
 		"all": "Todos",

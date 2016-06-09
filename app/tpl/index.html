@@ -15,57 +15,12 @@
 	<body class="hold-transition skin-blue sidebar-mini fixed no-select">
 		<div class="wrapper">
 
-			<!-- Main Header -->
-			<header class="main-header">
+			<header class="main-header">	
 
-				<!-- Logo -->
-				<a href="index2.html" class="logo">
-					<!-- mini logo for sidebar mini 50x50 pixels -->
-					<span class="logo-mini">T<b>m</b></span>
-					<!-- logo for regular state and mobile devices -->
-					<span class="logo-lg"><b>Torrent</b>Media</span>
-				</a>
+				{{ include('./components/header.tpl') }}
 
-				<!-- Header Navbar -->
-				<nav class="navbar navbar-static-top" role="navigation">
-					<!-- Sidebar toggle button-->
-					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" onclick="call.btn_sidebar_toggle()">
-						<span class="sr-only">Toggle navigation</span>
-					</a>
-					<!-- Navbar Right Menu -->
-					<div class="navbar-custom-menu">
-						<ul class="nav navbar-nav">
-							<!-- Control Sidebar Toggle Button -->
-
-							<!-- EJEMPLO DE CAST -->
-							<li class="dropdown notifications-menu">
-								<a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-cast"></i>
-									<!-- <span class="label label-success">3</span> -->
-								</a>
-								<ul class="dropdown-menu">
-									<li class="header">You have 3 files to play</li>
-									<li>
-										<!-- inner menu: contains the actual data -->
-										<ul class="menu">
-											<li><a href="#"><i class="fa fa-users text-aqua"></i> 5 new members joined today</a></li>
-											<li><a href="#"><i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems</a></li>
-											<li><a href="#"><i class="fa fa-users text-red"></i> 5 new members joined</a></li>
-											<li><a href="#"><i class="fa fa-shopping-cart text-green"></i> 25 sales made</a></li>
-											<li><a href="#"><i class="fa fa-user text-red"></i> You changed your username</a></li>
-										</ul>
-									</li>
-									<li class="footer"><a href="#">View all</a></li>
-								</ul>
-							</li>
-							<!-- FIN DE EJEMPLO -->
-
-							<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-share-alt"></i></a></li>
-						</ul>
-					</div>
-				</nav>
 			</header>
-			<!-- Left side column. contains the logo and sidebar -->
+
 			<aside class="main-sidebar">
 
 				{{ include('./components/sidebar.tpl') }}
@@ -74,82 +29,31 @@
 
 			{{ include('./pages/main.tpl') }}
 
-			{{ include('./pages/stats.tpl') }}
+			{{ include('./pages/mediacast.tpl') }}
 
 			{{ include('./pages/autofeed.tpl') }}
 			
 			{{ include('./pages/channels.tpl') }}
 
+			
 			{{ include('./pages/settings.tpl') }}
 
-			<!-- Main Footer -->
+			{{ include('./pages/stats.tpl') }}
+
 			<footer class="main-footer">
-				
+
 			</footer>
 
-			<!-- Control Sidebar -->
 			<aside class="control-sidebar control-sidebar-dark">
-				<!-- Create the tabs -->
-				<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-					<li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-					<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
-				</ul>
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<!-- Home tab content -->
-					<div class="tab-pane active" id="control-sidebar-home-tab">
-						<h3 class="control-sidebar-heading">Recent Activity</h3>
-						<ul class="control-sidebar-menu">
-							<li>
-								<a href="javascript::;">
-									<i class="menu-icon fa fa-birthday-cake bg-red"></i>
-									<div class="menu-info">
-										<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-										<p>Will be 23 on April 24th</p>
-									</div>
-								</a>
-							</li>
-						</ul><!-- /.control-sidebar-menu -->
 
-						<h3 class="control-sidebar-heading">Tasks Progress</h3>
-						<ul class="control-sidebar-menu">
-							<li>
-								<a href="javascript::;">
-									<h4 class="control-sidebar-subheading">
-										Custom Template Design
-										<span class="label label-danger pull-right">70%</span>
-									</h4>
-									<div class="progress progress-xxs">
-										<div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-									</div>
-								</a>
-							</li>
-						</ul><!-- /.control-sidebar-menu -->
+				{{ include('./components/hidebar.tpl') }}
 
-					</div><!-- /.tab-pane -->
-					<!-- Stats tab content -->
-					<div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
-					<!-- Settings tab content -->
-					<div class="tab-pane" id="control-sidebar-settings-tab">
-						<form method="post">
-							<h3 class="control-sidebar-heading">General Settings</h3>
-							<div class="form-group">
-								<label class="control-sidebar-subheading">
-									Report panel usage
-									<input type="checkbox" class="pull-right" checked>
-								</label>
-								<p>
-									Some information about this general settings option
-								</p>
-							</div><!-- /.form-group -->
-						</form>
-					</div><!-- /.tab-pane -->
-				</div>
-			</aside><!-- /.control-sidebar -->
+			</aside>
 			<!-- Add the sidebar's background. This div must be placed
 					 immediately after the control sidebar -->
 			<div class="control-sidebar-bg"></div>
-		</div><!-- ./wrapper -->
+
+		</div>
 
 		{{ include('./components/scripts.tpl') }}
 

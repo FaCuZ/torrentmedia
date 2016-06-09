@@ -9,6 +9,7 @@
 	"tooltip": {
 		"settings": "Settings",
 		"private": "Private",
+		"stats": "Stats",
 		"hide": "Hide",
 		"close": "Close",
 		"add_modal": "Add Torrent"
@@ -29,6 +30,13 @@
 	"stats": {
 		"title": "Stats",
 		"all": "All"
+	},
+
+	"mediacast": {
+		"title": "Mediacast",
+		"all": "All",
+		"video": "Video",
+		"music": "Music"
 	},
 	
 	"autofeeds": {

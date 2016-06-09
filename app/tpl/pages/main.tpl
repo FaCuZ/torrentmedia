@@ -11,7 +11,12 @@
 			
 			<span id="btns-hided" class="hide-btns">
 				<button type="button" onclick="call.btn_pause()" class="btn btn-default" id="btn-pause"><i class="fa fa-pause"></i></button>
-
+				
+				<div class="btn-group">
+					<button type="button" onclick="call.btn_cast()" class="btn btn-default" id="btn-cast"><i class="icon-cast"></i></button>
+					<button type="button" onclick="call.btn_share()" class="btn btn-default"><i class="fa fa-share-alt"></i></button>
+				</div>
+				
 				<div class="btn-group">
 					<button type="button" onclick="call.btn_position_up()" class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
 					<button type="button" onclick="call.btn_position_down()" class="btn btn-default"><i class="fa fa-arrow-down"></i></button>

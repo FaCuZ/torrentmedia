@@ -18,6 +18,14 @@ module.exports = {
 		settings.channels_warning = false
 	},
 
+	cast: () => {
+		alert("cast file")
+	},
+
+	share: () => {
+		alert("share file")
+	},
+
 	openSettings: () => {
 		$('#modal_setting').modal('toggle')
 	},
