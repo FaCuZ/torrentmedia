@@ -1,0 +1,16 @@
+{
+	"type": "rss",
+	"name": "aRGENTeaM",
+	"site": "http://www.argenteam.net",
+	"image": "http://i.imgur.com/v3cJwNx.jpg",
+	"feed": {
+		"name": "HDTV",
+		"type": "series",
+		"url": "http://www.argenteam.net/rss/tvseries_torrents.xml"
+	},
+	"feed2": {		
+		"name": "HR.HDTV",
+		"type": "series",
+		"url": "http://www.argenteam.net/rss/tvseries_torrents_hr.xml"
+	}
+}

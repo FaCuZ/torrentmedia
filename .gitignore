@@ -1,3 +1,4 @@
 AdminLTE/
 node_modules/
 dist/
+tmp/

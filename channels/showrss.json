@@ -1,0 +1,11 @@
+{
+	"type": "rss",
+	"name": "aRGENTeaM",
+	"site": "http://showrss.info",
+	"image": "http://i.imgur.com/TCA0tvS.png",
+	"feed": {
+		"name": "All",
+		"type": "series",
+		"url": "http://showrss.info/feeds/schedule/schedule.rss"
+	}
+}
