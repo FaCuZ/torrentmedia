@@ -169,7 +169,7 @@ function progressBar(progress, element, torrent = null){
 			`
 }
 
-function generalFoot (){	
+function generalFoot(){	
 	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
 	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
 	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
