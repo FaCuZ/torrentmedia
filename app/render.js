@@ -31,23 +31,23 @@ var call = {
 		btn_pause			 :()=> pauseTorrent(table.row('tr.selected')),	
 		btn_position_up 	 :()=> torrents[torrentSelected.infoHash].up(),
 		btn_position_down 	 :()=> torrents[torrentSelected.infoHash].down(),
-		btn_nav_main 		 :()=> gui.changePage('main'),
+		btn_nav_main 		 :()=> gui.changePage('downloads'),
 		btn_nav_stats 		 :()=> gui.changePage('stats'),
 		btn_nav_mediacast 	 :()=> gui.changePage('mediacast'),
 		btn_nav_autofeeds 	 :()=> gui.changePage('autofeeds'),
-		btn_nav_channels 	 :()=> gui.open.channels(),
-		btn_add_fileDialog	 :()=> gui.getDialogFile(), 
-		btn_add_folderDialog :()=> gui.getDialogFolder(),
+		btn_nav_channels 	 :()=> gui.channels.open(),
+		btn_add_fileDialog	 :()=> gui.downloads.getDialogFile(), 
+		btn_add_folderDialog :()=> gui.downloads.getDialogFolder(),
 		btn_search	 		 :()=> gui.searchTorrent(),
-		btn_bottom_settings	 :()=> gui.openSettings(),
+		btn_bottom_settings	 :()=> gui.settings.open(),
 		btn_bottom_fullscreen:()=> gui.send('fullscreen'),
 		btn_bottom_private	 :()=> alert('private'),
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
-		btn_sidebar_toggle	 :()=> $('.sidebar-footer').toggle(),
-		btn_channels_alert	 :()=> gui.closeAlert(),
-		btn_cast			 :()=> gui.cast(),
-		btn_share			 :()=> gui.share()
+		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
+		btn_channels_alert	 :()=> gui.channels.closeAlert(),
+		btn_cast			 :()=> gui.downloads.cast(),
+		btn_share			 :()=> gui.downloads.share()
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {

@@ -1,0 +1,11 @@
+{
+	"type": "rss",
+	"name": "YTS.ag",
+	"site": "https://yts.ag",
+	"image": "",
+	"feed": {
+		"name": "All",
+		"type": "movies",
+		"url": "https://yts.ag/rss/0/all/all/0"
+	}
+}

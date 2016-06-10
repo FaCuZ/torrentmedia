@@ -1,5 +1,5 @@
 <!--/////// DYNAMIC CONTENT: MAIN ///////-->
-<div class="content-wrapper content-wrapper-main">
+<div class="content-wrapper content-wrapper-downloads">
 
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">

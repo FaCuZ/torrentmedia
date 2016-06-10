@@ -1,8 +1,4 @@
 module.exports = {
-	addTorrentModal: () => {		
-		$('#addModal').modal('toggle')
-		$('#tb-add-folder').val(settings.dir_downloads)
-	},
 
 	changePage: type => {
 		$('.content-wrapper').hide()
@@ -11,52 +7,12 @@ module.exports = {
 		$('#btn_nav_' + type).addClass('active')	
 	},
 
-	open: {
-		channels : ()=> {
-			gui.changePage('channels')
-			if(settings.channels_warning) $('.channels-alert').fadeIn()
-			channels.load()
-		}
-	},
-
-	closeAlert: () => {
-		$('.channels-alert').fadeOut()
-		settings.channels_warning = false
-	},
-
-	cast: () => {
-		alert("cast file")
-	},
-
-	share: () => {
-		alert("share file")
-	},
-
-	openSettings: () => {
-		$('#modal_setting').modal('toggle')
+	sidebarToggle: ()=> {
+		$('.sidebar-footer').toggle()
 	},
 
 	searchTorrent: () => {
 		shell.openExternal(settings.searchers[settings.search_with] + $('#tb-search').val())
-	},
-
-	getDialogFile: () => {
-		let config = {	title: 'Please select a torrent',
-						filters: [{ name: 'Torrents', extensions: ['torrent'] }],
-						defaultPath: settings.dir_downloads,
-						properties: ['openFile']
-					 }
-
-		dialog.showOpenDialog(config, name => $('#tb-add-file').val(name))	
-	},
-
-	getDialogFolder: () => {
-		let config = {  title: 'Please select a folder',
-						defaultPath: settings.dir_downloads,
-						properties: ['openDirectory', 'createDirectory']
-					 }		
-
-		dialog.showOpenDialog(config, name => $('#tb-add-folder').val(name))	
 	},
 
 	setTray: (blink, color) => {
@@ -66,6 +22,61 @@ module.exports = {
 
 	send: (command) => {
 		ipcRenderer.send('control', command)
-	}
+	},
+
+	downloads: {
+		addTorrentModal: ()=> {
+			$('#addModal').modal('toggle')
+			$('#tb-add-folder').val(settings.dir_downloads)
+		},
+
+		cast: ()=> {
+			alert("cast file")
+		},
+
+		share: ()=> {
+			alert("share file")
+		},
+
+		getDialogFile: ()=> {
+			let config = {	title: 'Please select a torrent',
+							filters: [{ name: 'Torrents', extensions: ['torrent'] }],
+							defaultPath: settings.dir_downloads,
+							properties: ['openFile']
+						 }
+
+			dialog.showOpenDialog(config, name => $('#tb-add-file').val(name))	
+		},
+
+		getDialogFolder: ()=> {
+			let config = {  title: 'Please select a folder',
+							defaultPath: settings.dir_downloads,
+							properties: ['openDirectory', 'createDirectory']
+						 }		
+
+			dialog.showOpenDialog(config, name => $('#tb-add-folder').val(name))	
+		},
+
+
+	},
+
+	channels: {
+		open :()=> {
+			gui.changePage('channels')
+			if(settings.channels_warning) $('#modal_alert').modal('show')
+			channels.load()
+		}, 	
+
+		closeAlert :()=> {
+			$('#modal_alert').modal('hide')
+			settings.channels_warning = false
+		},
+	},
+	
+	settings: {
+		open :()=> {
+			$('#modal_setting').modal('toggle')
+		},
+	},
 
 }

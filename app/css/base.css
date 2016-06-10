@@ -21,8 +21,20 @@ body{
 	padding-top: 10%;
 }
 
-.channels-alert{
-	display: none;
+.info-box-number {
+	/* display: block; */
+	font-weight: bold;
+	font-size: 37px;
+	position: absolute;
+	bottom: 6px;
+	right: 20px;
+	color: rgba(23, 23, 23, 0.04);
+	text-transform: uppercase;
+}
+
+.info-box-text {
+    text-transform: uppercase;
+    font-size: initial;
 }
 
 .btn-alert{
@@ -46,11 +58,26 @@ body{
 }
 
 .btn {
-    height: 34px;
+	height: 34px;
 }
 
 .btn-group{
-    padding: 0px 3px;
+	padding: 0px 3px;
+}
+
+.alert .btn-wrapper a{
+	padding: 20px;
+	padding-right: 0px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.alert .btn-wrapper a:hover{
+	text-decoration: underline;
+}
+
+#channels-installed .empty-box{	
+	padding-top: 0px;
 }
 
 #table{
@@ -236,6 +263,6 @@ tr.selected{
 	}
 
 	.main-header .sidebar-toggle {
-    	padding: 13px 15px;
+		padding: 13px 15px;
 	}
 }

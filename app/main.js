@@ -54,8 +54,6 @@ app.on('ready', () => {
 	//console.log(global.settings.locale)
 	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
 
-	mainWindow.webContents.openDevTools() // Abre DevTools
-
 	mainWindow.on('closed', () => {
 		// Dereference the window object, usually you would store windows
 		// in an array if your app supports multi windows, this is the time
@@ -81,6 +79,14 @@ app.on('ready', () => {
 		}
 	})
 
+	///* DevTools *///
+	//TODO: if(developer stage)
+	mainWindow.webContents.openDevTools() // Open DevTools
+	
+	mainWindow.webContents.on("devtools-opened", () => {
+		//mainWindow.webContents.closeDevTools() // Avoid DevTools open
+	})
+	///* End DevTools *///
 
 	////-- TRAY ICON--////
 	appIcon = new Tray(getIconPath('white'))

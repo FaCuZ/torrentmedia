@@ -21,8 +21,7 @@
     "Files"
   ],
   "devDependencies": {
-    "del": "^2.2.0",
-    "electron-prebuilt": "1.2.0",
+    "electron-prebuilt": "^1.2.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-file-include": "^0.13.7",
@@ -36,6 +35,7 @@
     "admin-lte": "^2.3.3",
     "font-awesome": "^4.6.3",
     "glob": "^7.0.3",
+    "del": "^2.2.0",
     "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
     "pixl-xml": "^1.0.6",

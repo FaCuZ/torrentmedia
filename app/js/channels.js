@@ -1,5 +1,6 @@
 module.exports = {
 	all: null,
+	instelled: null,
 	load :()=> {
 		$('#channels-web').html('')
 		glob('./channels/*.json', (er, files) => {			
@@ -7,23 +8,36 @@ module.exports = {
 				let channel = require(Path.resolve(file))
 				$('#channels-web').append(channels.html(channel))
 				console.log(channel)
-				/*
-				var doc = XML.parse( require( Path.resolve(file) ) )
-				console.log( doc )
-				*/
 			})
-			//require( path.resolve( file ) )
-		});
+		})
+	},
+
+	parseXml(file){
+		return XML.parse(require(Path.resolve(file)))
 	},
 
 	html:  channel => {
+		let color = "info"
+		let icon = "general"
+
+		switch(channel.type) {
+			case 'rss':
+				color = "orange"
+				icon = "rss"
+				break
+			case 'html':
+				color = "teal"
+				icon = "html5"
+				break
+		} 
+
 		return `<div class="col-md-3 col-sm-6 col-xs-12">
-					<div class="info-box">
-						<span class="info-box-icon bg-aqua"><i class="fa fa-image"></i></span>
+					<div class="info-box channel-box">
+						<span class="info-box-icon bg-${color}"><i class="fa fa-${icon}"></i></span>
 
 						<div class="info-box-content">
 						  <span class="info-box-text">${channel.name}</span>
-						  <span class="info-box-number"><small>${channel.type}</small></span>
+						  <span class="info-box-number">${channel.type}</span>
 						</div>
 					</div>
 				</div>`

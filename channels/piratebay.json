@@ -1,0 +1,16 @@
+{
+	"type": "html",
+	"name": "Piratebay",
+	"site": "https://thepiratebay.org/",
+	"image": "",
+	"feed": {
+		"name": "All Videos",
+		"type": "videos",
+		"url": "https://thepiratebay.org/browse/200"
+	},
+	"structure": {
+		"item": "td",
+		"title": "td .detName .detLink|text",
+		"url": "td a|href"
+	}
+}
