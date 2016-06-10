@@ -35,8 +35,10 @@
   "dependencies": {
     "admin-lte": "^2.3.3",
     "font-awesome": "^4.6.3",
+    "glob": "^7.0.3",
     "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
+    "pixl-xml": "^1.0.6",
     "webtorrent": "^0.94.1"
   }
 }

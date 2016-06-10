@@ -1,29 +1,29 @@
 module.exports = {
 	all: null,
-	_files: null,
 	load :()=> {
-		console.log("load")
-		glob('./channels/*.json', (er, files) => {
-			_files = files
-			console.log(_files)
+		$('#channels-web').html('')
+		glob('./channels/*.json', (er, files) => {			
 			files.forEach(file => { 
-				console.log(Path.resolve(file))
-				$('#channels-web').append(channels.content(file))
+				let channel = require(Path.resolve(file))
+				$('#channels-web').append(channels.html(channel))
+				console.log(channel)
+				/*
+				var doc = XML.parse( require( Path.resolve(file) ) )
+				console.log( doc )
+				*/
 			})
 			//require( path.resolve( file ) )
 		});
 	},
 
-	content:  data => {
-		//return "<h3>"+data.name+"</h3>"
-
+	html:  channel => {
 		return `<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="info-box">
 						<span class="info-box-icon bg-aqua"><i class="fa fa-image"></i></span>
 
 						<div class="info-box-content">
-						  <span class="info-box-text">${data}</span>
-						  <span class="info-box-number">90<small>%</small></span>
+						  <span class="info-box-text">${channel.name}</span>
+						  <span class="info-box-number"><small>${channel.type}</small></span>
 						</div>
 					</div>
 				</div>`

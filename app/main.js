@@ -11,7 +11,6 @@ const Electron = require('electron'),
 	  Tray = Electron.Tray,
 	  BrowserWindow = Electron.BrowserWindow
 
-
 var mainWindow = null,
 	force_quit = false,
 	appIcon = null,
