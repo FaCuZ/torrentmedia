@@ -103,6 +103,7 @@ gulp.task('copile:clean', function() {
 	del(['relese/' + version + '/'])
 })
 
+gulp.task('compile', ['copile:clean'])
 
 ////////////////////////
 //////-- Basic --///////

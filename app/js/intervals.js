@@ -12,16 +12,16 @@ module.exports = {
 				torrents[torrent.infoHash].position,
 				torrent.name,
 				Humanize.fileSize(torrent.downloaded),
-				progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
+				gui.progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
 				Humanize.fileSize(torrent.downloadSpeed) + "/s",
 				Humanize.fileSize(torrent.uploadSpeed) + "/s",
 				torrent.numPeers,
-				fixRatio(torrent.ratio),
+				gui.fixRatio(torrent.ratio),
 				humanTime(torrent.timeRemaining)
 			]).draw()
 		}
 
-		$(".main-footer").html(generalFoot())
+		$(".main-footer").html(gui.generalFoot())
 	},
 
 	updateTray: () => {

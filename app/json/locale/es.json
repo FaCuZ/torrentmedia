@@ -54,7 +54,7 @@
 		"warning_btn": "Comprendo los riesgos, y asumo toda responsabilidad"
 	},
 	
-	"settings": {
+	"configs": {
 		"title": "Configuracion",
 		"general": "General",
 		"network": "Red",

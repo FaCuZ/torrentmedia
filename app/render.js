@@ -1,15 +1,19 @@
 const Electron 		= require('electron'),
 	  remote 		= Electron.remote,
-	  dialog 		= remote.dialog,
 	  ipcRenderer 	= Electron.ipcRenderer,
-	  shell 		= Electron.shell;
+	  shell 		= Electron.shell,
+	  dialog 		= remote.dialog,
+
 	  Path 			= require('path'),
 	  glob 			= require('glob'),
 	  WebTorrent 	= require('webtorrent'),
 	  Humanize 		= require('humanize-plus'),
-	  XML 			= require('pixl-xml');
-	  intervals		= require('./js/intervals'),
+	  XML 			= require('pixl-xml'),
+
 	  gui 			= require('./js/gui'),
+	  downloads		= require('./js/downloads'),
+	  intervals		= require('./js/intervals'),
+	  configs		= require('./js/configs'),
 	  channels		= require('./js/channels')
 
 var client		= new WebTorrent(),
@@ -17,57 +21,55 @@ var client		= new WebTorrent(),
 	locale		= require('./json/locale/' + settings.locale + '.json'),
 	humanTime	= require('humanize-duration').humanizer({ language: settings.locale, largest: 1, round: true }),
 	table		= $('#table').DataTable(tableConfig()),
-	footer		= $(".main-footer").html(generalFoot())
+	footer		= $(".main-footer").html(gui.generalFoot())
 
 intervals.start.all()
 
-////////////////////
-////-- EVENTS --////
-////////////////////
 var call = {
-		btn_add_modal 		 :()=> gui.addTorrentModal(),
-		btn_add_download 	 :()=> addTorrent($('#tb-add-file').val()),
-		btn_remove	 		 :()=> removeTorrent(table.row('tr.selected')),
-		btn_pause			 :()=> pauseTorrent(table.row('tr.selected')),	
-		btn_position_up 	 :()=> torrents[torrentSelected.infoHash].up(),
-		btn_position_down 	 :()=> torrents[torrentSelected.infoHash].down(),
+			////-- MAIN --////
 		btn_nav_main 		 :()=> gui.changePage('downloads'),
 		btn_nav_stats 		 :()=> gui.changePage('stats'),
 		btn_nav_mediacast 	 :()=> gui.changePage('mediacast'),
 		btn_nav_autofeeds 	 :()=> gui.changePage('autofeeds'),
-		btn_nav_channels 	 :()=> gui.channels.open(),
-		btn_add_fileDialog	 :()=> gui.downloads.getDialogFile(), 
-		btn_add_folderDialog :()=> gui.downloads.getDialogFolder(),
 		btn_search	 		 :()=> gui.searchTorrent(),
-		btn_bottom_settings	 :()=> gui.settings.open(),
 		btn_bottom_fullscreen:()=> gui.send('fullscreen'),
 		btn_bottom_private	 :()=> alert('private'),
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
-		btn_channels_alert	 :()=> gui.channels.closeAlert(),
-		btn_cast			 :()=> gui.downloads.cast(),
-		btn_share			 :()=> gui.downloads.share()
+			////-- DOWNLOAD --////
+		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val()),
+		btn_remove	 		 :()=> downloads.torrent.remove(table.row('tr.selected')),
+		btn_pause			 :()=> downloads.torrent.pause(table.row('tr.selected')),	
+		btn_add_modal 		 :()=> downloads.gui.addModal(),
+		btn_add_fileDialog	 :()=> downloads.gui.getDialogFile(), 
+		btn_add_folderDialog :()=> downloads.gui.getDialogFolder(),
+		btn_cast			 :()=> downloads.gui.cast(),
+		btn_share			 :()=> downloads.gui.share(),
+		btn_position_up 	 :()=> torrents[torrentSelected.infoHash].up(),
+		btn_position_down 	 :()=> torrents[torrentSelected.infoHash].down(),
+			////-- CHANNELS --////
+		btn_nav_channels 	 :()=> channels.gui.open(),
+		btn_channels_alert	 :()=> channels.gui.closeAlert(),
+			////-- CONFIGS --////
+		btn_bottom_settings	 :()=> configs.gui.open()
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {
-	if($('#table tbody td').hasClass('dataTables_empty')) return false 
-
-	if ($(this).hasClass('selected')) { 
-		$(this).removeClass('selected')
-		$('#btns-hided').hide()
-		torrentSelected = null
-	} else {
-		table.$('tr.selected').removeClass('selected')
-		$(this).addClass('selected')
-		torrentSelected = client.get($(this).data("hash")) 
-		$('#btns-hided').show()
-	}
+	torrentSelected = downloads.selectTr($(this))
 })
 
-///////////////////////
-////-- FUNCTIONS --////
-///////////////////////
+
+function tableConfig(){
+	let json = require('./json/datatable.json')
+
+	for (var i = json.columns.length - 1; i >= 0; i--) {
+		json.columns[i].title = locale.table[json.columns[i].title]
+	}
+	return json
+
+}
+
 var	torrents = {
 	find: position => {
 		for (var i in torrents) 
@@ -82,118 +84,6 @@ var	torrents = {
 	}
 }
 
-
-function tableConfig(){
-	let json = require('./json/datatable.json')
-
-	for (var i = json.columns.length - 1; i >= 0; i--) {
-		json.columns[i].title = locale.table[json.columns[i].title]
-	}
-	return json
-
-}
-
-function addTorrent(torrentID){
-	let temp = table.row.add([
-		' ',
-		locale.loading,
-		'0 Kb/s',
-		progressBar(0, $('#table')),
-		'0 Kb/s',
-		'0 Kb/s',
-		'0',
-		'0',
-		'-'
-	]).draw()
-	
-	let torrent = client.add(torrentID,	{ path: $('#tb-add-folder').val() }, torrent => {  })
-
-	torrent.on('infoHash', error => {
-		$(temp.node()).attr('data-hash', torrent.infoHash)
-		if(!torrents[torrent.infoHash]) torrents[torrent.infoHash] = new Torrent()
-	})
-
-	torrent.on('error', error => {
-		temp.row().remove().draw()
-		gui.setTray(false, 'red')
-		alert(error)
-		//TODO: cambiar el alert por:
-		//dialog.showErrorBox(title, content)
-	})
-
-	torrent.on('done', () => gui.setTray(true, 'green'))
-
-}
-
-function removeTorrent(row){
-	// TODO: Preguntar si esta seguro, y si quiere borrar los archivos tambien
-	torrentSelected.destroy( () => {
-		row.remove().draw()
-		$('#btns-hided').hide()
-		//if(client.torrents.length === 0) 
-	})
-
-}
-
-function pauseTorrent(row){
-	$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play')
-
-	// NOTE: Pausa pero no funciona
-	console.log(torrentSelected.paused)
-	if(torrentSelected.paused) torrentSelected.resume()
-	else torrentSelected.pause()
-	console.log(torrentSelected.paused)
-}
-
-function fixRatio(ratio){
-	if(ratio > 1000) return "&infin;"
-	return Humanize.formatNumber(ratio, 2)
-}
-
-function progressBar(progress, element, torrent = null){ 
-
-	let size = element.find('.progress').outerWidth()
-	let style = ''	
-
-	if(torrent){
-		style = 'progress-bar-info progress-bar-striped'
-		if(torrent.done) style = 'progress-bar-success' 
-		else if(torrent.paused) style = 'progress-bar-warning' 
-		else if(torrent.ready) style = ''
-	}
-
-// FIX: Cambiar para que no regenere toda la barra todo el tiempo
-	return `<div class="progress">
-				<span class="p-black" style="width: ${size}px;">${progress}%</span>
-				<div class="progress-bar ${style}" role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;">
-					<span class="p-white" style="width: ${size}px;">${progress}%</span>
-				</div>
-			</div>
-			`
-}
-
-function generalFoot(){	
-	let pb = progressBar((client.progress * 100).toFixed(1), $('.main-footer'))
-	let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
-	let us = Humanize.fileSize(client.uploadSpeed) + '/s'
-	let ra = fixRatio(client.ratio)
-	let o = ""
-	if(ra <= 1) o = "-o"
-
-	return `<div class="row">
-				<div class="col-md-10">
-					<span class="ft-cell"><i class="fa fa-fw fa-arrow-down"></i> ${ds} </span>
-					<span class="ft-cell"><i class="fa fa-fw fa-arrow-up"></i> ${us} </span>
-					<span class="ft-cell"><i class="fa fa-fw fa-heart${o}"></i> ${ra} </span>
-				</div>
-				<div class="col-md-2">${pb}</div>
-			</div>
-			` 	
-}
-
-/////////////////////
-////-- CLASSES --////
-/////////////////////
 class Torrent { 
 	constructor() {	
 		this._position = torrents.length()

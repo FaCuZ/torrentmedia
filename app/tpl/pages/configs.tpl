@@ -1,21 +1,21 @@
 <!-- MODAL: Agregar Torrent -->
-<div class="modal fade" id="modal_setting" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
+<div class="modal fade" id="modal_configs" tabindex="-1" role="dialog" aria-labelledby="configsModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="settingsModalLabel">{{ settings.title }}</h4>
+				<h4 class="modal-title" id="configsModalLabel">{{ configs.title }}</h4>
 			</div>
 
-			<div class="modal-body-settings">
+			<div class="modal-body-configs">
 				
 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
-						<li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">{{ settings.general }}</a></li>
-						<li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">{{ settings.network }}</a></li>
-						<li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">{{ settings.advance }}</a></li>
+						<li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">{{ configs.general }}</a></li>
+						<li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">{{ configs.network }}</a></li>
+						<li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">{{ configs.advance }}</a></li>
 
 						<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
 					</ul>
