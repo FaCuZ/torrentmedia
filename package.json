@@ -29,6 +29,7 @@
     "gulp-remove-html-comments": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-run-electron": "^2.0.0",
+    "gulp-sass": "^2.3.2",
     "gulp-watch": "^4.3.6"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 var gulp 	= require('gulp'),
 	watch 	= require('gulp-watch'),
+	sass 	= require('gulp-sass'),
 	concat  = require('gulp-concat'),
 	rename 	= require("gulp-rename"),
 	run 	= require('gulp-run-electron'),
@@ -29,7 +30,11 @@ var paths = {
 			 'package.json',
 			 'app/**/*',
 			 '!app/{tpl,tpl/**}',
+			 '!app/{sass,sass/**}',
 			 '!app/{icons/svg,icons/svg/**}' 
+			],
+	sass:	[
+			 'app/sass/**/*',
 			],
 	fonts:	[
 			 './node_modules/font-awesome/fonts/*',
@@ -73,6 +78,10 @@ gulp.task('dist:scripts', ['dist:clean'], function() {
 })
 
 gulp.task('dist:styles', ['dist:clean'], function() {
+	gulp.src(paths.sass)
+	    .pipe(sass().on('error', sass.logError))
+	    .pipe(gulp.dest('dist/css/'))
+
 	gulp.src(paths.skins)
 		.pipe(gulp.dest('dist/css/'))
 
