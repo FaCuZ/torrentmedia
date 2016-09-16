@@ -38,6 +38,7 @@
 					</div>
 				</div>
 
+				<p style="padding: 15px;">{{ alpha }}</p>
 
 
 			</div>

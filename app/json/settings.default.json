@@ -19,9 +19,10 @@
 	
 	"channels_warning": true,
 
-	"search_with": "Torrentz",
+	"search_with": "TorrentProject",
 	"searchers": {
-		"Torrentz": "https://www.torrentz.eu/search?q=",
+		"TorrentProject": "https://torrentproject.se/?t=",
+		"Torrentz2": "http://torrentz2.me/search?f=",
 		"Google": "http://google.com/search?q=filetype%3Atorrent+",
 		"BitTorrent": "http://www.bittorrent.com/search?client=%v&search=",
 		"Mininova": "http://www.mininova.org/search/?cat=0&search=",

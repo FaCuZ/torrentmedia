@@ -81,15 +81,15 @@ module.exports = {
 		},
 
 		cast: ()=> {
-			alert("cast file")
+			gui.alpha()
 		},
 
 		share: ()=> {
-			alert("share file")
+			gui.alpha()
 		},
 
 		getDialogFile: ()=> {
-			let config = {	title: 'Please select a torrent',
+			let config = {	title: locale.dialog.torrent,
 							filters: [{ name: 'Torrents', extensions: ['torrent'] }],
 							defaultPath: settings.dir_downloads,
 							properties: ['openFile']
@@ -99,7 +99,7 @@ module.exports = {
 		},
 
 		getDialogFolder: ()=> {
-			let config = {  title: 'Please select a folder',
+			let config = {  title: locale.dialog.folder,
 							defaultPath: settings.dir_downloads,
 							properties: ['openDirectory', 'createDirectory']
 						 }		

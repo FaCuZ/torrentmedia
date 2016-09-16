@@ -14,8 +14,11 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="box">
-					<div class="box-body sin-padding">
-						Aca van las Estadisticas
+					<div class="box-body">
+						<h4>{{ stats.title }}</h4>
+						<p>
+							{{ alpha }}
+						</p>
 					</div>
 				</div>			  
 			</div>

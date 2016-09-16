@@ -5,6 +5,7 @@
 	"save": "Save",
 	"search": "Search...",
 	"loading": "Loading...",
+	"alpha": "Coming soon. This is an alpha version, many features are not finished. Please check back in the next version.",
 
 	"tooltip": {
 		"settings": "Settings",
@@ -13,6 +14,11 @@
 		"hide": "Hide",
 		"close": "Close",
 		"add_modal": "Add Torrent"
+	},
+
+	"dialog": {
+		"torrent": "Please select a torrent",
+		"folder": "Please select a folder"
 	},
 	
 	"downloads": {

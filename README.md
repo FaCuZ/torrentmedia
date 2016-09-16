@@ -2,6 +2,10 @@
 
 Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha.
 
+### Funcionalidades
+* Descarga torrent (Magnets, Archivos y Urls)
+*
+
 ### Comandos
 
 Clonar el proyecto:

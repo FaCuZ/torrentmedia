@@ -69,7 +69,10 @@ module.exports = {
 					<div class="col-md-2">${pb}</div>
 				</div>
 				` 	
-	}
+	},
 	
+	alpha: ()=> {
+		alert(locale.alpha)			
+	}
 
 }

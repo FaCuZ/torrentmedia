@@ -32,7 +32,7 @@ module.exports = {
 		} 
 
 		return `<div class="col-md-3 col-sm-6 col-xs-12">
-					<div class="info-box channel-box">
+					<div class="info-box channel-box" onclick="call.btn_channel('${channel.name}')">
 						<span class="info-box-icon bg-${color}"><i class="fa fa-${icon}"></i></span>
 
 						<div class="info-box-content">
@@ -54,6 +54,7 @@ module.exports = {
 			$('#modal_alert').modal('hide')
 			settings.channels_warning = false
 		},
+
 	},
 
 }

@@ -33,7 +33,7 @@ var call = {
 		btn_nav_autofeeds 	 :()=> gui.changePage('autofeeds'),
 		btn_search	 		 :()=> gui.searchTorrent(),
 		btn_bottom_fullscreen:()=> gui.send('fullscreen'),
-		btn_bottom_private	 :()=> alert('private'),
+		btn_bottom_private	 :()=> gui.alpha(),
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
@@ -51,6 +51,7 @@ var call = {
 			////-- CHANNELS --////
 		btn_nav_channels 	 :()=> channels.gui.open(),
 		btn_channels_alert	 :()=> channels.gui.closeAlert(),
+		btn_channel			 :()=> gui.alpha(),
 			////-- CONFIGS --////
 		btn_bottom_settings	 :()=> configs.gui.open()
 	}

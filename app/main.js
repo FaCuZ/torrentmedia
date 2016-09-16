@@ -81,7 +81,7 @@ app.on('ready', () => {
 
 	///* DevTools *///
 	//TODO: if(developer stage)
-	mainWindow.webContents.openDevTools() // Open DevTools
+	//mainWindow.webContents.openDevTools() // Open DevTools
 	
 	mainWindow.webContents.on("devtools-opened", () => {
 		//mainWindow.webContents.closeDevTools() // Avoid DevTools open
