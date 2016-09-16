@@ -2,9 +2,7 @@
 
 Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha.
 
-### Funcionalidades
-* Descarga torrent (Magnets, Archivos y Urls)
-*
+![TorrentMedia Preview](https://raw.githubusercontent.com/FaCuZ/torrentmedia/master/preview.png)
 
 ### Comandos
 

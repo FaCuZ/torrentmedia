@@ -21,8 +21,9 @@ body {
 	padding-top: 10%;
 }
 
-.channel-box {
+.channel-box:hover{
 	cursor: pointer;
+	box-shadow: 0px 0px 2px #3c8dbc;
 }
 
 .info-box-number {

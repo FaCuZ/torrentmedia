@@ -34,10 +34,10 @@
 <!--			<h2 class="page-header">Instalados:</h2> -->
 
 				<div id="channels-installed" class="row">
-					<div class="empty-box text-center">No hay canales instalados.</div>					
+					<div class="empty-box text-center">{{ channels.not_installed }}</div>					
 				</div>
 
-				<h2 class="page-header">On the web:</h2>
+				<h2 class="page-header">{{ channels.title_web }}</h2>
 				<div id="channels-web" class="row"></div>
 
 			</div>

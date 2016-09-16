@@ -55,6 +55,8 @@
 	"channels": {
 		"title": "Canales",
 		"all": "Todos",
+		"not_installed": "No hay canales instalados.",
+		"title_web": "En la web:",
 		"warning": "¡Advertencia!",
 		"warning_msg": "Todos los canales son externos a esta aplicacion, facilmente encontrados en internet. Torrent Media no tiene control sobre su contenido, es posible que encuentre contenido falso, virus o con derechos de autor. Torrent Media no puede controlar lo que ud descarga desde los canales, por lo que no es responsable por daños o perjuicos que estos podrian causar.",
 		"warning_btn": "Comprendo los riesgos, y asumo toda responsabilidad"
