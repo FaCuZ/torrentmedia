@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Facundo Zaldo",
   "license": "MIT",
-  "description": "Cliente de bitorrent con webtorrent",
+  "description": "Cliente de bitorrent",
   "main": "main.js",
   "app-id": "com.facuz.torrentmedia",
   "repository": {

@@ -4,7 +4,7 @@ Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. 
 
 ![TorrentMedia Preview](https://raw.githubusercontent.com/FaCuZ/torrentmedia/master/preview.png)
 
-### Comandos
+### Compilar
 
 Clonar el proyecto:
 
@@ -12,10 +12,10 @@ Clonar el proyecto:
 	$ git clone https://github.com/FaCuZ/torrentmedia.git
 	$ cd torrentmedia
 	$ sudo npm install
-	$ adminlte
+	$ npm run-script adminlte
 ```
 
-El comando `sudo npm adminlte` sirve para evitar que el template carge fonts desde la web. 
+El comando `npm run-script adminlte` sirve para evitar que el template carge fonts desde la web. 
 
 ### Componentes de terceros
 * [WebTorrent](https://github.com/feross/webtorrent)
