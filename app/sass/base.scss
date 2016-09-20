@@ -38,8 +38,8 @@ body {
 }
 
 .info-box-text {
-    text-transform: uppercase;
-    font-size: initial;
+	text-transform: uppercase;
+	font-size: initial;
 }
 
 .btn-alert {
@@ -48,6 +48,12 @@ body {
 
 .btn-wrapper {
 	text-align: right;
+}
+
+
+.nav-tabs-custom {
+	margin-bottom: 0px;
+	background-color: #fbfbfb;
 }
 
 .modal-body-settings {
@@ -82,6 +88,55 @@ body {
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+}
+
+.theme-list {
+	max-width: 350px;
+
+	li {
+		float: left;
+		width: 33.33333%;
+		padding: 5px;
+		a {
+			display: block; 
+			box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+
+			span {
+				display:block; 
+				float: left;
+			}
+
+			.w80h7{
+				width: 80%; 
+				height: 16px;
+			}
+
+			.w80h20{
+				width: 80%;
+				height: 40px;
+			}
+
+			.w20h7{
+				width: 20%;
+				height: 16px;
+			}
+
+			.w20h20{
+				width: 20%;
+				height: 40px;
+			}
+
+
+		}
+	}
+
+}
+
+.dropdown-menu{
+	min-width: 300px;
+	&>li>a {
+		padding: 0px;
 	}
 }
 

@@ -1,4 +1,4 @@
-<!-- MODAL: Agregar Torrent -->
+<!-- MODAL: configuracion -->
 <div class="modal fade" id="modal_configs" tabindex="-1" role="dialog" aria-labelledby="configsModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -20,25 +20,69 @@
 						<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
 					</ul>
 					<div class="tab-content">
+
 						<div class="tab-pane active" id="tab_1">
-							- Idioma  <br/>
-							- Theme <br/>
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Lenguaje</label>
+
+									<div class="col-sm-10">
+										<select class="form-control">
+											<option>English</option>
+											<option>Español</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<div class="checkbox">
+											<label>
+												<input type="checkbox"> Preguntar al cerrar
+											</label>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<div class="checkbox">
+											<label>
+												<input type="checkbox"> Minimizar al cerrar
+											</label>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Theme</label>  
+									<div class="col-sm-10">
+										{{ include('../components/themes.tpl') }}
+									</div>
+								</div>
+
+							</form>
+							
 						</div>
 
 						<div class="tab-pane" id="tab_2">
 							- Cantidad de Conexiones <br/>
+							<p style="color:blue; padding: 15px;">{{ alpha }}</p>
 						</div>
 
 						<div class="tab-pane" id="tab_3">
 							- Frecuencia de refresco de pantalla <br/>
 							- Frecuencia de tray (parpadeo) <br/>
 							- Restauracion de configuracion <br/>
+
+							<p style="color:blue; padding: 15px;">{{ alpha }}</p>
 						</div>
-					  
+
 					</div>
 				</div>
 
-				<p style="padding: 15px;">{{ alpha }}</p>
 
 
 			</div>
@@ -51,4 +95,4 @@
 		</div>
 	</div>
 </div>
-<!-- MODAL END -->
+<!-- MODAL END
