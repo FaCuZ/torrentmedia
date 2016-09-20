@@ -39,15 +39,15 @@ var call = {
 		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
 			////-- DOWNLOAD --////
 		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val()),
-		btn_remove	 		 :()=> downloads.torrent.remove(table.row('tr.selected')),
+		btn_remove			 :()=> downloads.torrent.remove(table.row('tr.selected')),
 		btn_pause			 :()=> downloads.torrent.pause(table.row('tr.selected')),	
-		btn_add_modal 		 :()=> downloads.gui.addModal(),
+		btn_add_modal		 :()=> downloads.gui.addModal(),
 		btn_add_fileDialog	 :()=> downloads.gui.getDialogFile(), 
 		btn_add_folderDialog :()=> downloads.gui.getDialogFolder(),
 		btn_cast			 :()=> downloads.gui.cast(),
 		btn_share			 :()=> downloads.gui.share(),
 		btn_position_up 	 :()=> torrents[torrentSelected.infoHash].up(),
-		btn_position_down 	 :()=> torrents[torrentSelected.infoHash].down(),
+		btn_position_down	 :()=> torrents[torrentSelected.infoHash].down(),
 			////-- CHANNELS --////
 		btn_nav_channels 	 :()=> channels.gui.open(),
 		btn_channels_alert	 :()=> channels.gui.closeAlert(),
@@ -78,6 +78,10 @@ var	torrents = {
 				return torrents[i]
 	},
 	
+	save: () => {
+		return true
+	},
+
 	length: () => {
 		let length = -2
 		for (var i in torrents)	length++
@@ -112,16 +116,12 @@ class Torrent {
 }
 
 
-
-
 ///////////////////
 ////** DEBUG **////
 ///////////////////
 var tId0 = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.webtorrent.io&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4'
-var tId1 = "/home/facuz/Descargas/sintel.torrent"
 
 $('#tb-add-file').val(tId0)
 
 //addTorrent(tId0)
-//addTorrent(tId1)
 ////** END DEBUG **////

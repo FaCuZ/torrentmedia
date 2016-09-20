@@ -34,9 +34,11 @@
   },
   "dependencies": {
     "admin-lte": "^2.3.3",
-    "font-awesome": "^4.6.3",
-    "glob": "^7.0.3",
     "del": "^2.2.0",
+    "electron-storage": "^1.0.6",
+    "font-awesome": "^4.6.3",
+    "fs-extra": "^0.30.0",
+    "glob": "^7.0.3",
     "humanize-duration": "^3.8.0",
     "humanize-plus": "^1.8.2",
     "pixl-xml": "^1.0.6",

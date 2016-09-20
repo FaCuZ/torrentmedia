@@ -3,6 +3,7 @@
 const Electron = require('electron'),
 	  Path = require('path'),
 	  fs = require('fs'),
+	  storage = require('electron-storage'),
 	  dialog = Electron.dialog,
 	  app = Electron.app,
 	  ipcMain = Electron.ipcMain,
@@ -166,23 +167,27 @@ function getIconPath(color){
 
 
 function loadSettings(){
+	let path = app.getPath('userData') + '/App/settings.json'
+	
 	try	{
-		let path = app.getPath('userData') + '/settings.json'
 		fs.openSync(path, 'r+')
 		return JSON.parse(fs.readFileSync(path, 'utf8'))
 	} catch (error) {
-		let def = require('./json/settings.default.json')
-		return installSettings(def)
-		//return require('./json/settings.default.json')
+		return installSettings()
 	}
 
 }
 
-function installSettings(def){
-	// TODO: Copiar y renombrar settings.json a appdata
-
+function installSettings(){
+	let def = require('./json/settings.default.json')
+	
 	def.dir_downloads = app.getPath('downloads') 
 	//osLocale((err, locale) => def.locale = locale)
+
+	storage.set('App/settings.json', def, (err) => {
+		console.log('Default settings')
+		if (err) console.error(err)
+	});
 
 	return def
 }
