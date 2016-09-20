@@ -52,11 +52,9 @@ app.on('ready', () => {
 	if(global.settings.start_maximized) mainWindow.maximize()
 	else if(global.settings.start_minimized) mainWindow.minimize()
 
-	//console.log(global.settings.locale)
 	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
 
 	mainWindow.on('closed', () => {
-		// TODO: Guardar en Storage: Torrents
 		mainWindow = null
 	})
 
@@ -81,14 +79,19 @@ app.on('ready', () => {
 		}
 	})
 
-	///* DevTools *///
+	mainWindow.webContents.on('did-finish-load', () => { loadTorrents() })
+
+
+	////*** DevTools ***////
+	
 	//TODO: if(developer stage)
 	//mainWindow.webContents.openDevTools() // Open DevTools
 	
 	mainWindow.webContents.on("devtools-opened", () => {
-		//mainWindow.webContents.closeDevTools() // Avoid DevTools open
+		//mainWindow.webContents.closeDevTools() // Evita que se abra DevTools cuando esta en produccion
 	})
-	///* End DevTools *///
+
+	////*** End DevTools ***////
 
 	////-- TRAY ICON--////
 	appIcon = new Tray(getIconPath('white'))
@@ -128,6 +131,7 @@ app.on('ready', () => {
 		else if(mainWindow.isVisible()) mainWindow.hide()
 		else mainWindow.show()
 	})
+
 })
 
 ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{	
@@ -161,7 +165,17 @@ ipcMain.on('control', (event, action) => {
 })
 
 ipcMain.on('torrents', (event, torrents) => {	
-	console.log(torrents)
+	let path = 'App/Torrents'
+
+
+	storage.remove(path, err => {
+		if (err)  console.log(err)
+	})
+
+	storage.set(path, torrents, (err) => {
+		console.log('Torrent persist')
+		if (err) console.error(err)
+	})
 })
 
 function getIconPath(color){
@@ -170,8 +184,8 @@ function getIconPath(color){
 
 
 function loadSettings(){
-	let path = app.getPath('userData') + '/App/settings.json'
-	
+	let path = app.getPath('userData') + '/App/Settings.json'
+	//TODO: Ser si lo cambio por storage.get(...)
 	try	{
 		fs.openSync(path, 'r+')
 		return JSON.parse(fs.readFileSync(path, 'utf8'))
@@ -187,10 +201,19 @@ function installSettings(){
 	def.dir_downloads = app.getPath('downloads') 
 	//osLocale((err, locale) => def.locale = locale)
 
-	storage.set('App/settings.json', def, (err) => {
+	storage.set('App/Settings', def, (err) => {
 		console.log('Default settings')
 		if (err) console.error(err)
 	});
 
 	return def
+}
+
+function loadTorrents(){
+	storage.get('App/Torrents', (err, json) => {
+		if (err) json = [] 
+
+		mainWindow.webContents.send('torrents', json)
+
+	})
 }

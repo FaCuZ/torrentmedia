@@ -25,6 +25,12 @@ var client		= new WebTorrent(),
 
 intervals.start.all()
 
+ipcRenderer.on('torrents', (event, json) => {	
+	for (var torrent in json) {
+		downloads.torrent.add(json[torrent].magnetURI) 
+	}
+})
+
 var call = {
 			////-- MAIN --////
 		btn_nav_main 		 :()=> gui.changePage('downloads'),
@@ -78,22 +84,27 @@ var	torrents = {
 				return torrents[i]
 	},
 	
-	save: () => {
-		ipcRenderer.send('torrents', this)
+	persist: () => {
+		ipcRenderer.send('torrents', torrents)
 		return true
 	},
 
 	length: () => {
-		let length = -2
+		let length = -3
 		for (var i in torrents)	length++
 		return length
 	}
 }
 
 class Torrent { 
-	constructor() {	
+	constructor(torrent) {	
+		//this.super = torrent
+		this.magnetURI = torrent.magnetURI
+		this.path = torrent.path
+		this.paused = torrent.paused
+
 		this._position = torrents.length()
-		this.progress = 50
+		//this.progress = 50
 	}
 	
 	get position() { return this._position }
@@ -115,7 +126,7 @@ class Torrent {
 	}
 
 }
-
+	
 
 ///////////////////
 ////** DEBUG **////

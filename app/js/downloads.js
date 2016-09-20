@@ -19,6 +19,7 @@ module.exports = {
 	},
 
 	torrent: {
+		// TODO: Agregar mas parametros a add para cuando el torrent viene de la persistencia (Nombre, progreso, estado)
 
 		add: torrentID => {
 			let temp = table.row.add([
@@ -33,11 +34,13 @@ module.exports = {
 				'-'
 			]).draw()
 			
-			let torrent = client.add(torrentID,	{ path: $('#tb-add-folder').val() }, torrent => {  })
+			let torrent = client.add(torrentID,	{ path: $('#tb-add-folder').val() }, torrent => { 
+					torrents.persist()
+				})
 
 			torrent.on('infoHash', error => {
 				$(temp.node()).attr('data-hash', torrent.infoHash)
-				if(!torrents[torrent.infoHash]) torrents[torrent.infoHash] = new Torrent()
+				if(!torrents[torrent.infoHash]) torrents[torrent.infoHash] = new Torrent(torrent)
 			})
 
 			torrent.on('error', error => {
@@ -50,17 +53,20 @@ module.exports = {
 
 			torrent.on('done', () => gui.setTray(true, 'green'))
 
+
 		},
 
 		remove: row => {
 			
 			let destroy = () => {
 				torrentSelected.destroy( () => {
+					delete torrents[torrentSelected.infoHash]
 					row.remove().draw()
 					$('#btns-hided').hide()
+
 					//if(client.torrents.length === 0) 
 
-					//TODO: Actualizar storage: torrents
+					torrents.persist()
 				})
 			}
 			
@@ -90,11 +96,21 @@ module.exports = {
 		pause: row => {
 			$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play')
 
+			/* TODO: 
+			Eliminar Torrent:
+			torrentSelected.destroy()
+			
+			Cuando se despausa buscar en hash dentro de torrents[]
+			La funciona anterior no borra este array el torrent
+			*/
+
 			// NOTE: Pausa pero no funciona
 			console.log(torrentSelected.paused)
 			if(torrentSelected.paused) torrentSelected.resume()
 			else torrentSelected.pause()
 			console.log(torrentSelected.paused)
+
+			torrents.persist()
 		},
 
 	},
