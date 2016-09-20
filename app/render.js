@@ -79,6 +79,7 @@ var	torrents = {
 	},
 	
 	save: () => {
+		ipcRenderer.send('torrents', this)
 		return true
 	},
 
@@ -123,5 +124,5 @@ var tId0 = 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sint
 
 $('#tb-add-file').val(tId0)
 
-//addTorrent(tId0)
+//downloads.torrent.add(tId0) 
 ////** END DEBUG **////

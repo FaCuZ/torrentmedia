@@ -53,12 +53,37 @@ module.exports = {
 		},
 
 		remove: row => {
-			// TODO: Preguntar si esta seguro, y si quiere borrar los archivos tambien
-			torrentSelected.destroy( () => {
-				row.remove().draw()
-				$('#btns-hided').hide()
-				//if(client.torrents.length === 0) 
+			
+			let destroy = () => {
+				torrentSelected.destroy( () => {
+					row.remove().draw()
+					$('#btns-hided').hide()
+					//if(client.torrents.length === 0) 
+
+					//TODO: Actualizar storage: torrents
+				})
+			}
+			
+			if(!settings.ask_on_delete) {
+				destroy()
+				return true
+			}
+
+			dialog.showMessageBox({
+				type: "question",
+				title: locale.dialog.delete.torrent,
+				message: locale.dialog.delete.ask,
+				defaultId: 0,
+				cancelId: 0, 
+				buttons: [locale.cancel, locale.dialog.delete.files, locale.remove]
+			}, select =>{
+				if(select === 0) return false
+				
+				destroy()	  
+				
+				//if(select === 1) TODO: borrar archivos
 			})
+			
 
 		},
 

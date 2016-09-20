@@ -1,6 +1,7 @@
 {
 	"name": "TorrentMedia",
 	"cancel": "Cancelar",
+	"remove": "Eliminar",
 	"download": "Descargar",
 	"save": "Guardar",
 	"search": "Buscar...",	
@@ -18,7 +19,12 @@
 
 	"dialog": {
 		"torrent": "Por favor, seleccione un torrent",
-		"folder": "Por favor, seleccione una carpeta"
+		"folder": "Por favor, seleccione una carpeta",
+		"delete": {			
+			"ask": "¿Esta seguro que desea eliminar este torrent?",
+			"torrent": "Eliminar Torrent",
+			"files": "Borrar archivos"
+		}
 	},
 	
 	"downloads": {

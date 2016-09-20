@@ -1,5 +1,5 @@
 {
-	"exit_without_ask": true,
+	"exit_without_ask": false,
 	"exit_forced": true,
 	
 	"start_hide": true,
@@ -19,6 +19,8 @@
 	
 	"channels_warning": true,
 
+	"ask_on_delete": true,
+
 	"search_with": "TorrentProject",
 	"searchers": {
 		"TorrentProject": "https://torrentproject.se/?t=",
@@ -28,8 +30,7 @@
 		"Mininova": "http://www.mininova.org/search/?cat=0&search=",
 		"PirateBay": "https://thepiratebay.org/search/",
 		"IsoHunt": "https://isohunt.com/torrents.php?ext=&op=and&ihq=",
-		"YIFY": "https://yts.ag/browse-movies/",
-		"KAT": "https://kat.ph/torrents/usearch/?q="
+		"YIFY": "https://yts.ag/browse-movies/"
 	}
 
 }

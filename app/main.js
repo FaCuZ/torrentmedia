@@ -56,14 +56,13 @@ app.on('ready', () => {
 	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
 
 	mainWindow.on('closed', () => {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
+		// TODO: Guardar en Storage: Torrents
 		mainWindow = null
 	})
 
 	mainWindow.on('close', event => {
 		if(global.settings.exit_forced) force_quit = true			
+		
 		if(!force_quit){
 			event.preventDefault()
 			mainWindow.hide()
@@ -73,6 +72,8 @@ app.on('ready', () => {
 					type: "question",
 					title: "TorrentMedia",
 					message: "¿Esta seguro que desea cerrar la aplicacion?",
+					defaultId: 0, 
+					cancelId: 0, 
 					buttons: ["cancel", "OK"]
 				})
 				if(select === 0) event.preventDefault()
@@ -159,7 +160,9 @@ ipcMain.on('control', (event, action) => {
 	} 
 })
 
-
+ipcMain.on('torrents', (event, torrents) => {	
+	console.log(torrents)
+})
 
 function getIconPath(color){
 	return Path.join(__dirname, 'icons/png/icon-down-' + color + '.png')

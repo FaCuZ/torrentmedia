@@ -1,6 +1,7 @@
 {
 	"name": "TorrentMedia",
 	"cancel": "Cancel",
+	"remove": "Remove",
 	"download": "Download",
 	"save": "Save",
 	"search": "Search...",
@@ -18,7 +19,12 @@
 
 	"dialog": {
 		"torrent": "Please select a torrent",
-		"folder": "Please select a folder"
+		"folder": "Please select a folder",
+		"delete": {			
+			"ask": "Are you sure you want to remove this torrent?",
+			"torrent": "Remove Torrent",
+			"files": "Remove files"
+		}
 	},
 	
 	"downloads": {

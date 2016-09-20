@@ -1,4 +1,4 @@
-# Media Torrent
+# Torrent Media
 
 Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha.
 
