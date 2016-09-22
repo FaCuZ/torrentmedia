@@ -10,10 +10,12 @@
 	"interval_tray": 1000,
 
 	"conections_max": 25,
-	"locale": "es",
+	"locale": "en",
 
 	"tray_blink": false,
 	"tray_color": "white",
+
+	"theme": "blue",
 
 	"dir_downloads": "",
 	

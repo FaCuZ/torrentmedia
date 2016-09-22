@@ -50,6 +50,13 @@ body {
 	text-align: right;
 }
 
+.content-header > h1 > small {
+	margin-left: 15px;
+
+	&:hover{
+		background-color: #fbfbfb
+	}
+}
 
 .nav-tabs-custom {
 	margin-bottom: 0px;

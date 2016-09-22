@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header content-header-main">
 			
-		<h1>{{ downloads.title }}<small class="db-download">{{ downloads.all }}<i class="fa fa-angle-down"></i></small></h1>
+		<h1>{{ downloads.title }}<small class="db-download" onclick="call.btn_filer()">{{ downloads.all }}<i class="fa fa-angle-down"></i></small></h1>
 		<!-- TODO: Cambio a fa-angle-down -->
 
 		<div class="breadcrumb breadcrumb-botones">

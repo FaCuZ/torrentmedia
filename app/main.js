@@ -167,16 +167,12 @@ ipcMain.on('control', (event, action) => {
 ipcMain.on('torrents', (event, torrents) => {	
 	let path = 'App/Torrents'
 
+	storage.remove(path, err => { if(err) console.log(err) })
 
-	storage.remove(path, err => {
-		if (err)  console.log(err)
-	})
-
-	storage.set(path, torrents, (err) => {
-		console.log('Torrent persist')
-		if (err) console.error(err)
-	})
+	storage.set(path, torrents, (err) => { if(err) console.error(err) })
 })
+
+ipcMain.on('settings', (event, def) => { saveSettings(def) })
 
 function getIconPath(color){
 	return Path.join(__dirname, 'icons/png/icon-down-' + color + '.png')
@@ -198,16 +194,22 @@ function loadSettings(){
 function installSettings(){
 	let def = require('./json/settings.default.json')
 	
+	console.log('Default settings')
+	
 	def.dir_downloads = app.getPath('downloads') 
 	//osLocale((err, locale) => def.locale = locale)
 
-	storage.set('App/Settings', def, (err) => {
-		console.log('Default settings')
-		if (err) console.error(err)
-	});
+	saveSettings(def)
 
 	return def
 }
+
+function saveSettings(def){
+	storage.set('App/Settings', def, (err) => {
+		if (err) console.error(err)
+	});
+}
+
 
 function loadTorrents(){
 	storage.get('App/Torrents', (err, json) => {

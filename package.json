@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "adminlte": "echo 'Making offline AdminLTE...' && cd node_modules/admin-lte/dist/css/ && sed -i '1i/*' AdminLTE.css",
+    "adminlte": "echo 'Making offline AdminLTE...' && cd node_modules/admin-lte/dist/css/ && sed -i.bak '1i/*' AdminLTE.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

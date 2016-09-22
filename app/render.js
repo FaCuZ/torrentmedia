@@ -47,6 +47,7 @@ var call = {
 		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val()),
 		btn_remove			 :()=> downloads.torrent.remove(table.row('tr.selected')),
 		btn_pause			 :()=> downloads.torrent.pause(table.row('tr.selected')),	
+		btn_filer			 :()=> gui.alpha(),
 		btn_add_modal		 :()=> downloads.gui.addModal(),
 		btn_add_fileDialog	 :()=> downloads.gui.getDialogFile(), 
 		btn_add_folderDialog :()=> downloads.gui.getDialogFolder(),
@@ -59,7 +60,13 @@ var call = {
 		btn_channels_alert	 :()=> channels.gui.closeAlert(),
 		btn_channel			 :()=> gui.alpha(),
 			////-- CONFIGS --////
-		btn_bottom_settings	 :()=> configs.gui.open()
+		btn_configs_save 	 :()=> configs.gui.save(),
+		box_general_lenguage :()=> configs.general.lenguage(),
+		chk_general_close	 :()=> configs.general.close(),
+		chk_general_minimize :()=> configs.general.minimize(),
+		box_general_theme	 :()=> configs.general.theme(),
+		btn_bottom_settings	 :()=> configs.gui.open()		
+
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {

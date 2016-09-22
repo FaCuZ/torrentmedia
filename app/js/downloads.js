@@ -1,5 +1,5 @@
 module.exports = {
-	torrentSelected: null,
+	torrentSelected: null, // VER SI SE ROMPIO ALGO AL COMENTAR ESTA LINEA
 
 	selectTr: elem => {
 		if($('#table tbody td').hasClass('dataTables_empty')) return false 

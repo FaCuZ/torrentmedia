@@ -1,5 +1,5 @@
 <div class="btn-group">
-	<button data-toggle="dropdown" class="form-control">Blue <span class="caret"></span></button>
+	<button data-toggle="dropdown" class="form-control" onchange="call.box_general_minimize()"> Blue <span class="caret"></span></button>
 
 	<ul class="dropdown-menu list-unstyled clearfix theme-list">
 			<li>

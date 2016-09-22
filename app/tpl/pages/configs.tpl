@@ -22,49 +22,7 @@
 					<div class="tab-content">
 
 						<div class="tab-pane active" id="tab_1">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Lenguaje</label>
-
-									<div class="col-sm-10">
-										<select class="form-control">
-											<option>English</option>
-											<option>Español</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox"> Preguntar al cerrar
-											</label>
-										</div>
-									</div>
-								</div>
-
-
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox"> Minimizar al cerrar
-											</label>
-										</div>
-									</div>
-								</div>
-
-
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Theme</label>  
-									<div class="col-sm-10">
-										{{ include('../components/themes.tpl') }}
-									</div>
-								</div>
-
-							</form>
-							
+							{{ include('../components/configs/tab_general.tpl') }}							
 						</div>
 
 						<div class="tab-pane" id="tab_2">
@@ -89,7 +47,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ cancel }}</button>
-				<button type="button" class="btn btn-primary" onclick="call.btn_add_download()" data-dismiss="modal">{{ save }}</button>
+				<button type="button" class="btn btn-primary" onclick="call.btn_configs_save()" data-dismiss="modal">{{ save }}</button>
 			</div>
 
 		</div>
