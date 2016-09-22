@@ -1,12 +1,10 @@
 # Torrent Media
 
-Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha.
+Cliente de bitorrent utilizando WebTorrent de backend y AdminLTE como frontend. Actualmente se encuentra en estado Alpha, por lo que muchas funcionalidades todavia no estan terminadas.
 
 ![TorrentMedia Preview](https://raw.githubusercontent.com/FaCuZ/torrentmedia/master/preview.png)
 
 ### Compilar
-
-Clonar el proyecto:
 
 ```
 	$ git clone https://github.com/FaCuZ/torrentmedia.git

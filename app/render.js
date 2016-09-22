@@ -64,6 +64,8 @@ var call = {
 		box_general_lenguage :()=> configs.general.lenguage(),
 		chk_general_close	 :()=> configs.general.close(),
 		chk_general_minimize :()=> configs.general.minimize(),
+		chk_general_hide	 :()=> configs.general.hide(),
+		chk_general_delete	 :()=> configs.general.delete(),
 		box_general_theme	 :()=> configs.general.theme(),
 		btn_bottom_settings	 :()=> configs.gui.open()		
 

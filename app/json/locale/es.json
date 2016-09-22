@@ -70,9 +70,22 @@
 	
 	"configs": {
 		"title": "Configuracion",
-		"general": "General",
-		"network": "Red",
-		"advance": "Avanzado"
+		"general": {
+			"tab": "General",
+			"lenguage": "Lenguaje",
+			"close": "Preguntar antes de cerrar la aplicacion",
+			"minimize": "Minimizar al cerrar",
+			"hide": "Inicial oculto",
+			"delete": "Preguntar antes de borrar un torrent",
+			"theme": "Theme"
+		},		
+		"network": {
+			"tab": "Red"
+		},
+		"advance": {
+			"tab": "Avanzado"
+		}	
+
 	},
 	
 	"nav": {

@@ -2,3 +2,4 @@ AdminLTE/
 node_modules/
 dist/
 tmp/
+CHANGELOG.md

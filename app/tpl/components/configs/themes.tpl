@@ -3,7 +3,7 @@
 
 	<ul class="dropdown-menu list-unstyled clearfix theme-list">
 			<li>
-				<a href="#" data-skin="skin-blue" class="clearfix full-opacity-hover">
+				<buttom data-skin="skin-blue" class="clearfix full-opacity-hover">
 					<div>
 						<span class="w20h7" style="background: #367fa9;"></span>
 						<span class="w80h7 bg-light-blue"></span>
@@ -12,7 +12,7 @@
 						<span class="w20h20" style="background: #222d32;"></span>
 						<span class="w80h20" style="background: #f4f5f7;"></span>
 					</div>
-				</a>
+				</buttom>
 				<p class="text-center no-margin">Blue</p>
 			</li>
 			<li>

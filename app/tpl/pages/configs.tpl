@@ -13,9 +13,9 @@
 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
-						<li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">{{ configs.general }}</a></li>
-						<li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">{{ configs.network }}</a></li>
-						<li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">{{ configs.advance }}</a></li>
+						<li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">{{ configs.general.tab }}</a></li>
+						<li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">{{ configs.network.tab }}</a></li>
+						<li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">{{ configs.advance.tab }}</a></li>
 
 						<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
 					</ul>
@@ -26,16 +26,11 @@
 						</div>
 
 						<div class="tab-pane" id="tab_2">
-							- Cantidad de Conexiones <br/>
-							<p style="color:blue; padding: 15px;">{{ alpha }}</p>
+							{{ include('../components/configs/tab_network.tpl') }}							
 						</div>
 
 						<div class="tab-pane" id="tab_3">
-							- Frecuencia de refresco de pantalla <br/>
-							- Frecuencia de tray (parpadeo) <br/>
-							- Restauracion de configuracion <br/>
-
-							<p style="color:blue; padding: 15px;">{{ alpha }}</p>
+							{{ include('../components/configs/tab_advance.tpl') }}							
 						</div>
 
 					</div>

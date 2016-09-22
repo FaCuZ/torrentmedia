@@ -51,10 +51,14 @@ body {
 }
 
 .content-header > h1 > small {
-	margin-left: 15px;
+	margin-left: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
 
 	&:hover{
-		background-color: #fbfbfb
+		background-color: #fbfbfb;
+		box-shadow: 0px 0px 1px grey;
 	}
 }
 
@@ -294,6 +298,11 @@ tr.selected {
 
 .navbar-static-top {
 	font-size: 17px;
+}
+
+.form-tip{
+	padding-left: 0px;
+	top: 5px;
 }
 
 @media (max-width: 991px) {	

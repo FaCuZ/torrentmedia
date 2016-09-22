@@ -69,12 +69,17 @@ app.on('ready', () => {
 				let select = dialog.showMessageBox({
 					type: "question",
 					title: "TorrentMedia",
-					message: "¿Esta seguro que desea cerrar la aplicacion?",
+					message: "Are you sure you want to close?",
 					defaultId: 0, 
 					cancelId: 0, 
-					buttons: ["cancel", "OK"]
+					buttons: ["Cancel", "Hide", "Close"]
 				})
 				if(select === 0) event.preventDefault()
+				if(select === 1) {
+					mainWindow.hide()
+					event.preventDefault()
+				}
+
 			}
 		}
 	})

@@ -1,5 +1,5 @@
 module.exports = {
-	torrentSelected: null, // VER SI SE ROMPIO ALGO AL COMENTAR ESTA LINEA
+	torrentSelected: null, 
 
 	selectTr: elem => {
 		if($('#table tbody td').hasClass('dataTables_empty')) return false 
@@ -19,8 +19,6 @@ module.exports = {
 	},
 
 	torrent: {
-		// TODO: Agregar mas parametros a add para cuando el torrent viene de la persistencia (Nombre, progreso, estado)
-
 		add: torrentID => {
 			let temp = table.row.add([
 				' ',
@@ -64,9 +62,9 @@ module.exports = {
 					row.remove().draw()
 					$('#btns-hided').hide()
 
-					//if(client.torrents.length === 0) 
-
 					torrents.persist()
+				
+					//if(client.torrents.length === 0) 
 				})
 			}
 			

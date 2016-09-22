@@ -16,12 +16,13 @@
 	"tray_color": "white",
 
 	"theme": "blue",
+	
+	"ask_on_delete": true,
 
 	"dir_downloads": "",
 	
 	"channels_warning": true,
 
-	"ask_on_delete": true,
 
 	"search_with": "TorrentProject",
 	"searchers": {
