@@ -24,7 +24,13 @@
 			"ask": "¿Esta seguro que desea eliminar este torrent?",
 			"torrent": "Eliminar Torrent",
 			"files": "Borrar archivos"
+		},
+		"reset": {
+			"title": "Restablecer configuracion",			
+			"ask": "¿Esta seguro que desea restablecer la configuracion?",			
+			"accept": "Restablecer configuracion"			
 		}
+
 	},
 	
 	"downloads": {

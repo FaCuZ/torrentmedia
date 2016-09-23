@@ -54,8 +54,8 @@ gulp.task('dist:clean', function() {
 
 gulp.task('dist:html', ['dist:clean'], function() {
 	for (var loc in i18n) {
-		var locale = require('./app/json/locale/' + i18n[loc] + '.json')
-		var config = { 
+		var locale = require('./app/json/locale/' + i18n[loc] + '.json'),
+			config = { 
 					  prefix: '{{',
 					  suffix: '}}',
 					  basepath: '@file',

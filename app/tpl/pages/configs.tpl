@@ -17,7 +17,7 @@
 						<li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">{{ configs.network.tab }}</a></li>
 						<li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">{{ configs.advance.tab }}</a></li>
 
-						<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+						<!-- <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li> -->
 					</ul>
 					<div class="tab-content">
 

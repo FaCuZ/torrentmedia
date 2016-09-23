@@ -24,6 +24,11 @@
 			"ask": "Are you sure you want to remove this torrent?",
 			"torrent": "Remove Torrent",
 			"files": "Remove files"
+		},
+		"reset": {
+			"title": "Reset settings",			
+			"ask": "Are you sure you want to reset settings to default?",			
+			"accept": "Reset settings to default"			
 		}
 	},
 	

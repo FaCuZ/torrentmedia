@@ -67,12 +67,19 @@ var call = {
 		chk_general_hide	 :()=> configs.general.hide(),
 		chk_general_delete	 :()=> configs.general.delete(),
 		box_general_theme	 :()=> configs.general.theme(),
+		btn_advance_reset	 :()=> configs.advance.reset(),
 		btn_bottom_settings	 :()=> configs.gui.open()		
 
 	}
 
 $('#table tbody').on( 'click', 'tr', function () {
 	torrentSelected = downloads.selectTr($(this))
+})
+
+
+$('body').click(function () {
+	gui.setTray(false, 'white')
+	// FIX: Si hago click en verde, queda en verde. 
 })
 
 

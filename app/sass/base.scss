@@ -296,14 +296,35 @@ tr.selected {
 	}
 }
 
+#modal_configs .tab-content{
+	min-height: 270px;
+    padding-top: 25px;
+}
+
 .navbar-static-top {
 	font-size: 17px;
+}
+
+.nav-tabs-custom > .nav-tabs > li.active a {
+    border-left: 1px solid #e6e6e6 !important;
+    border-right: 1px solid #e6e6e6 !important;
 }
 
 .form-tip{
 	padding-left: 0px;
 	top: 5px;
 }
+
+
+body.modal-open .modal[style]:not([style='display: none;']) {
+	display: flex !important;
+	height: 100%;
+	
+	.modal-dialog {
+		margin: auto;
+	}
+}
+
 
 @media (max-width: 991px) {	
 

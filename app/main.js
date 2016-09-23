@@ -77,9 +77,8 @@ app.on('ready', () => {
 				if(select === 0) event.preventDefault()
 				if(select === 1) {
 					mainWindow.hide()
-					event.preventDefault()
+					event.preventDefault() 
 				}
-
 			}
 		}
 	})
@@ -127,6 +126,7 @@ app.on('ready', () => {
 	appIcon.setContextMenu(Menu.buildFromTemplate(menuTray))
 
 	appIcon.on('click', (event, bounds) => {
+		console.log(global.settings)
 		global.settings.tray_blink = false
 		global.settings.tray_color = 'white'
 
@@ -177,7 +177,9 @@ ipcMain.on('torrents', (event, torrents) => {
 	storage.set(path, torrents, (err) => { if(err) console.error(err) })
 })
 
-ipcMain.on('settings', (event, def) => { saveSettings(def) })
+ipcMain.on('save-settings', (event, def) => { saveSettings(def) })
+
+ipcMain.on('reset-settings', (event) => { global.settings = installSettings() })
 
 function getIconPath(color){
 	return Path.join(__dirname, 'icons/png/icon-down-' + color + '.png')
@@ -186,13 +188,14 @@ function getIconPath(color){
 
 function loadSettings(){
 	let path = app.getPath('userData') + '/App/Settings.json'
-	//TODO: Ser si lo cambio por storage.get(...)
+
 	try	{
 		fs.openSync(path, 'r+')
 		return JSON.parse(fs.readFileSync(path, 'utf8'))
 	} catch (error) {
 		return installSettings()
 	}
+	
 
 }
 
