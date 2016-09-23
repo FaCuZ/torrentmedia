@@ -114,6 +114,16 @@ module.exports = {
 	},
 
 	gui: {
+		table: ()=> {
+			let json = require('../json/datatable.json')
+
+			for (var i = json.columns.length - 1; i >= 0; i--) {
+				json.columns[i].title = locale.table[json.columns[i].title]
+			}
+			return json
+
+		},
+
 		addModal: ()=> {
 			$('#addModal').modal('toggle')
 			$('#tb-add-folder').val(settings.dir_downloads)

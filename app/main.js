@@ -17,7 +17,52 @@ var mainWindow = null,
 	appIcon = null,
 	flag = true
 
-global.settings = loadSettings()
+var	boot = {
+	settings: {
+		load: () => {
+			let path = app.getPath('userData') + '/App/Settings.json'
+
+			try	{
+				fs.openSync(path, 'r+')
+				return JSON.parse(fs.readFileSync(path, 'utf8'))
+			} catch (error) {
+				return boot.settings.install()
+			}
+		},
+
+		install: () => {
+			let def = require('./json/settings.default.json')
+
+			console.log('Default settings')
+
+			def.dir_downloads = app.getPath('downloads')
+			//osLocale((err, locale) => def.locale = locale)
+
+			boot.settings.save(def)
+
+			return def
+		},
+
+		save: def =>{
+			storage.set('App/Settings', def, (err) => {
+				if (err) console.error(err)
+			})
+		}
+	},
+
+	torrents: {
+		load: () =>{
+			storage.get('App/Torrents', (err, json) => {
+				if (err) json = [] 
+
+				mainWindow.webContents.send('torrents', json)
+			})
+		}
+	}
+
+}
+
+global.settings = boot.settings.load()
 
 
 app.on('window-all-closed', () => {
@@ -39,33 +84,35 @@ if(app.makeSingleInstance((commandLine, workingDirectory) => {
 app.on('activate-with-no-open-windows', () => mainWindow.show())
 
 app.on('ready', () => {
-	console.log(process.versions.electron)
+	console.log("Electron: " + process.versions.electron)
+	console.log("Chrome: " + process.versions.chrome)
+
 	mainWindow = new BrowserWindow ({
 									 width: 1200,
 									 height: 800,
 									 autoHideMenuBar: true,
-									 show: !global.settings.start_hide,
+									 show: !settings.start_hide,
 									 title: "TorrentMedia",
 									 icon: getIconPath('white')
 									})
 	
-	if(global.settings.start_maximized) mainWindow.maximize()
-	else if(global.settings.start_minimized) mainWindow.minimize()
+	if(settings.start_maximized) mainWindow.maximize()
+	else if(settings.start_minimized) mainWindow.minimize()
 
-	mainWindow.loadURL('file://' + __dirname + '/index-' + global.settings.locale + '.html')
+	mainWindow.loadURL('file://' + __dirname + '/index-' + settings.locale + '.html')
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
 	})
 
 	mainWindow.on('close', event => {
-		if(global.settings.exit_forced) force_quit = true			
+		if(settings.exit_forced) force_quit = true			
 		
 		if(!force_quit){
 			event.preventDefault()
 			mainWindow.hide()
 		} else {
-			if(!global.settings.exit_without_ask){
+			if(!settings.exit_without_ask){
 				let select = dialog.showMessageBox({
 					type: "question",
 					title: "TorrentMedia",
@@ -83,7 +130,7 @@ app.on('ready', () => {
 		}
 	})
 
-	mainWindow.webContents.on('did-finish-load', () => { loadTorrents() })
+	mainWindow.webContents.on('did-finish-load', () => { boot.torrents.load() })
 
 
 	////*** DevTools ***////
@@ -126,9 +173,8 @@ app.on('ready', () => {
 	appIcon.setContextMenu(Menu.buildFromTemplate(menuTray))
 
 	appIcon.on('click', (event, bounds) => {
-		console.log(global.settings)
-		global.settings.tray_blink = false
-		global.settings.tray_color = 'white'
+		settings.tray_blink = false
+		settings.tray_color = 'white'
 
 		appIcon.setImage(getIconPath('white'))
 
@@ -177,53 +223,12 @@ ipcMain.on('torrents', (event, torrents) => {
 	storage.set(path, torrents, (err) => { if(err) console.error(err) })
 })
 
-ipcMain.on('save-settings', (event, def) => { saveSettings(def) })
+ipcMain.on('save-settings', (event, def) => { boot.settings.save(def) })
 
-ipcMain.on('reset-settings', (event) => { global.settings = installSettings() })
+ipcMain.on('reset-settings', (event) => { settings = boot.settings.install() })
+
+
 
 function getIconPath(color){
 	return Path.join(__dirname, 'icons/png/icon-down-' + color + '.png')
-}
-
-
-function loadSettings(){
-	let path = app.getPath('userData') + '/App/Settings.json'
-
-	try	{
-		fs.openSync(path, 'r+')
-		return JSON.parse(fs.readFileSync(path, 'utf8'))
-	} catch (error) {
-		return installSettings()
-	}
-	
-
-}
-
-function installSettings(){
-	let def = require('./json/settings.default.json')
-	
-	console.log('Default settings')
-	
-	def.dir_downloads = app.getPath('downloads') 
-	//osLocale((err, locale) => def.locale = locale)
-
-	saveSettings(def)
-
-	return def
-}
-
-function saveSettings(def){
-	storage.set('App/Settings', def, (err) => {
-		if (err) console.error(err)
-	});
-}
-
-
-function loadTorrents(){
-	storage.get('App/Torrents', (err, json) => {
-		if (err) json = [] 
-
-		mainWindow.webContents.send('torrents', json)
-
-	})
 }

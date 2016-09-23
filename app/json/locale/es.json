@@ -8,6 +8,15 @@
 	"loading": "Cargando...",
 	"alpha": "Proximamente. Esta es una version alpha, muchas funcionalidades no estan terminadas. Porfavor, vuelva en la proxima version.",
 	
+	"menu": {		
+		"pause": "Pausar",
+		"up": "Bajar",
+		"down": "Subir",
+		"delete": "Borrar",
+		"cast" : "Castear",
+		"share" : "Compartir"
+	},
+
 	"tooltip": {
 		"settings": "Configuracion",
 		"private": "Torrents privados",		

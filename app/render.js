@@ -3,6 +3,8 @@ const Electron 		= require('electron'),
 	  ipcRenderer 	= Electron.ipcRenderer,
 	  shell 		= Electron.shell,
 	  dialog 		= remote.dialog,
+	  Menu 			= remote.Menu,
+	  MenuItem 		= remote.MenuItem,
 
 	  Path 			= require('path'),
 	  glob 			= require('glob'),
@@ -11,6 +13,7 @@ const Electron 		= require('electron'),
 	  XML 			= require('pixl-xml'),
 
 	  gui 			= require('./js/gui'),
+	  contextmenu	= require('./js/contextmenu'),
 	  downloads		= require('./js/downloads'),
 	  intervals		= require('./js/intervals'),
 	  configs		= require('./js/configs'),
@@ -20,16 +23,19 @@ var client		= new WebTorrent(),
 	settings	= remote.getGlobal('settings'),  
 	locale		= require('./json/locale/' + settings.locale + '.json'),
 	humanTime	= require('humanize-duration').humanizer({ language: settings.locale, largest: 1, round: true }),
-	table		= $('#table').DataTable(tableConfig()),
+	table		= $('#table').DataTable(downloads.gui.table()),
 	footer		= $(".main-footer").html(gui.generalFoot())
 
 intervals.start.all()
+
+contextmenu.torrents.init()
 
 ipcRenderer.on('torrents', (event, json) => {	
 	for (var torrent in json) {
 		downloads.torrent.add(json[torrent].magnetURI) 
 	}
 })
+
 
 var call = {
 			////-- MAIN --////
@@ -72,26 +78,14 @@ var call = {
 
 	}
 
-$('#table tbody').on( 'click', 'tr', function () {
+$('#table tbody').on('click', 'tr', function () {
 	torrentSelected = downloads.selectTr($(this))
 })
-
 
 $('body').click(function () {
 	gui.setTray(false, 'white')
 	// FIX: Si hago click en verde, queda en verde. 
 })
-
-
-function tableConfig(){
-	let json = require('./json/datatable.json')
-
-	for (var i = json.columns.length - 1; i >= 0; i--) {
-		json.columns[i].title = locale.table[json.columns[i].title]
-	}
-	return json
-
-}
 
 var	torrents = {
 	find: position => {

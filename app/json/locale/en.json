@@ -8,6 +8,15 @@
 	"loading": "Loading...",
 	"alpha": "Coming soon. This is an alpha version, many features are not finished. Please check back in the next version.",
 
+	"menu": {		
+		"pause": "Pause",
+		"up": "Up",
+		"down": "Down",
+		"delete": "Delete",
+		"cast" : "Cast",
+		"share" : "Share"
+	},
+
 	"tooltip": {
 		"settings": "Settings",
 		"private": "Private",
