@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	torrent: {
-		add: torrentID => {
+		add: (torrentID, path) => {
 			let temp = table.row.add([
 				' ',
 				locale.loading,
@@ -32,7 +32,7 @@ module.exports = {
 				'-'
 			]).draw()
 			
-			let torrent = client.add(torrentID,	{ path: $('#tb-add-folder').val() }, torrent => { 
+			let torrent = client.add(torrentID,	{ path: path }, torrent => { 
 					torrents.persist()
 				})
 

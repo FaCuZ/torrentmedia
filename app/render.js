@@ -32,7 +32,7 @@ contextmenu.torrents.init()
 
 ipcRenderer.on('torrents', (event, json) => {	
 	for (var torrent in json) {
-		downloads.torrent.add(json[torrent].magnetURI) 
+		downloads.torrent.add(json[torrent].magnetURI, json[torrent].path) 
 	}
 })
 
@@ -50,7 +50,7 @@ var call = {
 		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
 			////-- DOWNLOAD --////
-		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val()),
+		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val(), $('#tb-add-folder').val()),
 		btn_remove			 :()=> downloads.torrent.remove(table.row('tr.selected')),
 		btn_pause			 :()=> downloads.torrent.pause(table.row('tr.selected')),	
 		btn_filer			 :()=> gui.alpha(),
@@ -112,9 +112,10 @@ class Torrent {
 		this.magnetURI = torrent.magnetURI
 		this.path = torrent.path
 		this.paused = torrent.paused
+		this.name = torrent.name
+		//this.progress = torrent.progress
 
 		this._position = torrents.length()
-		//this.progress = 50
 	}
 	
 	get position() { return this._position }

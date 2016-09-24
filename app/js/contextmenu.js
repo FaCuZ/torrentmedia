@@ -5,7 +5,7 @@ module.exports = {
 
 			pause: ()=> { return new MenuItem({ label: locale.menu.pause, click(){ call.btn_pause() }})},
 			delete:()=> { return new MenuItem({ label: locale.menu.delete,click(){ call.btn_remove() }})},
-			up:    ()=> { return new MenuItem({ label: locale.menu.up, 	 click(){ call.btn_position_up() }})},
+			up:    ()=> { return new MenuItem({ label: locale.menu.up, 	  click(){ call.btn_position_up() }})},
 			down:  ()=> { return new MenuItem({ label: locale.menu.down,  click(){ call.btn_position_down() }})},
 			cast:  ()=> { return new MenuItem({ label: locale.menu.cast,  click(){ call.btn_cast() }})},
 			share: ()=> { return new MenuItem({ label: locale.menu.share, click(){ call.btn_share() }})} 
