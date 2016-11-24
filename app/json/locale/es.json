@@ -7,8 +7,8 @@
 	"search": "Buscar...",	
 	"loading": "Cargando...",
 	"alpha": "Proximamente. Esta es una version alpha, muchas funcionalidades no estan terminadas. Porfavor, vuelva en la proxima version.",
-	
-	"menu": {		
+
+	"menu": {
 		"pause": "Pausar",
 		"up": "Bajar",
 		"down": "Subir",
@@ -100,7 +100,6 @@
 		"advance": {
 			"tab": "Avanzado"
 		}	
-
 	},
 	
 	"nav": {
@@ -120,6 +119,7 @@
 		"upload": "Subida",
 		"peers": "Peers",
 		"ratio": "Ratio",
-		"estimated": "Estimado"
+		"estimated": "Estimado",
+		"emptyTable": "Sin torrents"
 	}
 }

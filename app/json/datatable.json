@@ -6,6 +6,9 @@
 	"info": true,
 	"autoWidth": true,
 	"bInfo": false,
+	"language": {
+		"emptyTable": "<span class='datatables-empty-message'>No torrents</span>"
+	},
 	"columns": [
 		{ "title": "position",  "className": "column-id"},
 		{ "title": "name", "className": "column-name" },

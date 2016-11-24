@@ -8,7 +8,7 @@
 	"loading": "Loading...",
 	"alpha": "Coming soon. This is an alpha version, many features are not finished. Please check back in the next version.",
 
-	"menu": {		
+	"menu": {
 		"pause": "Pause",
 		"up": "Up",
 		"down": "Down",
@@ -118,6 +118,7 @@
 		"upload": "Upload",
 		"peers": "Peers",
 		"ratio": "Ratio",
-		"estimated": "Estimated"
+		"estimated": "Estimated",
+		"emptyTable": "No torrents"
 	}
 }

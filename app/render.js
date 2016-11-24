@@ -108,12 +108,9 @@ var	torrents = {
 
 class Torrent { 
 	constructor(torrent) {	
-		//this.super = torrent
 		this.magnetURI = torrent.magnetURI
 		this.path = torrent.path
 		this.paused = torrent.paused
-		this.name = torrent.name
-		//this.progress = torrent.progress
 
 		this._position = torrents.length()
 	}

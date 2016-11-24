@@ -120,8 +120,10 @@ module.exports = {
 			for (var i = json.columns.length - 1; i >= 0; i--) {
 				json.columns[i].title = locale.table[json.columns[i].title]
 			}
-			return json
 
+			json.language.emptyTable = locale.table['emptyTable']
+
+			return json
 		},
 
 		addModal: ()=> {

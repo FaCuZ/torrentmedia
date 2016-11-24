@@ -188,15 +188,16 @@ app.on('ready', () => {
 ipcMain.on('tray', (event, text = '', blink = false, color = 'white') =>{	
 	appIcon.setToolTip(text)
 
-	if(blink){
-		if(flag){
-			appIcon.setImage(getIconPath(color))
-			flag = false
-		} else {
-			appIcon.setImage(getIconPath('white'))
-			flag = true
-		} 
-	}
+	if(!blink) return null
+
+	if(flag){
+		appIcon.setImage(getIconPath(color))
+		flag = false
+	} else {
+		appIcon.setImage(getIconPath('white'))
+		flag = true
+	} 
+	
 })
 
 ipcMain.on('control', (event, action) => {	
