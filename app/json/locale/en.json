@@ -97,7 +97,13 @@
 			"tab": "Network"
 		},
 		"advance": {
-			"tab": "Advance"
+			"tab": "Advance",
+			"restore": "Restore Settings",
+			"refresh": {
+				"table": "Table refresh rate",
+				"tray": "Tray refresh rate",
+				"footer": "Footer refresh rate"
+			}
 		}		
 	},
 	

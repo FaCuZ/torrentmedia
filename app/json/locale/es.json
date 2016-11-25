@@ -98,7 +98,13 @@
 			"tab": "Red"
 		},
 		"advance": {
-			"tab": "Avanzado"
+			"tab": "Avanzado",
+			"restore": "Restaurar la configuración",
+			"refresh": {
+				"table": "Frecuencia de refresco de tabla",
+				"tray": "Frecuencia de refresco de tray",
+				"footer": "Frecuencia de refresco del footer"
+			}
 		}	
 	},
 	

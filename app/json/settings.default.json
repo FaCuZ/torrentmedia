@@ -6,8 +6,11 @@
 	"start_maximized": true,
 	"start_minimized": false,
 
-	"interval_refresh": 500,
-	"interval_tray": 1000,
+	"interval": {		
+		"table": 500,
+		"tray": 1000,
+		"footer": 1500
+	},
 
 	"conections_max": 25,
 	"locale": "en",
