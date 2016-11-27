@@ -24,7 +24,7 @@ module.exports = {
 				' ',
 				locale.loading,
 				'0 Kb/s',
-				gui.progressBar(0, $('#table')),
+				gui.progress.table(),
 				'0 Kb/s',
 				'0 Kb/s',
 				'0',

@@ -11,6 +11,10 @@ module.exports = {
 			intervals.stop.table()
 			intervals.stop.tray()
 			intervals.stop.footer()
+		}, 
+		window: () => {
+			intervals.stop.table()
+			intervals.stop.footer()
 		}
 	},
 
@@ -21,6 +25,10 @@ module.exports = {
 		all:  	() => {
 			intervals.start.table()
 			intervals.start.tray()
+			intervals.start.footer()
+		}, 
+		window: () => {
+			intervals.start.table()
 			intervals.start.footer()
 		}
 
@@ -38,7 +46,7 @@ module.exports = {
 					torrents[torrent.infoHash].position,
 					torrent.name,
 					Humanize.fileSize(torrent.downloaded),
-					gui.progressBar((torrent.progress * 100).toFixed(1), $('#table'), torrent),
+					gui.progress.table(torrent),
 					Humanize.fileSize(torrent.downloadSpeed) + "/s",
 					Humanize.fileSize(torrent.uploadSpeed) + "/s",
 					torrent.numPeers,
