@@ -87,7 +87,7 @@
 		"general": {
 			"tab": "General",
 			"lenguage": "Lenguage",
-			"close": "Warn before quitting",
+			"close": "Don't warn before quitting",
 			"minimize": "Minimize on close to tray",
 			"hide": "Hidden start",
 			"delete": "Warn before delete a torrent",

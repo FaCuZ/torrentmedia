@@ -1,28 +1,28 @@
 <form class="form-horizontal">
 	<div class="form-group">
 		<div class="form-group">
-			<label for="config-adv-table" class="col-sm-6 control-label">{{ configs.advance.refresh.table }}</label>
+			<label for="opt-interval.table" class="col-sm-6 control-label">{{ configs.advance.refresh.table }}</label>
 
 			<div class="col-sm-3">
-				<input class="form-control" id="config-adv-table" type="text">
+				<input class="form-control" id="opt-interval_table" type="text">
 			</div>
 			<div class="col-sm-2 form-tip">ms</div>
 		</div>
 
 		<div class="form-group">
-			<label for="config-adv-tray" class="col-sm-6 control-label">{{ configs.advance.refresh.tray }}</label>
+			<label for="opt-interval.tray" class="col-sm-6 control-label">{{ configs.advance.refresh.tray }}</label>
 
 			<div class="col-sm-3">
-				<input class="form-control" id="config-adv-tray" type="text">				
+				<input class="form-control" id="opt-interval_tray" type="text">				
 			</div>
 			<div class="col-sm-2 form-tip">ms</div>			
 		</div>
 
 		<div class="form-group">
-			<label for="config-adv-footer" class="col-sm-6 control-label">{{ configs.advance.refresh.footer }}</label>
+			<label for="opt-interval.footer" class="col-sm-6 control-label">{{ configs.advance.refresh.footer }}</label>
 
 			<div class="col-sm-3">
-				<input class="form-control" id="config-adv-footer" type="text">				
+				<input class="form-control" id="opt-interval_footer" type="text">				
 			</div>
 			<div class="col-sm-2 form-tip">ms</div>			
 		</div>

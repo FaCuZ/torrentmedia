@@ -95,9 +95,11 @@ app.on('ready', () => {
 									 title: "TorrentMedia",
 									 icon: getIconPath('white')
 									})
-	
-	if(settings.start_maximized) mainWindow.maximize()
-	else if(settings.start_minimized) mainWindow.minimize()
+
+	if(!settings.start_hide) {
+		if(settings.start_maximized) mainWindow.maximize()
+		else if(settings.start_minimized) mainWindow.minimize()
+	}
 
 	mainWindow.loadURL('file://' + __dirname + '/index-' + settings.locale + '.html')
 
