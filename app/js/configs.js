@@ -1,16 +1,16 @@
 module.exports = {	
 
 	general: {
-		lenguage: 	()=> { temp['locale'] = event.target.value },		
-		close: 		()=> { temp['exit_without_ask'] = event.target.checked },
-		minimize: 	()=> { temp['exit_forced'] = event.target.checked },
-		hide: 		()=> { temp['start_hide'] = event.target.checked },
-		delete: 	()=> { temp['ask_on_delete'] = event.target.checked },
-		theme: 		()=> { temp['theme'] = event.target.value }
+		lenguage (){ temp['locale'] = event.target.value },		
+		close 	 (){ temp['exit_without_ask'] = event.target.checked },
+		minimize (){ temp['exit_forced'] = event.target.checked },
+		hide 	 (){ temp['start_hide'] = event.target.checked },
+		delete 	 (){ temp['ask_on_delete'] = event.target.checked },
+		theme 	 (){ temp['theme'] = event.target.value }
 	},
 	
 	advance: {
-		reset: ()=> { 
+		reset() { 
 
 			dialog.showMessageBox({
 				type: "question",
@@ -19,7 +19,7 @@ module.exports = {
 				defaultId: 0,
 				cancelId: 0, 
 				buttons: [locale.cancel, locale.dialog.reset.accept]
-			}, select =>{
+			}, select => {
 				if(select === 0) return false
 
 				ipcRenderer.send('reset-settings') 
@@ -31,7 +31,7 @@ module.exports = {
 	},
 
 	gui: {
-		open: ()=> {
+		open() {
 			temp = []
 			modal = $('#modal_configs')
 
@@ -40,7 +40,7 @@ module.exports = {
 			configs.gui.set(modal);
 		},
 	
-		save: ()=> {
+		save() {
 			console.log(temp)
 			for (config in temp) {
 				settings[config] = temp[config]
@@ -49,7 +49,7 @@ module.exports = {
 			ipcRenderer.send('save-settings', settings)
 		},		
 
-		set: (modal)=> {
+		set(modal) {
 
 			let checkboxs = ['exit_without_ask', 'start_hide', 'exit_forced', 'ask_on_delete']
 			for (var i = checkboxs.length - 1; i >= 0; i--) {

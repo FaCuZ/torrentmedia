@@ -35,7 +35,7 @@ module.exports = {
 	},
 
 	update: {
-		table: () => {
+		table() {
 			let count = client.torrents.length
 			
 			if(count <= 0) return null
@@ -56,11 +56,11 @@ module.exports = {
 			}
 		},
 
-		footer: () => {
+		footer() {
 			$(".main-footer").html(gui.generalFoot())
 		},
 
-		tray: () => {
+		tray() {
 			let ds = Humanize.fileSize(client.downloadSpeed) + '/s'
 			let us = Humanize.fileSize(client.uploadSpeed) + '/s'
 

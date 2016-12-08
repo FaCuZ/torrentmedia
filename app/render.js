@@ -88,18 +88,18 @@ $('body').click(function () {
 })
 
 var	torrents = {
-	find: position => {
+	find(position) {
 		for (var i in torrents) 
 			if(torrents[i].position === position)
 				return torrents[i]
 	},
 	
-	persist: () => {
+	persist() {
 		ipcRenderer.send('torrents', torrents)
 		return true
 	},
 
-	length: () => {
+	length() {
 		let length = -3
 		for (var i in torrents)	length++
 		return length

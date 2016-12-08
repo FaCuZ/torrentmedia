@@ -1,7 +1,7 @@
 module.exports = {
 	torrentSelected: null, 
 
-	selectTr: elem => {
+	selectTr(elem) {
 		if($('#table tbody td').hasClass('dataTables_empty')) return false 
 
 		if (elem.hasClass('selected')) { 
@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	torrent: {
-		add: (torrentID, path) => {
+		add(torrentID, path) {
 			let temp = table.row.add([
 				' ',
 				locale.loading,
@@ -54,7 +54,7 @@ module.exports = {
 
 		},
 
-		remove: row => {
+		remove(row) {
 			
 			let destroy = () => {
 				torrentSelected.destroy( () => {
@@ -91,7 +91,7 @@ module.exports = {
 
 		},
 
-		pause: row => {
+		pause(row) {
 			$('#btn-pause i').toggleClass('fa-pause').toggleClass('fa-play')
 
 			/* TODO: 
@@ -114,7 +114,7 @@ module.exports = {
 	},
 
 	gui: {
-		table: ()=> {
+		table() {
 			let json = require('../json/datatable.json')
 
 			for (var i = json.columns.length - 1; i >= 0; i--) {
@@ -126,20 +126,20 @@ module.exports = {
 			return json
 		},
 
-		addModal: ()=> {
+		addModal() {
 			$('#addModal').modal('toggle')
 			$('#tb-add-folder').val(settings.dir_downloads)
 		},
 
-		cast: ()=> {
+		cast() {
 			gui.alpha()
 		},
 
-		share: ()=> {
+		share() {
 			gui.alpha()
 		},
 
-		getDialogFile: ()=> {
+		getDialogFile() {
 			let config = {	title: locale.dialog.torrent,
 							filters: [{ name: 'Torrents', extensions: ['torrent'] }],
 							defaultPath: settings.dir_downloads,
@@ -149,7 +149,7 @@ module.exports = {
 			dialog.showOpenDialog(config, name => $('#tb-add-file').val(name))	
 		},
 
-		getDialogFolder: ()=> {
+		getDialogFolder() {
 			let config = {  title: locale.dialog.folder,
 							defaultPath: settings.dir_downloads,
 							properties: ['openDirectory', 'createDirectory']

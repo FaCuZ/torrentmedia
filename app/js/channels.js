@@ -1,7 +1,8 @@
 module.exports = {
 	all: null,
 	installed: null,
-	load: ()=> {
+
+	load() {
 		$('#channels-web').html('')
 		glob('./channels/*.json', (er, files) => {			
 			files.forEach(file => { 
@@ -12,11 +13,11 @@ module.exports = {
 		})
 	},
 
-	parseXml: file => {
+	parseXml(file) {
 		return XML.parse(require(Path.resolve(file)))
 	},
 
-	html: channel => {
+	html(channel) {
 		let color = "info"
 		let icon = "general"
 
@@ -44,13 +45,13 @@ module.exports = {
 	},
 
 	gui: {
-		open: ()=> {
+		open() {
 			gui.changePage('channels')
 			if(settings.channels_warning) $('#modal_alert').modal('show')
 			channels.load()
 		}, 	
 
-		closeAlert: ()=> {
+		closeAlert() {
 			$('#modal_alert').modal('hide')
 			settings.channels_warning = false
 		},

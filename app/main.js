@@ -19,7 +19,7 @@ var mainWindow = null,
 
 var	boot = {
 	settings: {
-		load: () => {
+		load() {
 			let path = app.getPath('userData') + '/App/Settings.json'
 
 			try	{
@@ -30,7 +30,7 @@ var	boot = {
 			}
 		},
 
-		install: () => {
+		install() {
 			let def = require('./json/settings.default.json')
 
 			console.log('Default settings')
@@ -43,7 +43,7 @@ var	boot = {
 			return def
 		},
 
-		save: def =>{
+		save(def) {
 			storage.set('App/Settings', def, (err) => {
 				if (err) console.error(err)
 			})
@@ -51,7 +51,7 @@ var	boot = {
 	},
 
 	torrents: {
-		load: () =>{
+		load() {
 			storage.get('App/Torrents', (err, json) => {
 				if (err) json = [] 
 
