@@ -33,15 +33,15 @@
     "gulp-watch": "^4.3.6"
   },
   "dependencies": {
-    "admin-lte": "^2.3.3",
+    "admin-lte": "^2.3.8",
     "del": "^2.2.0",
     "electron-storage": "^1.0.6",
     "font-awesome": "^4.6.3",
     "fs-extra": "^0.30.0",
-    "glob": "^7.0.3",
-    "humanize-duration": "^3.8.0",
+    "glob": "^7.1.1",
+    "humanize-duration": "^3.10.0",
     "humanize-plus": "^1.8.2",
     "pixl-xml": "^1.0.6",
-    "webtorrent": "^0.94.1"
+    "webtorrent": "^0.98.0"
   }
 }

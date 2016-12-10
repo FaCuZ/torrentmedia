@@ -8,10 +8,19 @@ module.exports = {
 		delete 	 (){ temp['ask_on_delete'] = event.target.checked },
 		theme 	 (){ temp['theme'] = event.target.value }
 	},
+
+	network: {
+		conections (){ temp['conections_max'] = event.target.value },		
+		directory  (){ temp['dir_downloads'] = event.target.value },
+		announces  (){ temp['announces'] = event.target.value }
+	},
 	
 	advance: {
-		reset() { 
+		table 	(){ temp_interval['table'] = event.target.value },		
+		tray 	(){ temp_interval['tray'] = event.target.value },		
+		footer	(){ temp_interval['footer'] = event.target.value },		
 
+		reset() { 
 			dialog.showMessageBox({
 				type: "question",
 				title: locale.dialog.reset.title,
@@ -22,7 +31,7 @@ module.exports = {
 			}, select => {
 				if(select === 0) return false
 
-				ipcRenderer.send('reset-settings') 
+				gui.send('reset-settings')
 
 				$('#modal_configs').modal('hide')
 			})
@@ -33,29 +42,34 @@ module.exports = {
 	gui: {
 		open() {
 			temp = []
+			temp_interval = []
 			modal = $('#modal_configs')
 
 			modal.modal('toggle')
 
 			configs.gui.set(modal);
-		},
+		}, 
 	
 		save() {
-			console.log(temp)
-			for (config in temp) {
-				settings[config] = temp[config]
-			}
+			for (config in temp) settings[config] = temp[config] 
+			
+			for (config in temp_interval) settings.interval[config] = temp_interval[config]
 			
 			ipcRenderer.send('save-settings', settings)
 		},		
 
 		set(modal) {
-
 			let checkboxs = ['exit_without_ask', 'start_hide', 'exit_forced', 'ask_on_delete']
+
 			for (var i = checkboxs.length - 1; i >= 0; i--) {
 				modal.find('#opt-'+checkboxs[i]).prop("checked", settings[checkboxs[i]])
 			}
-
+			
+			let textboxs = ['announces', 'conections_max', 'dir_downloads']
+			for (var i = textboxs.length - 1; i >= 0; i--) {
+				modal.find('#opt-'+textboxs[i]).val(settings[textboxs[i]])
+			}
+			
 			let intervals = ["table", "tray", "footer"]
 			for (var i = intervals.length - 1; i >= 0; i--) {
 				modal.find('#opt-interval_'+intervals[i]).val(settings.interval[intervals[i]])

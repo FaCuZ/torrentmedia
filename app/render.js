@@ -38,7 +38,7 @@ ipcRenderer.on('torrents', (event, json) => {
 
 
 var call = {
-			////-- MAIN --////
+		////-- MAIN --////
 		btn_nav_main 		 :()=> gui.changePage('downloads'),
 		btn_nav_stats 		 :()=> gui.changePage('stats'),
 		btn_nav_mediacast 	 :()=> gui.changePage('mediacast'),
@@ -49,7 +49,8 @@ var call = {
 		btn_bottom_hide		 :()=> gui.send('hide'),
 		btn_bottom_close	 :()=> gui.send('close'),
 		btn_sidebar_toggle	 :()=> gui.sidebarToggle(),
-			////-- DOWNLOAD --////
+		
+		////-- DOWNLOAD --////
 		btn_add_download 	 :()=> downloads.torrent.add($('#tb-add-file').val(), $('#tb-add-folder').val()),
 		btn_remove			 :()=> downloads.torrent.remove(table.row('tr.selected')),
 		btn_pause			 :()=> downloads.torrent.pause(table.row('tr.selected')),	
@@ -61,11 +62,13 @@ var call = {
 		btn_share			 :()=> downloads.gui.share(),
 		btn_position_up 	 :()=> torrents[torrentSelected.infoHash].up(),
 		btn_position_down	 :()=> torrents[torrentSelected.infoHash].down(),
-			////-- CHANNELS --////
+		
+		////-- CHANNELS --////
 		btn_nav_channels 	 :()=> channels.gui.open(),
 		btn_channels_alert	 :()=> channels.gui.closeAlert(),
 		btn_channel			 :()=> gui.alpha(),
-			////-- CONFIGS --////
+		
+		////-- CONFIGS --////
 		btn_configs_save 	 :()=> configs.gui.save(),
 		box_general_lenguage :()=> configs.general.lenguage(),
 		chk_general_close	 :()=> configs.general.close(),
@@ -73,7 +76,13 @@ var call = {
 		chk_general_hide	 :()=> configs.general.hide(),
 		chk_general_delete	 :()=> configs.general.delete(),
 		box_general_theme	 :()=> configs.general.theme(),
+		tb_advance_table	 :()=> configs.advance.table(),
+		tb_advance_tray		 :()=> configs.advance.tray(),
+		tb_advance_footer	 :()=> configs.advance.footer(),
 		btn_advance_reset	 :()=> configs.advance.reset(),
+		tb_network_announces :()=> configs.network.announces(),
+		tb_network_directory :()=> configs.network.directory(),
+		tb_network_conections:()=> configs.network.conections(),
 		btn_bottom_settings	 :()=> configs.gui.open()		
 
 	}

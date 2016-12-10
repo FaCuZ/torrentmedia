@@ -88,13 +88,16 @@
 			"tab": "General",
 			"lenguage": "Lenguage",
 			"close": "Don't warn before quitting",
-			"minimize": "Minimize on close to tray",
+			"minimize": "Don't minimize to tray on close",
 			"hide": "Hidden start",
 			"delete": "Warn before delete a torrent",
 			"theme": "Theme"
 		},		
 		"network": {
-			"tab": "Network"
+			"tab": "Network",
+			"announces": "Trackers by default",
+			"conections_max": "Maximum Connections",
+			"dir_downloads": "Path by default"
 		},
 		"advance": {
 			"tab": "Advance",

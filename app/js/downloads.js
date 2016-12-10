@@ -32,7 +32,7 @@ module.exports = {
 				'-'
 			]).draw()
 			
-			let torrent = client.add(torrentID,	{ path: path }, torrent => { 
+			let torrent = client.add(torrentID,	{ path: path, announce: settings.announces, maxWebConns: settings.conections_max }, torrent => { 
 					torrents.persist()
 				})
 

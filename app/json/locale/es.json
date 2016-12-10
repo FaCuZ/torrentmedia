@@ -89,13 +89,16 @@
 			"tab": "General",
 			"lenguage": "Lenguaje",
 			"close": "No preguntar antes de cerrar la aplicacion",
-			"minimize": "Minimizar al cerrar",
+			"minimize": "No minimizar al cerrar",
 			"hide": "Inicial oculto",
 			"delete": "Preguntar antes de borrar un torrent",
 			"theme": "Theme"
 		},		
 		"network": {
-			"tab": "Red"
+			"tab": "Red",
+			"announces": "Tracker por defecto",
+			"conections_max": "Maximo de conecciones",
+			"dir_downloads": "Directorio por defecto"
 		},
 		"advance": {
 			"tab": "Avanzado",

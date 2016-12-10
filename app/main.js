@@ -58,6 +58,11 @@ var	boot = {
 				mainWindow.webContents.send('torrents', json)
 			})
 		}
+	},
+
+	restart(){
+		app.relaunch({args: process.argv.slice(1).concat(['--relaunch'])})
+		app.exit(0)
 	}
 
 }
@@ -215,8 +220,14 @@ ipcMain.on('control', (event, action) => {
 			if(mainWindow.isFullScreen()) mainWindow.setFullScreen(false)
 			else mainWindow.setFullScreen(true)
 			break
+		case 'reset-settings':
+			global.settings = boot.settings.install()
+			boot.restart()
+			break
 	} 
 })
+
+ipcMain.on('save-settings', (event, def) => { boot.settings.save(def) })
 
 ipcMain.on('torrents', (event, torrents) => {	
 	let path = 'App/Torrents'
@@ -225,10 +236,6 @@ ipcMain.on('torrents', (event, torrents) => {
 
 	storage.set(path, torrents, (err) => { if(err) console.error(err) })
 })
-
-ipcMain.on('save-settings', (event, def) => { boot.settings.save(def) })
-
-ipcMain.on('reset-settings', (event) => { settings = boot.settings.install() })
 
 
 

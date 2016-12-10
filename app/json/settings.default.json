@@ -12,7 +12,10 @@
 		"footer": 1500
 	},
 
-	"conections_max": 25,
+	"conections_max": 4,
+	"default_path": "",
+	"announces": "",
+
 	"locale": "en",
 
 	"tray_blink": false,
@@ -25,6 +28,7 @@
 	"dir_downloads": "",
 	
 	"channels_warning": true,
+
 
 
 	"search_with": "TorrentProject",
